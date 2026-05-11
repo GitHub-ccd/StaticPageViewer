@@ -11,6 +11,14 @@ export default function Home() {
         </p>
       </section>
 
+      <section className="bouncing-container">
+        <div className="ball ball-1"></div>
+        <div className="ball ball-2"></div>
+        <div className="ball ball-3"></div>
+        <div className="ball ball-4"></div>
+        <div className="ball ball-5"></div>
+      </section>
+
       <footer>
         <small>Built with Next.js • myBillAnalysis</small>
       </footer>
