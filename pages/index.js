@@ -17,7 +17,7 @@ export default function Home() {
             <Link href="/" className="nav-link active">
               Home
             </Link>
-            <Link href="/tictactoe.html" className="nav-link">
+            <Link href="tictactoe.html" className="nav-link">
               Tic Tac Toe
             </Link>
           </nav>
