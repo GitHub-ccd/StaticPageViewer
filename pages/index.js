@@ -51,6 +51,27 @@ export default function Home() {
             </div>
           </div>
         </main>
+
+        <section className="docs-section">
+          <h2 className="docs-heading">T2DM Model 1 — Documents</h2>
+          <div className="docs-grid">
+            <a href="./T2DM Model 1 Clinical Summary-update 0626 converted.html" className="doc-card">
+              <span className="doc-label">Clinical</span>
+              <h3>Clinical Summary</h3>
+              <p>Stakeholder-facing overview of the T2DM unplanned admission risk model.</p>
+            </a>
+            <a href="./T2DM Model 1 Technical Reference for Clinical stakeholders-update 0626 converted.html" className="doc-card">
+              <span className="doc-label">Clinical + Technical</span>
+              <h3>Technical Reference for Clinical Stakeholders</h3>
+              <p>Technical detail pitched for clinical audiences.</p>
+            </a>
+            <a href="./T2DM Model 1 Internal Technical Reference for DS team-update 0626 converted.html" className="doc-card">
+              <span className="doc-label">Internal / DS</span>
+              <h3>Internal Technical Reference</h3>
+              <p>Full internal reference for the data science team.</p>
+            </a>
+          </div>
+        </section>
       </div>
 
       <style jsx>{`
@@ -225,6 +246,77 @@ export default function Home() {
 
           .hero-visual {
             align-items: stretch;
+          }
+        }
+
+        .docs-section {
+          max-width: 1100px;
+          width: 100%;
+          margin: 48px auto 0;
+          padding: 0 12px 48px;
+          animation: fadeIn 1.1s ease 0.4s both;
+        }
+
+        .docs-heading {
+          font-size: 1.1rem;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: rgba(230, 238, 246, 0.5);
+          margin: 0 0 20px;
+          font-weight: 600;
+        }
+
+        .docs-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 18px;
+        }
+
+        .doc-card {
+          display: block;
+          text-decoration: none;
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 18px;
+          padding: 24px;
+          transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .doc-card:hover {
+          border-color: rgba(6, 182, 212, 0.4);
+          transform: translateY(-3px);
+          box-shadow: 0 16px 40px rgba(6, 182, 212, 0.1);
+          text-decoration: none;
+        }
+
+        .doc-label {
+          display: inline-block;
+          padding: 3px 10px;
+          border-radius: 999px;
+          background: rgba(6, 182, 212, 0.12);
+          color: #38bdf8;
+          font-size: 0.78rem;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          margin-bottom: 12px;
+        }
+
+        .doc-card h3 {
+          font-size: 1rem;
+          margin: 0 0 8px;
+          color: #e6eef6;
+        }
+
+        .doc-card p {
+          font-size: 0.88rem;
+          margin: 0;
+          color: rgba(230, 238, 246, 0.6);
+          line-height: 1.55;
+        }
+
+        @media (max-width: 900px) {
+          .docs-grid {
+            grid-template-columns: 1fr;
           }
         }
 
