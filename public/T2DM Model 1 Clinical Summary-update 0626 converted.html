@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T2DM Model 1 Clinical Summary</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                         Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6; color: #333;
+            background-color: #f8f9fa; margin: 0; padding: 20px;
+        }
+        .container {
+            max-width: 920px; margin: 0 auto; background: #fff;
+            border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 40px 50px;
+        }
+        h1 {
+            font-size: 2em; color: #1a1a2e;
+            border-bottom: 3px solid #e94560; padding-bottom: 12px; margin-top: 0;
+        }
+        h2 {
+            font-size: 1.5em; color: #16213e;
+            border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-top: 1.5em;
+        }
+        h3 { font-size: 1.25em; color: #0f3460; margin-top: 1.2em; }
+        h4, h5, h6 { color: #16213e; }
+        p { margin: 0.8em 0; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ── Cells ── */
+        .cell { margin-bottom: 8px; }
+        .cell-title {
+            background: #eef2f7; padding: 8px 14px;
+            font-weight: 600; font-size: 1.05em; color: #16213e;
+            border-left: 4px solid #e94560; border-radius: 4px 4px 0 0;
+        }
+        .markdown-cell { padding: 4px 0; }
+
+        /* ── Code blocks ── */
+        .code-cell {
+            background: #282c34; border-radius: 6px;
+            margin: 8px 0; overflow-x: auto;
+        }
+        .code-cell pre { margin: 0; padding: 16px 20px; }
+        .code-cell code {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono',
+                         Menlo, Courier, monospace;
+            font-size: 0.88em; color: #abb2bf; line-height: 1.5;
+        }
+        .markdown-cell code {
+            background: #f0f0f0; padding: 2px 6px; border-radius: 3px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono',
+                         Menlo, Courier, monospace;
+            font-size: 0.9em; color: #c7254e;
+        }
+        .markdown-cell pre {
+            background: #282c34; border-radius: 6px;
+            padding: 16px 20px; overflow-x: auto;
+        }
+        .markdown-cell pre code {
+            background: transparent; color: #abb2bf; padding: 0;
+        }
+
+        /* ── Tables ── */
+        table {
+            border-collapse: collapse; width: 100%;
+            margin: 1em 0; font-size: 0.95em;
+        }
+        th, td { border: 1px solid #d0d7de; padding: 10px 14px; text-align: left; }
+        th { background-color: #f0f3f6; font-weight: 600; color: #1a1a2e; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        tr:hover { background-color: #eef2f7; }
+
+        /* ── Block quotes ── */
+        blockquote {
+            border-left: 4px solid #e94560; margin: 1em 0;
+            padding: 10px 20px; background: #fef9fa; color: #555;
+        }
+
+        /* ── Lists ── */
+        ul, ol { padding-left: 2em; }
+        li { margin: 0.3em 0; }
+
+        /* ── Misc ── */
+        img { max-width: 100%; height: auto; }
+        hr { border: none; border-top: 1px solid #ddd; margin: 2em 0; }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px 24px; }
+            body { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>T2DM Model 1 Clinical Summary</h1>
+        <div class="cell"><div class="cell-title">T2DM Model 1 Clinical Summary</div><div class="markdown-cell"><h1 id="t2dm-model-1-clinical-summary-for-stakeholder-review">T2DM Model 1 — Clinical Summary for Stakeholder Review</h1>
+<p><strong>Project:</strong> Population Health — Type 2 Diabetes Mellitus Unplanned Admission Risk Prediction</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sponsor</td>
+<td>Hebert, Christopher J MD</td>
+</tr>
+<tr>
+<td>Analytics Business Partner</td>
+<td>Courtny Wiggs</td>
+</tr>
+<tr>
+<td>Data Science</td>
+<td>Chamila Dharmawardhana</td>
+</tr>
+<tr>
+<td>Clarity (Epic Data)</td>
+<td>Andrew Parker</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Date:</strong> June 2026 | <strong>Status:</strong> Flags 10% of patients, 36% yield, 4.9× lift, captures 47% of admissions, exceeds baseline</p>
+<blockquote>
+<p><strong>Companion document:</strong> Detailed model structure, feature dimensions, and clinical interpretation are documented in <em>T2DM Model 1 Technical Reference for Clinical stakeholders</em>.</p>
+</blockquote></div></div><div class="cell"><div class="cell-title">Cohort and Target Definition</div><div class="markdown-cell"><hr />
+<h2 id="cohort-target-definition">Cohort &amp; Target Definition</h2>
+<p>The model was built on <strong>299,224 empaneled T2DM patients</strong> from the Mercy health system.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cohort size</td>
+<td>299,224 patients</td>
+</tr>
+<tr>
+<td>Feature window</td>
+<td>22 months (May 2022 – March 2024)</td>
+</tr>
+<tr>
+<td>Target window</td>
+<td>12 months following feature end date</td>
+</tr>
+<tr>
+<td>Target definition</td>
+<td>Any unplanned inpatient admission (including observation) or ED visit</td>
+</tr>
+<tr>
+<td>Positive rate</td>
+<td>7.52%</td>
+</tr>
+<tr>
+<td>Source system</td>
+<td>Epic Clarity structured EHR data</td>
+</tr>
+</tbody>
+</table>
+<p>The task is to identify patients at highest risk of a future unplanned admission so that care-management attention can be prioritised where it is most likely to help.</p></div></div><div class="cell"><div class="cell-title">Why We Rebuilt the Model</div><div class="markdown-cell"><hr />
+<h2 id="what-prompted-the-improvements">What Prompted the Improvements</h2>
+<p>The earlier model showed that EHR-based prediction was feasible, but review of model behaviour identified an opportunity to make the model both more clinically understandable and more complete for complex patients.</p>
+<p>The redesign focused on three goals:</p>
+<ol>
+<li><strong>Translate features into clinical concepts</strong> rather than opaque database artifacts.</li>
+<li><strong>Capture multi-source burden</strong> for patients whose diagnoses and treatment complexity appear across many parts of the chart.</li>
+<li><strong>Retain or improve discrimination</strong> while reducing feature count and improving interpretability.</li>
+</ol>
+<p>That redesign has now succeeded: the integrated model exceeds the earlier baseline while using a much smaller, clinically organised feature set.</p></div></div><div class="cell"><div class="cell-title">Model Architecture Overview</div><div class="markdown-cell"><hr />
+<h2 id="model-architecture-overview">Model Architecture Overview</h2>
+<p>The model uses <strong>11 clinical feature dimensions</strong> drawn from Epic Clarity. These dimensions were tested independently and then combined into a single integrated model.</p>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Dimension</th>
+<th>PR-AUC</th>
+<th>Features</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Clinical Diagnoses</td>
+<td>0.308</td>
+<td>87</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Lab Results</td>
+<td>0.288</td>
+<td>47</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Utilization History</td>
+<td>0.286</td>
+<td>6</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Medications</td>
+<td>0.257</td>
+<td>56</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Registry Flags</td>
+<td>0.250</td>
+<td>8</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Flowsheet Vitals</td>
+<td>0.240</td>
+<td>13</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Surgical History</td>
+<td>0.161</td>
+<td>12</td>
+</tr>
+<tr>
+<td>8</td>
+<td>A1C + eGFR</td>
+<td>0.156</td>
+<td>4</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Social History / SDOH</td>
+<td>0.147</td>
+<td>27</td>
+</tr>
+<tr>
+<td>10</td>
+<td>BMI</td>
+<td>0.128</td>
+<td>2</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Demographics</td>
+<td>0.108</td>
+<td>19</td>
+</tr>
+</tbody>
+</table>
+<p>Together these dimensions produce an integrated model with <strong>~280 clinically interpretable features</strong>, substantially smaller than the prior 854-feature baseline model used for comparison.</p></div></div><div class="cell"><div class="cell-title">Key Clinical Findings</div><div class="markdown-cell"><hr />
+<h2 id="key-clinical-findings">Key Clinical Findings</h2>
+<ul>
+<li><strong>The model now exceeds the original baseline.</strong> The leading integrated H2O model achieved <strong>test PR-AUC 0.387</strong>, slightly above the prior baseline of <strong>0.382</strong>.</li>
+<li><strong>The signal is clinically coherent.</strong> The strongest contributors span prior utilization, diagnosis burden, treatment complexity, labs, and inpatient physiologic instability.</li>
+<li><strong>The model is more efficient.</strong> It uses about 74% fewer features than the older baseline approach while improving interpretability.</li>
+<li><strong>Hybrid integration added real value.</strong> Signals initially identified through gap analysis were validated and are now integrated directly into the core feature dimensions rather than maintained as a separate supplement.</li>
+<li><strong>The result is operationally flexible.</strong> Thresholds can be adjusted depending on how many patients care management is able to review.</li>
+</ul></div></div><div class="cell"><div class="cell-title">Model Performance and Consultation Yield</div><div class="markdown-cell"><hr />
+<h2 id="model-performance-and-consultation-yield">Model Performance and Consultation Yield</h2>
+<h3 id="canonical-performance-number">Canonical Performance Number</h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Features</th>
+<th>Test PR-AUC</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prior baseline</td>
+<td>854</td>
+<td>0.382</td>
+<td>Older wide-table reference</td>
+</tr>
+<tr>
+<td>Current integrated model (H2O)</td>
+<td>~280</td>
+<td><strong>0.387</strong></td>
+<td>Current best overall model</td>
+</tr>
+<tr>
+<td>Current integrated model (XGBoost)</td>
+<td>283</td>
+<td>0.373</td>
+<td>Confirms signal reproducibility</td>
+</tr>
+</tbody>
+</table>
+<h3 id="consultation-operating-point">Consultation Operating Point</h3>
+<p>At a balanced threshold of <strong>0.187</strong>, the integrated model:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Patients flagged</td>
+<td><strong>8,711 (9.7%)</strong></td>
+</tr>
+<tr>
+<td>Precision</td>
+<td><strong>36.5%</strong></td>
+</tr>
+<tr>
+<td>Recall</td>
+<td><strong>47.2%</strong></td>
+</tr>
+<tr>
+<td>Lift</td>
+<td><strong>4.9×</strong></td>
+</tr>
+<tr>
+<td>NPV</td>
+<td><strong>95.6%</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="headline-interpretation">Headline Interpretation</h3>
+<p>This means the model can <strong>flag about 10% of patients, with a 36% yield, 4.9× lift, and capture of 47% of future admissions</strong>.</p>
+<p>This threshold is not fixed. If review capacity is lower, the threshold can be raised to produce a smaller, higher-yield list. If the goal is broader capture, it can be lowered to review more patients and identify more admissions.</p></div></div><div class="cell"><div class="cell-title">Limitations and Recommendations</div><div class="markdown-cell"><hr />
+<h2 id="limitations-and-next-steps">Limitations and Next Steps</h2>
+<h3 id="current-limitations">Current Limitations</h3>
+<ul>
+<li>Some clinically relevant inputs still have incomplete capture, especially SDOH screening and portions of kidney-function data.</li>
+<li>Blood pressure parsing and a small number of lab naming issues remain open data-quality items.</li>
+<li>Validation so far is retrospective rather than prospective.</li>
+</ul>
+<h3 id="current-project-position">Current Project Position</h3>
+<ul>
+<li>Hybrid integration is complete.</li>
+<li>Tier A enrichment is closed and remains historical context only.</li>
+<li>The integrated all-11 design is now the current best model direction.</li>
+</ul>
+<h3 id="next-steps">Next Steps</h3>
+<ol>
+<li>Prospective validation on a newer cohort.</li>
+<li>Dashboard-based review workflow for clinical use.</li>
+<li>Threshold calibration based on real care-management capacity.</li>
+<li>Targeted data-quality fixes to strengthen future model refreshes.</li>
+</ol>
+<hr />
+<p><em>For source-table detail and fuller clinical rationale, refer to the companion Technical Reference notebook.</em></p></div></div>
+    </div>
+</body>
+</html>
