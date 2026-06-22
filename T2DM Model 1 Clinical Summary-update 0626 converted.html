@@ -96,11 +96,6 @@
     </style>
 </head>
 <body>
-    <nav style="max-width:920px;margin:0 auto 16px;padding:0 20px">
-      <a href="./" style="display:inline-flex;align-items:center;gap:6px;color:#0066cc;text-decoration:none;font-size:0.9rem">
-        &#8592; Home
-      </a>
-    </nav>
     <div class="container">
         <h1>T2DM Model 1 Clinical Summary</h1>
         <div class="cell"><div class="cell-title">T2DM Model 1 Clinical Summary</div><div class="markdown-cell"><h1 id="t2dm-model-1-clinical-summary-for-stakeholder-review">T2DM Model 1 — Clinical Summary for Stakeholder Review</h1>
@@ -171,7 +166,131 @@
 </tr>
 </tbody>
 </table>
-<p>The task is to identify patients at highest risk of a future unplanned admission so that care-management attention can be prioritised where it is most likely to help.</p></div></div><div class="cell"><div class="cell-title">Why We Rebuilt the Model</div><div class="markdown-cell"><hr />
+<p>The task is to identify patients at highest risk of a future unplanned admission so that care-management attention can be prioritised where it is most likely to help.</p></div></div><div class="cell"><div class="cell-title">Geographic Distribution by Market</div><div class="markdown-cell"><hr />
+<h2 id="geographic-distribution-by-market">Geographic Distribution by Market</h2>
+<p>The cohort spans all Bon Secours Mercy Health markets. Market is derived from each patient’s most recent encounter department within the feature window.</p>
+<table>
+<thead>
+<tr>
+<th>Market</th>
+<th>Patients</th>
+<th>% of Cohort</th>
+<th>Positives</th>
+<th>Prevalence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cincinnati</td>
+<td>60,181</td>
+<td>20.0%</td>
+<td>4,659</td>
+<td>7.7%</td>
+</tr>
+<tr>
+<td>Richmond</td>
+<td>45,023</td>
+<td>15.0%</td>
+<td>3,929</td>
+<td>8.7%</td>
+</tr>
+<tr>
+<td>Youngstown</td>
+<td>24,281</td>
+<td>8.1%</td>
+<td>2,944</td>
+<td><strong>12.1%</strong></td>
+</tr>
+<tr>
+<td>Greenville</td>
+<td>22,673</td>
+<td>7.6%</td>
+<td>1,314</td>
+<td>5.8%</td>
+</tr>
+<tr>
+<td>Toledo Metro</td>
+<td>22,268</td>
+<td>7.4%</td>
+<td>2,531</td>
+<td>11.4%</td>
+</tr>
+<tr>
+<td>Hampton Roads</td>
+<td>11,420</td>
+<td>3.8%</td>
+<td>513</td>
+<td>4.5%</td>
+</tr>
+<tr>
+<td>Lima</td>
+<td>9,956</td>
+<td>3.3%</td>
+<td>1,118</td>
+<td>11.2%</td>
+</tr>
+<tr>
+<td>Lorain</td>
+<td>8,482</td>
+<td>2.8%</td>
+<td>658</td>
+<td>7.8%</td>
+</tr>
+<tr>
+<td>Paducah</td>
+<td>7,887</td>
+<td>2.6%</td>
+<td>665</td>
+<td>8.4%</td>
+</tr>
+<tr>
+<td>Springfield</td>
+<td>7,654</td>
+<td>2.5%</td>
+<td>913</td>
+<td>11.9%</td>
+</tr>
+<tr>
+<td>Toledo Rural</td>
+<td>6,514</td>
+<td>2.2%</td>
+<td>480</td>
+<td>7.4%</td>
+</tr>
+<tr>
+<td>Kentucky – Irvine</td>
+<td>1,540</td>
+<td>0.5%</td>
+<td>49</td>
+<td>3.2%</td>
+</tr>
+<tr>
+<td>Unmatched</td>
+<td>62,773</td>
+<td>20.9%</td>
+<td>2,608</td>
+<td>4.2%</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>300,290</strong></td>
+<td><strong>100%</strong></td>
+<td><strong>22,433</strong></td>
+<td><strong>7.5%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Prevalence ranges from 3.2% (Kentucky – Irvine) to 12.1% (Youngstown) — a 3.8× ratio reflecting regional differences in disease burden and acute-care utilisation.</p>
+<h3 id="could-a-youngstown-specific-model-perform-better">Could a Youngstown-Specific Model Perform Better?</h3>
+<p>Youngstown’s 12.1% prevalence (vs 7.5% system-wide) raises a natural question: would a dedicated market-level model yield stronger discrimination?</p>
+<p><strong>Potential advantages:</strong><br />
+* Higher base rate makes the prediction task inherently easier — PR-AUC is base-rate-sensitive, so a model trained on a 12% positive population would be expected to report higher PR-AUC even at similar discrimination ability.<br />
+* A market-specific model could learn local referral patterns, provider behaviour, and population characteristics that are diluted in the system-wide model.</p>
+<p><strong>Practical concerns:</strong><br />
+* Youngstown contributes only 24,281 patients (8% of cohort). After train/test split, the effective training set would be \~19K patients with \~2,350 positives — substantially less data for hyperparameter tuning and stable feature learning.<br />
+* Maintaining separate models per market multiplies operational complexity (retraining, monitoring, threshold calibration) without guaranteed net clinical benefit.<br />
+* The current all-market model already captures Youngstown’s higher-acuity signal implicitly through clinical features (utilisation patterns, comorbidity burden, lab values) that reflect the local disease environment.</p>
+<p><strong>Current position:</strong> The system-wide model remains the primary direction. Market-level performance breakdowns can be monitored post-deployment; if Youngstown shows materially different calibration or recall, a targeted adjustment (e.g. market-specific threshold) is a lighter-weight intervention than a fully separate model.</p></div></div><div class="cell"><div class="cell-title">Why We Rebuilt the Model</div><div class="markdown-cell"><hr />
 <h2 id="what-prompted-the-improvements">What Prompted the Improvements</h2>
 <p>The earlier model showed that EHR-based prediction was feasible, but review of model behaviour identified an opportunity to make the model both more clinically understandable and more complete for complex patients.</p>
 <p>The redesign focused on three goals:</p>
@@ -190,6 +309,7 @@
 <th>Dimension</th>
 <th>PR-AUC</th>
 <th>Features</th>
+<th>What It Captures</th>
 </tr>
 </thead>
 <tbody>
@@ -197,67 +317,78 @@
 <td>1</td>
 <td>Clinical Diagnoses</td>
 <td>0.308</td>
-<td>87</td>
+<td>57-&gt;<strong>87</strong></td>
+<td>Diabetes complications, cardiovascular, renal, respiratory, mental health, and multi-source burden</td>
 </tr>
 <tr>
 <td>2</td>
 <td>Lab Results</td>
 <td>0.288</td>
-<td>47</td>
+<td>27-&gt;<strong>47</strong></td>
+<td>Broad metabolic and physiologic laboratory profile</td>
 </tr>
 <tr>
 <td>3</td>
 <td>Utilization History</td>
 <td>0.286</td>
-<td>6</td>
+<td><strong>6</strong></td>
+<td>Prior unplanned admissions, ED use, LOS, and charges</td>
 </tr>
 <tr>
 <td>4</td>
 <td>Medications</td>
 <td>0.257</td>
-<td>56</td>
+<td>48-&gt;<strong>56</strong></td>
+<td>Diabetes therapy, regimen complexity, polypharmacy, and treatment intensity</td>
 </tr>
 <tr>
 <td>5</td>
 <td>Registry Flags</td>
 <td>0.250</td>
-<td>8</td>
+<td><strong>8</strong></td>
+<td>Chronic condition registry flags and visit recency</td>
 </tr>
 <tr>
 <td>6</td>
 <td>Flowsheet Vitals</td>
 <td>0.240</td>
-<td>13</td>
+<td>8-&gt;<strong>13</strong></td>
+<td>Inpatient vital sign instability and summary measures</td>
 </tr>
 <tr>
 <td>7</td>
 <td>Surgical History</td>
 <td>0.161</td>
-<td>12</td>
+<td>6-&gt;<strong>12</strong></td>
+<td>Procedure burden and procedure-type history</td>
 </tr>
 <tr>
 <td>8</td>
 <td>A1C + eGFR</td>
 <td>0.156</td>
-<td>4</td>
+<td>4-&gt;<strong>5</strong></td>
+<td>Glycaemic control and kidney function</td>
 </tr>
 <tr>
 <td>9</td>
 <td>Social History / SDOH</td>
 <td>0.147</td>
-<td>27</td>
+<td>29-&gt;<strong>27</strong></td>
+<td>Financial class, substance use, and social risk context</td>
 </tr>
 <tr>
 <td>10</td>
 <td>BMI</td>
 <td>0.128</td>
-<td>2</td>
+<td><strong>2</strong></td>
+<td>Body mass index and weight trajectory</td>
 </tr>
 <tr>
 <td>11</td>
 <td>Demographics</td>
 <td>0.108</td>
-<td>19</td>
+<td><strong>19</strong></td>
+<td>Age, sex, race/ethnicity, marital status, language, PCP context</td>
 </tr>
 </tbody>
 </table>
@@ -269,7 +400,35 @@
 <li><strong>The model is more efficient.</strong> It uses about 74% fewer features than the older baseline approach while improving interpretability.</li>
 <li><strong>Hybrid integration added real value.</strong> Signals initially identified through gap analysis were validated and are now integrated directly into the core feature dimensions rather than maintained as a separate supplement.</li>
 <li><strong>The result is operationally flexible.</strong> Thresholds can be adjusted depending on how many patients care management is able to review.</li>
-</ul></div></div><div class="cell"><div class="cell-title">Model Performance and Consultation Yield</div><div class="markdown-cell"><hr />
+</ul></div></div><div class="cell"><div class="cell-title">Top Feature Importance (H2O Integrated Model)</div><div class="code-cell"><pre><code># ---------------------------------------------------------------
+# Top Feature Importance — H2O All-11 Integrated Model
+# Source: H2OAI_1.T2DM_11D_Hybrid_corrected (Test PR-AUC 0.387)
+# Global Shapley values for original features
+# ---------------------------------------------------------------
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mtick
+
+# Read H2O DAI Shapley export (skip 8 header lines)
+csv_path = "/Workspace/Users/cdharmawardhana@mercy.com/DS-PopHealth-Diabetes/T2DM_model1/H2O/H2OAI_11D_hybrid_integrated_shapley-values-for-original-features.csv"
+df_imp = pd.read_csv(csv_path, skiprows=8)
+df_imp.columns = ["feature", "importance", "scope"]
+df_imp["importance"] = df_imp["importance"].astype(float)
+
+# Top 20 features
+top = df_imp.head(20).copy()
+
+# Plot
+fig, ax = plt.subplots(figsize=(9, 6))
+colors = ["#1f4e79" if i &lt; 5 else "#4a86c8" for i in range(len(top))]
+ax.barh(top["feature"][::-1], top["importance"][::-1], color=colors[::-1], edgecolor="white", linewidth=0.5)
+ax.set_xlabel("Global Shapley Importance", fontsize=11)
+ax.set_title("Top 20 Predictive Features — H2O All-11 Integrated Model\n(Test PR-AUC 0.387)", fontsize=12, fontweight="bold", pad=12)
+ax.xaxis.set_major_formatter(mtick.PercentFormatter(xmax=1, decimals=0))
+ax.spines[["top", "right"]].set_visible(False)
+ax.tick_params(axis="y", labelsize=10)
+plt.tight_layout()
+plt.show()</code></pre></div></div><div class="cell"><div class="cell-title">Model Performance and Consultation Yield</div><div class="markdown-cell"><hr />
 <h2 id="model-performance-and-consultation-yield">Model Performance and Consultation Yield</h2>
 <h3 id="canonical-performance-number">Canonical Performance Number</h3>
 <table>
@@ -293,12 +452,6 @@
 <td>~280</td>
 <td><strong>0.387</strong></td>
 <td>Current best overall model</td>
-</tr>
-<tr>
-<td>Current integrated model (XGBoost)</td>
-<td>283</td>
-<td>0.373</td>
-<td>Confirms signal reproducibility</td>
 </tr>
 </tbody>
 </table>
