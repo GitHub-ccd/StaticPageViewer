@@ -1,6 +1,6 @@
-# myBillAnalysis
+# StaticPageViewer
 
-Minimal Next.js single-page boilerplate intended for static export and hosting on GitHub Pages.
+Minimal Next.js static viewer for showing single-page HTML files from `public/`.
 
 Quick start:
 
@@ -13,7 +13,8 @@ Quick start:
 Notes:
 
 - GitHub Pages only supports static files. For full Next.js features (server rendering, API routes), deploy to Vercel or another Node-capable host.
-- When using `next export` avoid `getServerSideProps` or other server-only features.
+- When using `next export`, avoid `getServerSideProps` or other server-only features.
+- If you plan to rename this repository on GitHub, update `next.config.js` from `/myBillAnalysis` to the new path before you deploy again.
 
 Automatic deployment:
 - The repository includes a GitHub Actions workflow that builds the site and deploys the `out/` folder to the `gh-pages` branch on pushes to `main`.

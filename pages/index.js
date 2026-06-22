@@ -1,23 +1,25 @@
+import fs from 'fs';
+import path from 'path';
 import Head from 'next/head';
 
-export default function Home() {
+export default function Home({ htmlFiles }) {
   return (
     <>
       <Head>
-        <title>myBillAnalysis</title>
-        <meta name="description" content="Animated landing page for myBillAnalysis" />
+        <title>StaticPageViewer</title>
+        <meta name="description" content="Animated landing page for StaticPageViewer" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
       <div className="homepage">
         <header className="site-header">
-          <div className="brand">myBillAnalysis</div>
+          <div className="brand">StaticPageViewer</div>
           <nav className="nav-menu">
             <a href="./" className="nav-link active">
               Home
             </a>
             <a href="./tictactoe.html" className="nav-link">
-              Tic Tac Toe
+              Demo Page
             </a>
           </nav>
         </header>
@@ -25,14 +27,14 @@ export default function Home() {
         <main className="hero-section">
           <div className="hero-copy">
             <span className="eyebrow">Welcome back</span>
-            <h1>Landing page restored with motion and menu links</h1>
+            <h1>Static HTML pages hosted together in one place</h1>
             <p>
-              Your home experience is back. Use the menu to open the static Tic Tac Toe page,
-              then return here anytime with the built-in home link.
+              Use this viewer to open any single-page HTML file placed in `public/`, including
+              report documents, demos, or supporting static content.
             </p>
             <div className="hero-actions">
               <a href="./tictactoe.html" className="primary-button">
-                Play Tic Tac Toe
+                Open Demo Page
               </a>
             </div>
           </div>
@@ -53,23 +55,18 @@ export default function Home() {
         </main>
 
         <section className="docs-section">
-          <h2 className="docs-heading">T2DM Model 1 — Documents</h2>
+          <h2 className="docs-heading">Static HTML files available</h2>
           <div className="docs-grid">
-            <a href="./T2DM Model 1 Clinical Summary-update 0626 converted.html" className="doc-card">
-              <span className="doc-label">Clinical</span>
-              <h3>Clinical Summary</h3>
-              <p>Stakeholder-facing overview of the T2DM unplanned admission risk model.</p>
-            </a>
-            <a href="./T2DM Model 1 Technical Reference for Clinical stakeholders-update 0626 converted.html" className="doc-card">
-              <span className="doc-label">Clinical + Technical</span>
-              <h3>Technical Reference for Clinical Stakeholders</h3>
-              <p>Technical detail pitched for clinical audiences.</p>
-            </a>
-            <a href="./T2DM Model 1 Internal Technical Reference for DS team-update 0626 converted.html" className="doc-card">
-              <span className="doc-label">Internal / DS</span>
-              <h3>Internal Technical Reference</h3>
-              <p>Full internal reference for the data science team.</p>
-            </a>
+            {htmlFiles.map((file) => {
+              const title = file.replace(/\.html$/i, '');
+              return (
+                <a key={file} href={`./${encodeURI(file)}`} className="doc-card">
+                  <span className="doc-label">Static HTML</span>
+                  <h3>{title}</h3>
+                  <p>Open this static document or page from the public folder.</p>
+                </a>
+              );
+            })}
           </div>
         </section>
       </div>
@@ -340,4 +337,23 @@ export default function Home() {
       `}</style>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const publicDir = path.join(process.cwd(), 'public');
+  let htmlFiles = [];
+
+  try {
+    htmlFiles = fs.readdirSync(publicDir)
+      .filter((file) => file.toLowerCase().endsWith('.html'))
+      .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+  } catch (error) {
+    console.error('Failed to read public directory', error);
+  }
+
+  return {
+    props: {
+      htmlFiles,
+    },
+  };
 }
