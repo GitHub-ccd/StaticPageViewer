@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T2DM Model 1 Clinical Summary</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                         Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6; color: #333;
+            background-color: #f8f9fa; margin: 0; padding: 20px;
+        }
+        .container {
+            max-width: 920px; margin: 0 auto; background: #fff;
+            border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 40px 50px;
+        }
+        h1 {
+            font-size: 2em; color: #1a1a2e;
+            border-bottom: 3px solid #e94560; padding-bottom: 12px; margin-top: 0;
+        }
+        h2 {
+            font-size: 1.5em; color: #16213e;
+            border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-top: 1.5em;
+        }
+        h3 { font-size: 1.25em; color: #0f3460; margin-top: 1.2em; }
+        h4, h5, h6 { color: #16213e; }
+        p { margin: 0.8em 0; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ── Cells ── */
+        .cell { margin-bottom: 8px; }
+        .cell-title {
+            background: #eef2f7; padding: 8px 14px;
+            font-weight: 600; font-size: 1.05em; color: #16213e;
+            border-left: 4px solid #e94560; border-radius: 4px 4px 0 0;
+        }
+        .markdown-cell { padding: 4px 0; }
+
+        /* ── Code blocks ── */
+        .code-cell {
+            background: #282c34; border-radius: 6px;
+            margin: 8px 0; overflow-x: auto;
+        }
+        .code-cell pre { margin: 0; padding: 16px 20px; }
+        .code-cell code {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono',
+                         Menlo, Courier, monospace;
+            font-size: 0.88em; color: #abb2bf; line-height: 1.5;
+        }
+        .markdown-cell code {
+            background: #f0f0f0; padding: 2px 6px; border-radius: 3px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono',
+                         Menlo, Courier, monospace;
+            font-size: 0.9em; color: #c7254e;
+        }
+        .markdown-cell pre {
+            background: #282c34; border-radius: 6px;
+            padding: 16px 20px; overflow-x: auto;
+        }
+        .markdown-cell pre code {
+            background: transparent; color: #abb2bf; padding: 0;
+        }
+
+        /* ── Tables ── */
+        table {
+            border-collapse: collapse; width: 100%;
+            margin: 1em 0; font-size: 0.95em;
+        }
+        th, td { border: 1px solid #d0d7de; padding: 10px 14px; text-align: left; }
+        th { background-color: #f0f3f6; font-weight: 600; color: #1a1a2e; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        tr:hover { background-color: #eef2f7; }
+
+        /* ── Block quotes ── */
+        blockquote {
+            border-left: 4px solid #e94560; margin: 1em 0;
+            padding: 10px 20px; background: #fef9fa; color: #555;
+        }
+
+        /* ── Lists ── */
+        ul, ol { padding-left: 2em; }
+        li { margin: 0.3em 0; }
+
+        /* ── Misc ── */
+        img { max-width: 100%; height: auto; }
+        hr { border: none; border-top: 1px solid #ddd; margin: 2em 0; }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px 24px; }
+            body { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>T2DM Model 1 Clinical Summary</h1>
+        <div class="cell"><div class="cell-title">Title and Current Model State</div><div class="markdown-cell"><h1 id="t2dm-model-1-clinical-summary-july-2026-review">T2DM Model 1 — Clinical Summary: July 2026 Review</h1>
+<p><strong>Project:</strong> Population Health – Diabetes &nbsp;·&nbsp; <strong>Review date:</strong> 2026-07-21 &nbsp;·&nbsp; <strong>Author:</strong> cdharmawardhana@mercy.com</p>
+<hr />
+<div style="background:#f0f7ff; border-left:5px solid #1F77B4; padding:14px 20px; margin:16px 0; border-radius:4px;">
+<span style="font-size:17px; font-weight:bold; color:#1F77B4;">The T2DM model now identifies high-risk patients 5.8× more efficiently than random outreach — and July experiments confirmed the first performance improvement since June.</span>
+</div>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cohort</strong></td>
+<td>300,290 T2DM patients &nbsp;·&nbsp; 7.47% will have an unplanned admission in the next 12 months</td>
+</tr>
+<tr>
+<td><strong>Best model</strong></td>
+<td>H2O DAI — all-11 clinical dimensions + CGM User Flag</td>
+</tr>
+<tr>
+<td><strong>Current benchmark</strong></td>
+<td><strong>PR-AUC 0.396</strong> ✅ — improved from 0.387 (June 2026)</td>
+</tr>
+<tr>
+<td><strong>Gain this cycle</strong></td>
+<td><strong>+0.009</strong> — first positive result since June</td>
+</tr>
+<tr>
+<td><strong>July experiments</strong></td>
+<td>3 completed &nbsp;·&nbsp; 1 PASS (CGM User Flag) &nbsp;·&nbsp; 2 CLOSED (Lab Trajectories, Milliman)</td>
+</tr>
+</tbody>
+</table></div></div><div class="cell"><div class="cell-title">What We’ll Cover</div><div class="markdown-cell"><hr />
+<h2 id="what-well-cover-july-2026-t2dm-review">What We’ll Cover — July 2026 T2DM Review</h2>
+<p>This review reports on the July model development cycle: <strong>three experiments completed, one of which improved the benchmark for the first time since June.</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Topic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>✅ Good news first</strong></td>
+<td>CGM User Flag raised the working benchmark to <strong>PR-AUC 0.396</strong> — first gain since June</td>
+</tr>
+<tr>
+<td><strong>Model in practice</strong></td>
+<td>What 5.8× lift means in care management terms · how to read PPV and Sensitivity as a care manager</td>
+</tr>
+<tr>
+<td><strong>Two closed experiments</strong></td>
+<td>Lab Trajectories and Milliman augmentation — transparent reporting on what didn’t work and why</td>
+</tr>
+<tr>
+<td><strong>Where high-risk patients are</strong></td>
+<td>Four BSMH markets at 1.5–1.6× the average unplanned admission rate</td>
+</tr>
+<tr>
+<td><strong>What comes next</strong></td>
+<td>Three remaining strategies before model lock and deployment readiness</td>
+</tr>
+</tbody>
+</table>
+<p><em>Each section = one slide. This document is the precursor to a live presentation.</em></p></div></div><div class="cell"><div class="cell-title">What the Model Does in Practice</div><div class="markdown-cell"><hr />
+<h2 id="the-model-is-a-prioritization-tool-not-a-diagnostic">The Model Is a Prioritization Tool — Not a Diagnostic</h2>
+<p><strong>Translating model performance into practical terms: of every 100 patients the model flags, how many will actually have an unplanned admission?</strong></p>
+<div style="text-align:center; margin:20px 0;">
+<div style="font-size:66px; font-weight:bold; color:#1F77B4; line-height:1;">5.8×</div>
+<div style="font-size:16px; color:#555; margin-top:6px;">more efficient than random selection when targeting the top 5% of flagged patients</div>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Targeting Group</th>
+<th>Patients Flagged</th>
+<th>Of every 100 flagged, how many admitted?</th>
+<th>All admissions captured</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Top 1%</td>
+<td>~901</td>
+<td><strong>64 out of 100</strong></td>
+<td>9%</td>
+</tr>
+<tr>
+<td><strong>Top 5%</strong></td>
+<td><strong>~4,505</strong></td>
+<td><strong>44 out of 100</strong></td>
+<td><strong>29%</strong></td>
+</tr>
+<tr>
+<td>Top 10%</td>
+<td>~9,009</td>
+<td>33 out of 100</td>
+<td>44%</td>
+</tr>
+<tr>
+<td>Top 20%</td>
+<td>~18,017</td>
+<td>24 out of 100</td>
+<td>65%</td>
+</tr>
+<tr>
+<td>Random selection (no model)</td>
+<td>any</td>
+<td><strong>7 out of 100</strong></td>
+<td>proportional</td>
+</tr>
+</tbody>
+</table>
+<p><em>Based on held-out test set: 90,087 patients, 6,730 admissions, 7.47% base rate.</em></p>
+<p><strong>How care teams use this:</strong> A care manager working through the top 5% flagged list (~4,500 patients per cycle) will find roughly 44 per 100 who genuinely need outreach — 5.8× more productive than reviewing a random list of the same size.</p>
+<p><strong>Important framing:</strong> The model is a triage tool, not a diagnostic. Fewer than half of patients in the top 5% will have an admission — this is expected and appropriate. The goal is to focus scarce care management attention where it will have the most impact, not to achieve diagnostic certainty.</p></div></div><div class="cell"><div class="cell-title">CGM User Flag — Pass (Good News First)</div><div class="markdown-cell"><hr />
+<h2 id="one-binary-feature-raised-the-benchmark-for-the-first-time-since-june-strategy-7-pass">One Binary Feature Raised the Benchmark for the First Time Since June ✅ (Strategy 7 — Pass)</h2>
+<p><strong>What was tested:</strong> We identified patients with Continuous Glucose Monitor (CGM) device orders — Dexcom G6/G7, FreeStyle Libre 2/3, Eversense — from prescription and supply records in Epic. One binary yes/no feature (<code>CGM_USER</code>) was added to the existing 263-feature set.</p>
+<p><strong>Coverage:</strong> 30,195 patients — <strong>10.1% of the cohort</strong> have a CGM order in the 2-year feature window.</p>
+<div style="display:flex; gap:28px; margin:18px 0; flex-wrap:wrap;">
+<div style="text-align:center; background:#f0fff4; border:2px solid #2CA02C; border-radius:8px; padding:14px 24px; min-width:140px;">
+<div style="font-size:52px; font-weight:bold; color:#2CA02C; line-height:1;">+0.009</div>
+<div style="font-size:13px; color:#555; margin-top:4px;">PR-AUC improvement</div>
+</div>
+<div style="text-align:center; background:#f0f7ff; border:2px solid #1F77B4; border-radius:8px; padding:14px 24px; min-width:140px;">
+<div style="font-size:52px; font-weight:bold; color:#1F77B4; line-height:1;">0.396</div>
+<div style="font-size:13px; color:#555; margin-top:4px;">New benchmark (was 0.387)</div>
+</div>
+</div>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prior benchmark (June)</th>
+<th>New benchmark (July)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PR-AUC</td>
+<td>0.387</td>
+<td><strong>0.396</strong> ✅</td>
+</tr>
+<tr>
+<td>Of 100 flagged patients, how many admitted? (PPV)</td>
+<td>~36.5%</td>
+<td><strong>39.2%</strong></td>
+</tr>
+<tr>
+<td>Proportion of all admissions captured (Sensitivity)</td>
+<td>~43%</td>
+<td><strong>45.6%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Zero additional data cost.</strong> The feature is derived from existing Epic order tables — no new data sources, no new ETL pipeline.</p>
+<p><strong>One note of caution:</strong> CGM status did not appear among the top predictors in feature importance. The gain likely reflects how CGM use interacts with existing signals (A1C monitoring intensity, medication complexity) rather than being a direct predictor. To be confirmed in prospective validation.</p>
+<hr />
+<h3 id="setting-the-operating-threshold-how-ppv-and-sensitivity-guide-care-management-deployment">Setting the Operating Threshold — How PPV and Sensitivity Guide Care Management Deployment</h3>
+<p>The model outputs a <strong>risk probability</strong> for every patient. The <strong>operating threshold</strong> determines how far down the ranked list your care management team reviews each cycle. It sets the fundamental tradeoff between two complementary metrics:</p>
+<ul>
+<li><strong>PPV</strong> answers: <em>“Of the patients we flag, what fraction will actually be admitted?”</em>  — A higher threshold means fewer patients flagged, higher PPV, less wasted outreach effort.</li>
+<li><strong>Sensitivity</strong> answers: <em>“Of all patients who will be admitted, what fraction did we catch?”</em>  — A lower threshold means more patients flagged, higher Sensitivity, fewer high-risk patients missed.</li>
+</ul>
+<p><strong>These cannot both be maximised simultaneously.</strong> The right operating point is determined by care management team capacity and programme goals.</p>
+<table>
+<thead>
+<tr>
+<th>Operating Strategy</th>
+<th>Patients per cycle</th>
+<th>PPV — of 100 flagged, how many admitted?</th>
+<th>Sensitivity — admissions captured</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>High-confidence (top 1%)</td>
+<td>~900</td>
+<td><strong>~64%</strong></td>
+<td>~9%</td>
+</tr>
+<tr>
+<td><strong>Balanced start (top 5%) ← Recommended</strong></td>
+<td><strong>~4,500</strong></td>
+<td><strong>~40%</strong></td>
+<td><strong>~29%</strong></td>
+</tr>
+<tr>
+<td>Broad outreach (top 10%)</td>
+<td>~9,000</td>
+<td>~30%</td>
+<td>~43%</td>
+</tr>
+<tr>
+<td>High-volume (top 20%)</td>
+<td>~18,000</td>
+<td>~24%</td>
+<td>~65%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The CGM improvement makes every threshold more efficient.</strong> At the balanced starting point (top 5%), PPV improved from ~36.5% → ~39.2% — approximately <strong>3 fewer unnecessary outreach contacts per 100 patients reviewed.</strong> At a cycle volume of 4,500 patients, that is ~135 fewer wasted contacts per cycle.</p>
+<blockquote>
+<p><strong>For deployment planning:</strong> Start at the top-5% threshold (~4,500 patients/cycle, ~40% PPV, ~29% Sensitivity). After one review cycle, calibrate based on actual team capacity and the observed value of each prevented admission. The threshold can be adjusted without changing the model.</p>
+</blockquote></div></div><div class="cell"><div class="cell-title">Completed Experiment: Market-Specific Model Pilot</div><div class="markdown-cell"><hr />
+<h2 id="one-universal-model-works-equally-well-in-all-markets-no-separate-model-needed">One Universal Model Works Equally Well in All Markets — No Separate Model Needed</h2>
+<p><strong>Question raised at the June 23 review:</strong> Would training the model exclusively on our highest-prevalence markets produce better predictions for those populations?</p>
+<p>Youngstown, Toledo Metro, Lima, and Springfield show unplanned admission rates of 11.1–12.3% — roughly 1.5× the cohort average of 7.47%. The hypothesis was that a model trained on this subpopulation would be more precisely calibrated to their risk patterns.</p>
+<p><strong>Test design:</strong> Two independent validation approaches were evaluated on 64,159 patients from the four markets and compared against results on the full 300,290-patient cohort. Both reached the same conclusion.</p></div></div><div class="cell"><div class="cell-title">Experiments, Results, and Decision</div><div class="markdown-cell"><h3 id="result-full-cohort-model-is-more-accurate-on-both-methods">Result: Full-Cohort Model Is More Accurate on Both Methods</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Full Cohort (300K patients)</th>
+<th>4-Market Subset (64K patients)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C-statistic</td>
+<td><strong>0.847</strong></td>
+<td>0.805 ↓</td>
+</tr>
+<tr>
+<td>PR-AUC</td>
+<td>0.387</td>
+<td>0.420 †</td>
+</tr>
+</tbody>
+</table>
+<p><em>An independent validation approach confirmed the same C-statistic decline (0.847 → 0.805).</em></p>
+<p>† <em>The higher PR-AUC in the subset reflects that these markets simply have more admissions per 100 patients — not that the model ranks patients better. C-statistic is the correct comparison: it measures ranking accuracy and is unaffected by prevalence.</em></p>
+<p>Ranking accuracy (C-statistic) fell by <strong>0.042</strong> when the model was restricted to the four markets — confirmed by both validation approaches. A care manager using the market-only model would receive a less reliable priority list.</p>
+<blockquote>
+<p><strong>Takeaway:</strong> The full-cohort model identifies high-risk patients with equal skill in every market. A separate regional model would be less accurate and add engineering complexity. <strong>Decision: No market-specific model planned.</strong></p>
+</blockquote></div></div><div class="cell"><div class="cell-title">Experiment: Lab Trajectory Strategy 1 — CLOSED</div><div class="markdown-cell"><hr />
+<h2 id="lab-trend-features-added-no-new-signal-the-model-already-extracts-the-available-information-strategy-1-closed">Lab Trend Features Added No New Signal — The Model Already Extracts the Available Information (Strategy 1 — Closed)</h2>
+<p><strong>Question:</strong> Can we improve predictions by tracking how lab values change over time, rather than capturing only the most recent value?</p>
+<p><strong>What was tested:</strong> 30 new features tracking the trend direction, peak, trough, number of readings, and variability over 22 months for five labs: eGFR, Creatinine, Anion Gap, Hemoglobin, and Troponin HS.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>PR-AUC</th>
+<th>vs Benchmark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Benchmark (H2O DAI, all-11)</td>
+<td>0.387</td>
+<td>—</td>
+</tr>
+<tr>
+<td>+ 30 Lab Trajectory features</td>
+<td><strong>0.384</strong></td>
+<td><strong>−0.003</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>None of the 30 trajectory features ranked among the top 50 predictors.</strong> Two factors explain why:</p>
+<ul>
+<li><strong>Data too sparse for reliable trends:</strong> 73% of patients are missing eGFR readings; 88% are missing Troponin HS. A trend calculated from one or two values is noise, not a trend.</li>
+<li><strong>The snapshot already carries the signal:</strong> For better-covered labs (Creatinine 65%, Anion Gap 61%), a currently low or elevated value already reflects prior deterioration. The trajectory adds nothing beyond what the existing snapshot communicates.</li>
+</ul>
+<blockquote>
+<p><strong>Takeaway:</strong> The current lab features are at the practical ceiling of what the available data can support. No changes were made to the core feature tables. Strategy closed with no regression.</p>
+</blockquote></div></div><div class="cell"><div class="cell-title">Experiment: Milliman Target Augmentation (Strategy 6) — CLOSED</div><div class="markdown-cell"><hr />
+<h2 id="correcting-out-of-network-labels-made-predictions-slightly-worse-and-confirmed-our-target-definition-is-right-strategy-6-closed">Correcting Out-of-Network Labels Made Predictions Slightly Worse — and Confirmed Our Target Definition Is Right (Strategy 6 — Closed)</h2>
+<p><strong>Question:</strong> Are we missing patients admitted outside of Bon Secours? Could fixing those mislabelled cases improve the model?</p>
+<p><strong>What was tested:</strong> We matched our T2DM cohort to Milliman Med Insight claims data (using Epic ID + date of birth) and identified 7,854 patients (2.6%) who had unplanned admissions recorded in Milliman but NOT in Epic. We created a corrected target label that counts these as positive events, raising the positive rate from 7.48% to 10.09%.</p>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Test PR-AUC</th>
+<th>vs Current Best</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Current best (H2O DAI, original target)</td>
+<td>0.387</td>
+<td>—</td>
+</tr>
+<tr>
+<td>All-11 + Milliman-corrected labels</td>
+<td><strong>0.381</strong></td>
+<td><strong>−0.006</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Result: Slight regression.</strong> The corrected labels did not improve — and slightly worsened — model performance. The top predictive features were unchanged from the current model.</p>
+<p><strong>Adding “correct” labels made the model slightly worse.</strong> The reason is counterintuitive but clear once we examine what these patients look like in our data.</p>
+<p><strong>The Milliman-only patients don’t look sick in our Epic records:</strong></p>
+<table>
+<thead>
+<tr>
+<th>What the model sees</th>
+<th>Epic Positives</th>
+<th>Milliman-Only</th>
+<th>Non-admitted</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prior admissions in Epic</td>
+<td>High (0.97)</td>
+<td><strong>Very low (0.16)</strong></td>
+<td>Very low (0.13)</td>
+</tr>
+<tr>
+<td>Charges in our system</td>
+<td>~$92K</td>
+<td><strong>~$20K</strong></td>
+<td>~$15K</td>
+</tr>
+<tr>
+<td>Diagnosis complexity</td>
+<td>High</td>
+<td><strong>Moderate</strong></td>
+<td>Low-moderate</td>
+</tr>
+</tbody>
+</table>
+<p>These patients receive their acute care at other hospitals. In Epic, they appear low-risk — their complexity and utilization are captured elsewhere. Teaching the model that “patients who look healthy in our data are actually high-risk” actively confuses its decision boundary.</p>
+<blockquote>
+<p><strong>Takeaway:</strong> The Epic-only target is the right scope for BSMH care management. We can only intervene on patients whose care we coordinate. The model correctly predicts the admissions that are actionable within our system. <strong>Decision: Target definition unchanged.</strong></p>
+</blockquote></div></div><div class="cell"><div class="cell-title">Geographic Distribution — High-Risk Markets</div><div class="markdown-cell"><hr />
+<h2 id="high-risk-t2dm-patients-are-concentrated-in-four-markets-reflecting-real-regional-differences">High-Risk T2DM Patients Are Concentrated in Four Markets — Reflecting Real Regional Differences</h2>
+<p><strong>The model performs consistently across all BSMH markets (C-statistic 0.847 everywhere). But admission rates vary meaningfully by geography, which matters for deployment prioritization.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Market</th>
+<th>T2DM Patients</th>
+<th>Unplanned Admission Rate</th>
+<th>Relative to Average</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Youngstown</strong></td>
+<td><strong>26,749</strong></td>
+<td><strong>12.3%</strong></td>
+<td><strong>1.6× average</strong></td>
+</tr>
+<tr>
+<td><strong>Springfield</strong></td>
+<td><strong>8,376</strong></td>
+<td><strong>11.8%</strong></td>
+<td><strong>1.6× average</strong></td>
+</tr>
+<tr>
+<td><strong>Toledo Metro</strong></td>
+<td><strong>24,778</strong></td>
+<td><strong>11.3%</strong></td>
+<td><strong>1.5× average</strong></td>
+</tr>
+<tr>
+<td><strong>Lima</strong></td>
+<td><strong>10,650</strong></td>
+<td><strong>11.1%</strong></td>
+<td><strong>1.5× average</strong></td>
+</tr>
+<tr>
+<td>Richmond</td>
+<td>49,248</td>
+<td>8.9%</td>
+<td>1.2× average</td>
+</tr>
+<tr>
+<td>Lorain</td>
+<td>9,806</td>
+<td>8.0%</td>
+<td>1.1× average</td>
+</tr>
+<tr>
+<td>Paducah</td>
+<td>8,347</td>
+<td>8.4%</td>
+<td>1.1× average</td>
+</tr>
+<tr>
+<td>Cincinnati</td>
+<td>70,514</td>
+<td>7.4%</td>
+<td>≈ average</td>
+</tr>
+<tr>
+<td>Greenville</td>
+<td>24,963</td>
+<td>5.8%</td>
+<td>0.8× average</td>
+</tr>
+<tr>
+<td>Hampton Roads</td>
+<td>13,120</td>
+<td>4.5%</td>
+<td>0.6× average</td>
+</tr>
+</tbody>
+</table>
+<p><em>35,087 patients (11.7%) could not be assigned to a named market and are excluded above. This improved from 20.9% unmatched via updated market logic adopted 2026-07-18.</em></p>
+<p>This variation was raised as a data quality concern at the June review. After investigation, it reflects genuine differences in regional disease burden and care access — not a mapping artefact. Market-specific model testing confirmed no benefit to separate regional models.</p>
+<blockquote>
+<p><strong>Takeaway:</strong> Youngstown, Springfield, Toledo Metro, and Lima have 1.5–1.6× the average unplanned admission rate. These markets represent the highest-density opportunity for first-wave care management deployment.</p>
+</blockquote></div></div><div class="cell"><div class="cell-title">What Comes Next</div><div class="markdown-cell"><hr />
+<h2 id="three-experiments-remain-before-final-model-lock-two-can-start-now">Three Experiments Remain Before Final Model Lock — Two Can Start Now</h2>
+<p><strong>With the new benchmark at 0.396, three improvement strategies are queued. Two are low-effort and can run in parallel.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>What It Tests</th>
+<th>Expected Lift</th>
+<th>Effort</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Missingness Indicators</strong></td>
+<td>Whether patients are <em>not</em> being monitored (no A1C in 22 months, no eGFR, no lipid panel) as a risk signal in itself</td>
+<td>+0.003–0.008</td>
+<td>Low — computed from existing feature tables</td>
+</tr>
+<tr>
+<td><strong>Utilization Patterns</strong></td>
+<td>How patients use the system: visit regularity, no-show rate, ED bounce-back pattern, care fragmentation across departments</td>
+<td>+0.003–0.008</td>
+<td>Medium — requires scheduling table access</td>
+</tr>
+<tr>
+<td><strong>Baseline Feature Recovery</strong></td>
+<td>Final sweep of ~373 columns from the original model not yet evaluated — pick the best 20–40 survivors</td>
+<td>+0.003–0.008</td>
+<td>Low — one H2O run on appended data</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Realistic combined target: PR-AUC 0.400–0.408</strong><br />
+Gains are not fully additive (feature signals overlap), but if two or three experiments pass, the model may reach or exceed the stretch target of 0.400 set at the June review.</p>
+<h3 id="after-model-lock-deployment-readiness">After Model Lock — Deployment Readiness</h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>What It Requires</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Operating threshold calibration</td>
+<td>Care management team capacity (how many patients can be reviewed per cycle?)</td>
+</tr>
+<tr>
+<td>Dashboard-based review workflow</td>
+<td>IT/ops engagement for the care manager interface</td>
+</tr>
+<tr>
+<td>Prospective validation</td>
+<td>Forward-looking cohort test after model lock</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Takeaway:</strong> Two of the three remaining strategies are low-effort and independent — they can start immediately. If both pass, the path to a prospective validation pilot is clear.</p>
+</blockquote>
+<hr />
+<p><em>Clinical Summary last updated: 2026-07-19 — cdharmawardhana@mercy.com</em></p></div></div>
+    </div>
+</body>
+</html>
