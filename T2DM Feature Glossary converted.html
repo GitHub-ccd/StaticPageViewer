@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T2DM Feature Glossary</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                         Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6; color: #333;
+            background-color: #f8f9fa; margin: 0; padding: 20px;
+        }
+        .container {
+            max-width: 920px; margin: 0 auto; background: #fff;
+            border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 40px 50px;
+        }
+        h1 {
+            font-size: 2em; color: #1a1a2e;
+            border-bottom: 3px solid #e94560; padding-bottom: 12px; margin-top: 0;
+        }
+        h2 {
+            font-size: 1.5em; color: #16213e;
+            border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-top: 1.5em;
+        }
+        h3 { font-size: 1.25em; color: #0f3460; margin-top: 1.2em; }
+        h4, h5, h6 { color: #16213e; }
+        p { margin: 0.8em 0; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ── Cells ── */
+        .cell { margin-bottom: 8px; }
+        .cell-title {
+            background: #eef2f7; padding: 8px 14px;
+            font-weight: 600; font-size: 1.05em; color: #16213e;
+            border-left: 4px solid #e94560; border-radius: 4px 4px 0 0;
+        }
+        .markdown-cell { padding: 4px 0; }
+
+        /* ── Code blocks ── */
+        .code-cell {
+            background: #282c34; border-radius: 6px;
+            margin: 8px 0; overflow-x: auto;
+        }
+        .code-cell pre { margin: 0; padding: 16px 20px; }
+        .code-cell code {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono',
+                         Menlo, Courier, monospace;
+            font-size: 0.88em; color: #abb2bf; line-height: 1.5;
+        }
+        .markdown-cell code {
+            background: #f0f0f0; padding: 2px 6px; border-radius: 3px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono',
+                         Menlo, Courier, monospace;
+            font-size: 0.9em; color: #c7254e;
+        }
+        .markdown-cell pre {
+            background: #282c34; border-radius: 6px;
+            padding: 16px 20px; overflow-x: auto;
+        }
+        .markdown-cell pre code {
+            background: transparent; color: #abb2bf; padding: 0;
+        }
+
+        /* ── Tables ── */
+        table {
+            border-collapse: collapse; width: 100%;
+            margin: 1em 0; font-size: 0.95em;
+        }
+        th, td { border: 1px solid #d0d7de; padding: 10px 14px; text-align: left; }
+        th { background-color: #f0f3f6; font-weight: 600; color: #1a1a2e; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        tr:hover { background-color: #eef2f7; }
+
+        /* ── Block quotes ── */
+        blockquote {
+            border-left: 4px solid #e94560; margin: 1em 0;
+            padding: 10px 20px; background: #fef9fa; color: #555;
+        }
+
+        /* ── Lists ── */
+        ul, ol { padding-left: 2em; }
+        li { margin: 0.3em 0; }
+
+        /* ── Misc ── */
+        img { max-width: 100%; height: auto; }
+        hr { border: none; border-top: 1px solid #ddd; margin: 2em 0; }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px 24px; }
+            body { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>T2DM Feature Glossary</h1>
+        <div class="cell"><div class="cell-title">Feature Glossary Title</div><div class="markdown-cell"><h1 id="t2dm-model-1-feature-glossary">T2DM Model 1 — Feature Glossary</h1>
+<p><strong>Purpose:</strong> Complete reference of all features in the current integrated model (~280 features across 11 clinical dimensions). Designed as a companion to the Top-54 Features summary — any feature can be looked up here for detailed clinical context, what it captures, and what changed between iterations.</p>
+<p><strong>Model:</strong> H2O DAI integrated (Test PR-AUC 0.387) | <strong>Features:</strong> ~280 across 11 dimensions | <strong>Source:</strong> Epic Clarity</p>
+<p><strong>Author:</strong> cdharmawardhana@mercy.com | June 2026</p></div></div><div class="cell"><div class="cell-title">Dimension Rankings Overview</div><div class="markdown-cell"><hr />
+<h2 id="feature-dimensions-overview">Feature Dimensions Overview</h2>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Dimension</th>
+<th>PR-AUC</th>
+<th>Features</th>
+<th>What It Captures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Clinical Diagnoses</td>
+<td>0.308</td>
+<td>87</td>
+<td>Diabetes complications, cardiovascular, renal, respiratory, mental health, and multi-source burden</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Lab Results</td>
+<td>0.288</td>
+<td>47</td>
+<td>Broad metabolic and physiologic laboratory profile</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Utilization History</td>
+<td>0.286</td>
+<td>6</td>
+<td>Prior unplanned admissions, ED use, LOS, and charges</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Medications</td>
+<td>0.257</td>
+<td>56</td>
+<td>Diabetes therapy, regimen complexity, polypharmacy, and treatment intensity</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Registry Flags</td>
+<td>0.250</td>
+<td>8</td>
+<td>Chronic condition registry flags and visit recency</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Flowsheet Vitals</td>
+<td>0.240</td>
+<td>13</td>
+<td>Inpatient vital sign instability and summary measures</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Surgical History</td>
+<td>0.161</td>
+<td>12</td>
+<td>Procedure burden and procedure-type history</td>
+</tr>
+<tr>
+<td>8</td>
+<td>A1C + eGFR</td>
+<td>0.156</td>
+<td>5</td>
+<td>Glycaemic control and kidney function</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Social History / SDOH</td>
+<td>0.147</td>
+<td>27</td>
+<td>Financial class, substance use, and social risk context</td>
+</tr>
+<tr>
+<td>10</td>
+<td>BMI</td>
+<td>0.128</td>
+<td>2</td>
+<td>Body mass index and weight trajectory</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Demographics</td>
+<td>0.108</td>
+<td>19</td>
+<td>Age, sex, race/ethnicity, marital status, language, PCP context</td>
+</tr>
+</tbody>
+</table></div></div><div class="cell"><div class="cell-title">Diagnoses, Labs, Utilization (Rank 1-3)</div><div class="markdown-cell"><hr />
+<h2 id="detailed-feature-definitions-top-predictive-dimensions-rank-13">Detailed Feature Definitions — Top Predictive Dimensions (Rank 1–3)</h2>
+<h3 id="1-clinical-diagnoses-87-features">1. Clinical Diagnoses (87 features)</h3>
+<p>Diagnoses are collected from <strong>4 independent Epic sources</strong> and consolidated through ICD-10 clinical grouping:</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>What It Captures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Medical History</td>
+<td>Conditions explicitly documented by clinicians during visits</td>
+</tr>
+<tr>
+<td>Problem List</td>
+<td>Provider-curated active conditions under ongoing management</td>
+</tr>
+<tr>
+<td>Ambulatory Encounter DX</td>
+<td>Per-visit coded diagnoses from outpatient encounters</td>
+</tr>
+<tr>
+<td>Hospital Account DX</td>
+<td>Inpatient/ED coded diagnoses from acute-care episodes</td>
+</tr>
+</tbody>
+</table>
+<p>All sources are unified into a single patient-level profile. The <code>N_SOURCES_*</code> features below quantify how many sources independently confirm a given condition.</p>
+<h4 id="a-dm-complication-flags-9-binary-features">A. DM Complication Flags (9 binary features)</h4>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>ICD-10 Rule</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DM_KETOACIDOSIS</code></td>
+<td>E10.1x, E11.1x</td>
+<td>Acute metabolic decompensation and severe diabetes instability</td>
+</tr>
+<tr>
+<td><code>DM_NEPHROPATHY</code></td>
+<td>E10.2x, E11.2x</td>
+<td>Diabetic kidney disease and progression toward CKD</td>
+</tr>
+<tr>
+<td><code>DM_RETINOPATHY</code></td>
+<td>E10.3x, E11.3x</td>
+<td>Microvascular damage burden</td>
+</tr>
+<tr>
+<td><code>DM_NEUROPATHY</code></td>
+<td>E10.4x, E11.4x</td>
+<td>Nerve damage, gait/fall risk, foot-ulcer risk</td>
+</tr>
+<tr>
+<td><code>DM_PVD</code></td>
+<td>E10.5x, E11.5x</td>
+<td>Peripheral vascular disease and limb-risk burden</td>
+</tr>
+<tr>
+<td><code>DM_HYPOGLYCEMIA</code></td>
+<td>E10.64x, E11.64x</td>
+<td>Treatment-related glucose instability and frailty signal</td>
+</tr>
+<tr>
+<td><code>DM_HYPERGLYCEMIA</code></td>
+<td>E10.65x, E11.65x</td>
+<td>Poor glycaemic control signal</td>
+</tr>
+<tr>
+<td><code>DM_OTHER_COMPLICATION</code></td>
+<td>E10.6x, E11.6x</td>
+<td>Other diabetes-related organ/system complications</td>
+</tr>
+<tr>
+<td><code>DM_GENERAL</code></td>
+<td>E08–E13 (no specific complication)</td>
+<td>Diabetes documented without a more specific complication code</td>
+</tr>
+</tbody>
+</table>
+<h4 id="b-comorbidity-flags-33-binary-features">B. Comorbidity Flags (33 binary features)</h4>
+<table>
+<thead>
+<tr>
+<th>Subgroup</th>
+<th>Features (ICD-10 codes)</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cardiovascular</td>
+<td><code>HYPERTENSION</code> (I10–I16), <code>ISCHEMIC_HEART</code> (I20–I25), <code>HEART_FAILURE</code> (I50), <code>ARRHYTHMIA</code> (I44–I49), <code>CEREBROVASCULAR</code> (I60–I69), <code>PERIPHERAL_VASCULAR</code> (I70–I79), <code>VTE</code> (I26, I80–I82)</td>
+<td>Major cardiometabolic and thrombotic disease burden</td>
+</tr>
+<tr>
+<td>Renal / metabolic</td>
+<td><code>OBESITY</code> (E65–E68), <code>DYSLIPIDEMIA</code> (E78), <code>THYROID</code> (E00–E07), <code>FLUID_ELECTROLYTE</code> (E86–E87), <code>MALNUTRITION</code> (E40–E46), <code>CKD</code> (N18), <code>AKI</code> (N17), <code>UTI</code> (N30, N39)</td>
+<td>Chronic metabolic stress, kidney disease, electrolyte instability</td>
+</tr>
+<tr>
+<td>Pulmonary</td>
+<td><code>COPD</code> (J40–J44), <code>ASTHMA</code> (J45–J46), <code>PNEUMONIA</code> (J12–J18), <code>SLEEP_APNEA</code> (G47.3x)</td>
+<td>Respiratory instability and oxygenation-related illness</td>
+</tr>
+<tr>
+<td>Mental health</td>
+<td><code>DEPRESSION</code> (F32–F33), <code>ANXIETY</code> (F40–F41), <code>SUBSTANCE_USE</code> (F10–F19), <code>TOBACCO</code> (F17)</td>
+<td>Behavioural risk, adherence risk, psychosocial complexity</td>
+</tr>
+<tr>
+<td>Other chronic</td>
+<td><code>LIVER_DISEASE</code> (K70–K77), <code>GERD</code> (K21), <code>GI_BLEEDING</code> (K92), <code>ANEMIA</code> (D50–D64), <code>SEPSIS</code> (A40–A41, R65), <code>COAGULATION</code> (D65–D69), <code>CHRONIC_PAIN</code> (G89, M54), <code>OSTEOARTHRITIS</code> (M15–M19), <code>NEUROPATHY_GENERAL</code> (G60–G65)</td>
+<td>Broader chronic illness, inflammation, symptom burden</td>
+</tr>
+<tr>
+<td>Severity context</td>
+<td><code>DNR_STATUS</code></td>
+<td>Goals-of-care / severe-illness context</td>
+</tr>
+</tbody>
+</table>
+<h4 id="c-dm-comorbidity-interaction-flags-6-binary-features">C. DM × Comorbidity Interaction Flags (6 binary features)</h4>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DM_CHF</code></td>
+<td>Diabetes plus heart failure</td>
+</tr>
+<tr>
+<td><code>DM_SEPSIS</code></td>
+<td>Diabetes plus sepsis</td>
+</tr>
+<tr>
+<td><code>DM_CKD</code></td>
+<td>Diabetes plus chronic kidney disease</td>
+</tr>
+<tr>
+<td><code>DM_AFIB</code></td>
+<td>Diabetes plus arrhythmia / atrial fibrillation</td>
+</tr>
+<tr>
+<td><code>DM_DEPRESSION</code></td>
+<td>Diabetes plus depression (adherence and self-management implications)</td>
+</tr>
+<tr>
+<td><code>DM_OBESITY</code></td>
+<td>Diabetes plus obesity (insulin-resistance burden)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="d-source-validation-scores-4-integer-features">D. Source-Validation Scores (4 integer features)</h4>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>N_SOURCES_HEART_FAILURE</code></td>
+<td>Number of diagnosis sources supporting heart failure</td>
+</tr>
+<tr>
+<td><code>N_SOURCES_DM</code></td>
+<td>Number of diagnosis sources supporting diabetes</td>
+</tr>
+<tr>
+<td><code>N_SOURCES_HYPERTENSION</code></td>
+<td>Number of diagnosis sources supporting hypertension</td>
+</tr>
+<tr>
+<td><code>N_SOURCES_CKD</code></td>
+<td>Number of diagnosis sources supporting CKD</td>
+</tr>
+</tbody>
+</table>
+<h4 id="e-complexity-meta-features-7-features">E. Complexity Meta-Features (7 features)</h4>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>N_HCC_CATEGORIES</code></td>
+<td>Number of distinct HCC groups represented</td>
+</tr>
+<tr>
+<td><code>HAS_MCC</code></td>
+<td>Whether the patient has a major complication/comorbidity marker</td>
+</tr>
+<tr>
+<td><code>N_CC_DIAGNOSES</code></td>
+<td>Number of diagnoses carrying CC status</td>
+</tr>
+<tr>
+<td><code>N_CHRONIC_DX</code></td>
+<td>Count of chronic diagnoses</td>
+</tr>
+<tr>
+<td><code>N_DISTINCT_CLINICAL_GROUPS</code></td>
+<td>Breadth of disease burden across grouped conditions</td>
+</tr>
+<tr>
+<td><code>N_DX_SOURCES_USED</code></td>
+<td>How many diagnosis sources contributed to the patient profile</td>
+</tr>
+<tr>
+<td><code>N_Total_CORE_DXs</code></td>
+<td>Overall count of key hospital core diagnoses</td>
+</tr>
+</tbody>
+</table>
+<h4 id="f-medical-history-reinforcement-11-features">F. Medical History Reinforcement (11 features)</h4>
+<p>Features from the charted Medical History source in Epic — conditions explicitly documented by clinicians that may not appear in ICD-10 coding.</p>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>HTN_hypertension_Medhx</code>, <code>COPD_chronic_obstructive_pulmonary_disease_HCC_Medhx</code>, <code>Diverticulitis_Medhx</code>, <code>CAD_coronary_artery_disease_Medhx</code>, <code>CHF_congestive_heart_failure_HCC_Medhx</code>, <code>History_of_blood_transfusion_Medhx</code>, <code>Seizures_HCC_Medhx</code>, <code>Cerebral_artery_occlusion_with_cerebral_infarction_HCC_Medhx</code>, <code>Pneumonia_Medhx</code>, <code>OSA_on_CPAP_Medhx</code>, <code>Migraines_Medhx</code></td>
+</tr>
+</tbody>
+</table>
+<p>These reinforce important charted history that may not be fully captured by the grouped ICD-10 logic alone.</p>
+<h4 id="g-problem-list-reinforcement-13-features">G. Problem List Reinforcement (13 features)</h4>
+<p>Drawn from the active Problem List — conditions a clinician has marked as currently relevant and under active management.</p>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Leukocytosis_PL</code>, <code>SOB_shortness_of_breath_PL</code>, <code>Chronic_obstructive_pulmonary_disease_HCC_PL</code>, <code>Hypertriglyceridemia_PL</code>, <code>COPD_chronic_obstructive_pulmonary_disease_HCC_PL</code>, <code>Tobacco_abuse_PL</code>, <code>Neuropathy_PL</code>, <code>Primary_hypertension_PL</code>, <code>Dyslipidemia_PL</code>, <code>NSTEMI_non_ST_elevated_myocardial_infarction_HCC_PL</code>, <code>CAD_coronary_artery_disease_PL</code>, <code>CKD_chronic_kidney_disease_stage_3_GFR_30_59_ml_min_HCC_PL</code>, <code>UTI_urinary_tract_infection_PL</code></td>
+</tr>
+</tbody>
+</table>
+<p>These carry active-problem-list context and persistent disease-management burden.</p>
+<h4 id="h-hospital-dx-reinforcement-4-features">H. Hospital DX Reinforcement (4 features)</h4>
+<p>Drawn from hospital discharge diagnosis records — conditions documented during acute inpatient episodes, identifying the highest-acuity subgroup.</p>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>do_not_resuscitate</code>, <code>other_chronic_obstructive_pulmonary_disease</code>, <code>hypertensive_heart_and_chronic_kidney_disease</code>, <code>heart_failure_hsp</code></td>
+</tr>
+</tbody>
+</table>
+<p>These sharpen severe-hospitalised-subgroup identification and add high-acuity context.</p>
+<blockquote>
+<p><strong>Clinical interpretation:</strong> Disease burden and multi-morbidity complexity predict acute decompensation risk. The multi-source architecture ensures diagnostic certainty — a condition confirmed in 3+ sources (Problem List + Medical History + Hospital DX) is far more reliable than a single-source flag. The 4-source consolidation means the model distinguishes incidental coding from established chronic disease.</p>
+</blockquote>
+<hr />
+<h3 id="2-lab-results-47-features">2. Lab Results (47 features)</h3>
+<p>All features are "most recent finalised value" within the 22-month feature window.</p>
+<h4 id="a-core-chemistry-renal-and-electrolyte-profile">A. Core Chemistry, Renal, and Electrolyte Profile</h4>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>A_G_RATIO_Results</code>, <code>ALBUMIN_Results</code>, <code>ANION_GAP_Results</code>, <code>BUN_Results</code>, <code>BUN_CREAT_RATIO_Results</code>, <code>CALCIUM_Results</code>, <code>CHLORIDE_Results</code>, <code>CO2_Results</code>, <code>CREATININE_Results</code>, <code>GLOM_FILT_RATE_EST_Results</code>, <code>GLUCOSE_Results</code>, <code>MAGNESIUM_Results</code>, <code>PHOSPHORUS_Results</code>, <code>POTASSIUM_Results</code>, <code>SODIUM_Results</code>, <code>TOTAL_PROTEIN_Results</code></td>
+<td>Renal reserve, dehydration, acid-base status, electrolyte instability, general metabolic stress</td>
+</tr>
+</tbody>
+</table>
+<h4 id="b-liver-and-protein-markers">B. Liver and Protein Markers</h4>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ALK_PHOS_Results</code>, <code>ALT_Results</code>, <code>AST_Results</code>, <code>BILIRUBIN_TOTAL_Results</code></td>
+<td>Hepatobiliary stress and broader systemic illness burden</td>
+</tr>
+</tbody>
+</table>
+<h4 id="c-lipid-and-endocrine-markers">C. Lipid and Endocrine Markers</h4>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CHOL_Results</code>, <code>CHOL_HDL_RATIO_Results</code>, <code>HDL_Results</code>, <code>LDL_CHOLESTEROL_Results</code>, <code>TRIGLYCERIDES_Results</code>, <code>TSH_Results</code></td>
+<td>Cardiometabolic control and endocrine context</td>
+</tr>
+</tbody>
+</table>
+<h4 id="d-haematology-and-inflammatory-profile">D. Haematology and Inflammatory Profile</h4>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>HEMATOCRIT_Results</code>, <code>HEMOGLOBIN_Results</code>, <code>LYMPHS_PCT_Results</code>, <code>MCV_Results</code>, <code>MONOS_ABS_Results</code>, <code>MPV_Results</code>, <code>PLATELETS_Results</code>, <code>RBC_Results</code>, <code>RDW_Results</code>, <code>WBC_Results</code></td>
+<td>Anaemia, inflammatory response, marrow stress, chronic disease burden</td>
+</tr>
+</tbody>
+</table>
+<h4 id="e-diabetes-and-kidney-monitoring-june-additions">E. Diabetes and Kidney Monitoring (June additions)</h4>
+<p>Extends the laboratory profile with diabetic nephropathy monitoring and point-of-care glucose, capturing kidney progression and near-term glycaemic instability.</p>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MICROALB_UR_Results</code>, <code>POC_GLUCOSE_Results</code></td>
+<td>Diabetic kidney-injury monitoring and near-term glycaemic context</td>
+</tr>
+</tbody>
+</table>
+<h4 id="f-cardiac-coagulation-and-ekg-linked-features-june-additions">F. Cardiac, Coagulation, and EKG-Linked Features (June additions)</h4>
+<p>Captures acute cardiac stress and rhythm abnormalities — high-specificity markers of active physiologic deterioration not covered by standard chemistry panels.</p>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INR_Results</code>, <code>PROTIME_Results</code>, <code>TROPONIN_HIGH_SENSITIVITY_Results</code>, <code>LEFT_VENTRICULAR_EJECTION_FRACTION_Results</code>, <code>EKG_QRS_DURATION_Results</code>, <code>EKG_QTC_CALCULATION_BAZETT_Results</code>, <code>EKG_R_AXIS_Results</code>, <code>EKG_T_AXIS_Results</code>, <code>EKG_VENTRICULAR_RATE_Results</code></td>
+<td>Acute cardiac stress, heart-function context, conduction/rhythm burden, coagulation</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Why it matters:</strong> Lab features capture active physiologic instability and disease burden. They reflect what is happening in the patient <em>now</em>, not just what has been coded historically.</p>
+<p><strong>Clinical interpretation:</strong> Lab Results at #2 standalone confirms the model is not driven only by prior utilisation — it detects meaningful physiologic stress directly from laboratory data. A patient with elevated troponin, declining eGFR, and widening anion gap is in active physiologic deterioration regardless of their coding history.</p>
+</blockquote>
+<hr />
+<h3 id="3-utilization-history-6-core-documentation-features">3. Utilization History (6 core + documentation features)</h3>
+<h4 id="a-core-prior-acute-care-burden-6-features">A. Core Prior Acute-Care Burden (6 features)</h4>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Clinical meaning</th>
+<th>Derivation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TOTAL_UNPLANNED_IP_PAST</code></td>
+<td>Number of prior unplanned inpatient admissions</td>
+<td>Count of Emergency/Urgent IP admissions</td>
+</tr>
+<tr>
+<td><code>TOTAL_UNPLANNED_ED_PAST</code></td>
+<td>Number of prior unplanned ED visits</td>
+<td>Count of Emergency/Urgent ED visits</td>
+</tr>
+<tr>
+<td><code>Total_LOS</code></td>
+<td>Total inpatient length of stay across prior admissions</td>
+<td>Sum of days across all IP stays</td>
+</tr>
+<tr>
+<td><code>Average_LOS</code></td>
+<td>Average length of stay per admission</td>
+<td>Average days per IP stay</td>
+</tr>
+<tr>
+<td><code>TOTAL_AMB_ENCOUNTERS</code></td>
+<td>Structured ambulatory engagement volume</td>
+<td>Count of distinct structured office visits</td>
+</tr>
+<tr>
+<td><code>TOTAL_CHARGES</code></td>
+<td>Overall inpatient/ED charge burden</td>
+<td>Sum of IP + ED account charges</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Key definition — “Unplanned”:</strong> Defined as admission type = <strong>Emergency or Urgent</strong> (<code>HOSP_ADMSN_TYPE_C IN (1, 2)</code>). This is the same definition used for the prediction target (unplanned event in the next 12 months). The predictor and target measure the <em>same event type</em> across different time windows.</p>
+</blockquote>
+<h4 id="b-documentation-and-result-burden-june-additions">B. Documentation and Result Burden (June additions)</h4>
+<p>Clinical documentation volume acts as a proxy for healthcare system engagement intensity and overall disease complexity.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>N_Total_AmbDXs</code></td>
+<td>Total ambulatory diagnosis volume</td>
+</tr>
+<tr>
+<td><code>N_Other_AmbDXs</code></td>
+<td>Additional ambulatory diagnosis burden</td>
+</tr>
+<tr>
+<td><code>N_Total_MEDHXs</code></td>
+<td>Number of medical-history entries</td>
+</tr>
+<tr>
+<td><code>N_Total_results</code></td>
+<td>Number of recorded results/laboratory outputs</td>
+</tr>
+<tr>
+<td><code>N_Total_PLs</code></td>
+<td>Number of problem-list entries</td>
+</tr>
+<tr>
+<td><code>N_Other_PLs</code></td>
+<td>Non-diabetes problem-list entries</td>
+</tr>
+</tbody>
+</table>
+<h4 id="c-recency-features-june-additions">C. Recency Features (June additions)</h4>
+<p>Temporal context for utilisation events — a patient whose last ED visit was 2 weeks ago is at higher acute risk than one whose last visit was 18 months ago.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Days_last_unplanned_ip_date</code></td>
+<td>Days since last unplanned inpatient admission</td>
+</tr>
+<tr>
+<td><code>Days_last_ed_date</code></td>
+<td>Days since last ED visit</td>
+</tr>
+<tr>
+<td><code>Days_last_unplanned_ed_date</code></td>
+<td>Days since last unplanned ED visit</td>
+</tr>
+<tr>
+<td><code>Days_LAST_OFFICE_VISIT</code></td>
+<td>Days since last office visit</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Clinical interpretation:</strong> “Past admissions predict future admissions” — patients with established utilisation patterns are at highest risk. The predictor and target use the <em>same definition of unplanned</em> (Emergency/Urgent admission type) across different time windows, which creates a strong and clinically intuitive relationship. This is also the most sample-efficient dimension: only 6 core features achieve near-top performance.</p>
+</blockquote></div></div><div class="cell"><div class="cell-title">Medications, Registry, Flowsheets, Surgical, A1C (Rank 4-8)</div><div class="markdown-cell"><hr />
+<h2 id="detailed-feature-definitions-middle-predictive-dimensions-rank-48">Detailed Feature Definitions — Middle Predictive Dimensions (Rank 4–8)</h2>
+<h3 id="4-medications-56-features">4. Medications (56 features)</h3>
+<h4 id="layer-1-therapeutic-class-flags-15-binary">Layer 1: Therapeutic Class Flags (15 binary)</h4>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>THERA_CARDIOVASCULAR</code>, <code>THERA_ENDOCRINE_METABOLIC</code>, <code>THERA_CNS</code>, <code>THERA_ANTI_INFECTIVE</code>, <code>THERA_ANALGESIC</code>, <code>THERA_GI</code>, <code>THERA_RESPIRATORY</code>, <code>THERA_HEMATOLOGICAL</code>, <code>THERA_NEUROMUSCULAR</code>, <code>THERA_NUTRITIONAL</code>, <code>THERA_TOPICAL</code>, <code>THERA_GENITOURINARY</code>, <code>THERA_ANTINEOPLASTIC</code>, <code>THERA_BIOLOGICAL</code>, <code>THERA_MISCELLANEOUS</code></td>
+<td>Broad organ-system and treatment-domain exposure</td>
+</tr>
+</tbody>
+</table>
+<h4 id="layer-2-dm-relevant-drug-group-flags-20-binary">Layer 2: DM-Relevant Drug Group Flags (20 binary)</h4>
+<p>Granular drug groups mapped from pharmacy subclass. Each flag fires if the patient has ANY order matching that drug group within the feature window.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Example drugs</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MED_INSULIN</code></td>
+<td>Glargine, lispro, aspart</td>
+<td>Insulin therapy (injectable)</td>
+</tr>
+<tr>
+<td><code>MED_BIGUANIDE</code></td>
+<td>Metformin</td>
+<td>First-line oral DM therapy</td>
+</tr>
+<tr>
+<td><code>MED_GLP1_AGONIST</code></td>
+<td>Semaglutide, liraglutide, dulaglutide</td>
+<td>GLP-1 receptor agonists</td>
+</tr>
+<tr>
+<td><code>MED_SGLT2_INHIBITOR</code></td>
+<td>Empagliflozin, dapagliflozin</td>
+<td>SGLT2 inhibitors (cardio/renal-protective)</td>
+</tr>
+<tr>
+<td><code>MED_SULFONYLUREA</code></td>
+<td>Glipizide, glimepiride</td>
+<td>Sulfonylureas (older oral agent)</td>
+</tr>
+<tr>
+<td><code>MED_DPP4_INHIBITOR</code></td>
+<td>Sitagliptin, linagliptin</td>
+<td>DPP-4 inhibitors</td>
+</tr>
+<tr>
+<td><code>MED_THIAZOLIDINEDIONE</code></td>
+<td>Pioglitazone</td>
+<td>TZDs (insulin sensitiser)</td>
+</tr>
+<tr>
+<td><code>MED_DM_SUPPLIES</code></td>
+<td>Test strips, lancets</td>
+<td>Diabetes self-management engagement proxy</td>
+</tr>
+<tr>
+<td><code>MED_STATIN</code></td>
+<td>Atorvastatin, rosuvastatin</td>
+<td>Statins (lipid-lowering)</td>
+</tr>
+<tr>
+<td><code>MED_ACE_ARB</code></td>
+<td>Lisinopril, losartan</td>
+<td>ACE inhibitors / ARBs (renoprotection)</td>
+</tr>
+<tr>
+<td><code>MED_BETA_BLOCKER</code></td>
+<td>Metoprolol, carvedilol</td>
+<td>Beta-blockers (heart failure, HTN)</td>
+</tr>
+<tr>
+<td><code>MED_CCB</code></td>
+<td>Amlodipine, diltiazem</td>
+<td>Calcium channel blockers</td>
+</tr>
+<tr>
+<td><code>MED_DIURETIC</code></td>
+<td>Furosemide, hydrochlorothiazide</td>
+<td>Diuretics (fluid management)</td>
+</tr>
+<tr>
+<td><code>MED_OPIOID</code></td>
+<td>Oxycodone, hydrocodone</td>
+<td>Opioid analgesics (chronic pain signal)</td>
+</tr>
+<tr>
+<td><code>MED_NSAID</code></td>
+<td>Ibuprofen, naproxen</td>
+<td>NSAIDs (renal risk in DM)</td>
+</tr>
+<tr>
+<td><code>MED_PPI</code></td>
+<td>Omeprazole, pantoprazole</td>
+<td>Proton pump inhibitors</td>
+</tr>
+<tr>
+<td><code>MED_ANTICOAGULANT</code></td>
+<td>Warfarin, heparin, enoxaparin</td>
+<td>Anticoagulants (VTE/AF management)</td>
+</tr>
+<tr>
+<td><code>MED_SSRI</code></td>
+<td>Sertraline, fluoxetine</td>
+<td>SSRIs (depression → nonadherence risk)</td>
+</tr>
+<tr>
+<td><code>MED_BENZODIAZEPINE</code></td>
+<td>Lorazepam, alprazolam</td>
+<td>Benzodiazepines (fall risk, frailty)</td>
+</tr>
+<tr>
+<td><code>MED_CORTICOSTEROID</code></td>
+<td>Prednisone, dexamethasone</td>
+<td>Corticosteroids (destabilise glucose control)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="layer-3-aggregate-medication-complexity-9-features">Layer 3: Aggregate Medication Complexity (9 features)</h4>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Clinical meaning</th>
+<th>Derivation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>N_TOTAL_MED_ORDERS</code></td>
+<td>Total medication order volume</td>
+<td>Count of all medication orders</td>
+</tr>
+<tr>
+<td><code>N_UNIQUE_SUBCLASSES</code></td>
+<td>Breadth of medication types</td>
+<td>Count of distinct pharmacy subclasses</td>
+</tr>
+<tr>
+<td><code>N_UNIQUE_THERA_CLASSES</code></td>
+<td>Breadth of therapeutic systems</td>
+<td>Count of distinct therapeutic classes</td>
+</tr>
+<tr>
+<td><code>N_UNIQUE_PHARM_CLASSES</code></td>
+<td>Mid-level diversity</td>
+<td>Count of distinct pharmacy classes</td>
+</tr>
+<tr>
+<td><code>N_CONTROLLED_MEDS</code></td>
+<td>Controlled substance count</td>
+<td>Count of controlled-substance orders</td>
+</tr>
+<tr>
+<td><code>N_DM_DRUG_CLASSES</code></td>
+<td>DM regimen complexity (0–8)</td>
+<td>Count of distinct DM drug groups used</td>
+</tr>
+<tr>
+<td><code>N_CARDIO_DRUG_CLASSES</code></td>
+<td>Cardiovascular regimen complexity (0–5)</td>
+<td>Count of distinct cardiovascular drug groups</td>
+</tr>
+<tr>
+<td><code>POLYPHARMACY_FLAG</code></td>
+<td>Standard polypharmacy threshold</td>
+<td>≥5 distinct therapeutic classes</td>
+</tr>
+<tr>
+<td><code>HIGH_POLYPHARMACY_FLAG</code></td>
+<td>Excessive polypharmacy</td>
+<td>≥10 distinct pharmacy subclasses</td>
+</tr>
+</tbody>
+</table>
+<h4 id="layer-4-dm-treatment-combination-flags-4-binary">Layer 4: DM Treatment-Combination Flags (4 binary)</h4>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Clinical meaning</th>
+<th>Logic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DM_INSULIN_PLUS_ORAL</code></td>
+<td>Disease has progressed beyond monotherapy</td>
+<td>On insulin AND any oral DM agent</td>
+</tr>
+<tr>
+<td><code>DM_MULTI_ORAL</code></td>
+<td>Intensified oral therapy before insulin</td>
+<td>≥2 distinct oral DM drug classes</td>
+</tr>
+<tr>
+<td><code>DM_PLUS_STATIN</code></td>
+<td>Metabolic syndrome management</td>
+<td>Any DM med AND statin</td>
+</tr>
+<tr>
+<td><code>DM_PLUS_ANTIHYPERTENSIVE</code></td>
+<td>Cardiometabolic complexity</td>
+<td>Any DM med AND any antihypertensive (ACE/ARB, beta-blocker, CCB, diuretic)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="layer-5-june-hybrid-additions-8-features">Layer 5: June Hybrid Additions (8 features)</h4>
+<p>Narrower class/subclass markers that added incremental signal beyond the core 4-layer architecture without disrupting the original clinical logic.</p>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MED_LOOP_DIURETICS</code>, <code>MED_ANTICOAGULANTS_CLASS</code>, <code>MED_ANTICONVULSANT_CLASS</code>, <code>Analgesics_Other_subclass</code>, <code>Laxatives_Miscellaneous_subclass</code>, <code>Anticonvulsants_Misc_subclass</code>, <code>Insulin_subclass</code>, <code>Local_Anesthetics_Topical_subclass</code></td>
+<td>Narrower class/subclass markers adding incremental signal</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Clinical interpretation:</strong> Treatment complexity serves as a proxy for disease severity and progression. A patient on insulin + oral DM agent + statin + ACE inhibitor represents advanced cardiometabolic disease. The 4-layer approach captures both breadth (therapeutic classes) and depth (specific DM regimen patterns), ensuring the model understands treatment intensity at multiple levels.</p>
+</blockquote>
+<hr />
+<h3 id="5-registry-flags-8-features">5. Registry Flags (8 features)</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CC_CHRONIC_BRONCHITIS</code></td>
+<td>Actively tracked for chronic bronchitis</td>
+</tr>
+<tr>
+<td><code>CC_PULMONARY_HYPERTENSION</code></td>
+<td>Actively tracked for pulmonary hypertension</td>
+</tr>
+<tr>
+<td><code>CC_DIABETES</code></td>
+<td>Actively tracked for diabetes</td>
+</tr>
+<tr>
+<td><code>CC_EMPHYSEMA</code></td>
+<td>Actively tracked for emphysema</td>
+</tr>
+<tr>
+<td><code>CC_HYPERTENSION</code></td>
+<td>Actively tracked for hypertension</td>
+</tr>
+<tr>
+<td><code>TOBACCO_USE_C</code></td>
+<td>Registry-coded tobacco status</td>
+</tr>
+<tr>
+<td><code>LAST_OFFICE_VISIT</code></td>
+<td>Recency of most recent office visit</td>
+</tr>
+<tr>
+<td><code>LAST_INPATIENT_VISIT</code></td>
+<td>Recency of most recent inpatient visit</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Clinical interpretation:</strong> Registry is a compact, high-specificity dimension. Its value comes from compressing clinically meaningful chronic disease burden into a very small footprint — 8 features that encode curated chronic-condition status and care recency.</p>
+</blockquote>
+<hr />
+<h3 id="6-flowsheet-vitals-13-features">6. Flowsheet Vitals (13 features)</h3>
+<h4 id="a-extreme-value-features-8-features">A. Extreme-Value Features (8 features)</h4>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IP_MAX_SPO2</code>, <code>IP_MIN_SPO2</code>, <code>IP_MAX_PAIN</code>, <code>IP_MIN_PAIN</code>, <code>IP_MAX_PULSE</code>, <code>IP_MIN_PULSE</code>, <code>IP_MAX_TEMP</code>, <code>IP_MIN_TEMP</code></td>
+<td>Best/worst inpatient physiologic values during prior admissions</td>
+</tr>
+</tbody>
+</table>
+<h4 id="b-average-instability-measures-3-features-june-additions">B. Average Instability Measures (3 features, June additions)</h4>
+<p>Averages capture sustained physiologic stress — a persistently elevated pulse carries different clinical meaning than a single transient spike.</p>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IP_AVG_PULSE</code>, <code>IP_AVG_TEMP</code>, <code>IP_AVG_SPO2</code></td>
+<td>Overall physiologic burden beyond worst extremes</td>
+</tr>
+</tbody>
+</table>
+<h4 id="c-blood-pressure-summary-2-features-june-additions">C. Blood-Pressure Summary (2 features, June additions)</h4>
+<p>Limited blood-pressure context recovered from inpatient flowsheets, complementing the pulse/temperature/SpO2 extremes above.</p>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IP_MIN_DIASTOLIC</code>, <code>IP_MAX_SYSTOLIC</code></td>
+<td>Blood-pressure severity context from inpatient flowsheets</td>
+</tr>
+</tbody>
+</table>
+<h4 id="coverage">Coverage</h4>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Coverage</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Has inpatient flowsheet data</td>
+<td>∼36% of cohort</td>
+<td>Patient had prior inpatient stay with recorded vitals</td>
+</tr>
+<tr>
+<td>Among positive class (TARGET=1)</td>
+<td>74%</td>
+<td>Much higher prior inpatient exposure</td>
+</tr>
+<tr>
+<td>Among negative class (TARGET=0)</td>
+<td>32%</td>
+<td>Lower prior inpatient exposure</td>
+</tr>
+</tbody>
+</table>
+<p>Missingness is itself informative: having flowsheet data means the patient has been hospitalised, which correlates strongly with future admission risk.</p>
+<blockquote>
+<p><strong>Clinical interpretation:</strong> Flowsheet vitals capture physiologic instability during prior inpatient stays. These features are only populated for the inpatient-exposed subset of the cohort — patients with flowsheet data have been hospitalised, which is itself informative. Min/max extremes identify acute instability episodes; averages capture sustained physiologic stress.</p>
+</blockquote>
+<hr />
+<h3 id="7-surgical-history-12-features">7. Surgical History (12 features)</h3>
+<h4 id="a-original-grouped-surgical-features-6-features">A. Original Grouped Surgical Features (6 features)</h4>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Clinical meaning</th>
+<th>Procedure patterns matched</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>N_TOTAL_SURGERIES</code></td>
+<td>Total prior procedural burden</td>
+<td>Count of all distinct procedures</td>
+</tr>
+<tr>
+<td><code>HAS_DIALYSIS_SURGERY</code></td>
+<td>Dialysis-access / fistula / dialysis-procedure history</td>
+<td>Dialysis, Fistula, Fistulagram</td>
+</tr>
+<tr>
+<td><code>HAS_CARDIAC_SURGERY</code></td>
+<td>Cardiac involvement history</td>
+<td>Cardiac, Coronary, Pacemaker, PTCA, CABG, Echo, EKG, DFB</td>
+</tr>
+<tr>
+<td><code>HAS_WOUND_FOOT_SURGERY</code></td>
+<td>Diabetic foot/wound severity burden</td>
+<td>Foot, Toe, Amputation, Debridement, Ulcer</td>
+</tr>
+<tr>
+<td><code>HAS_VASCULAR_ACCESS</code></td>
+<td>History of vascular-access procedures</td>
+<td>Catheter, PICC, CVC, Midline, Tunneled</td>
+</tr>
+<tr>
+<td><code>HAS_GI_PROCEDURE</code></td>
+<td>GI / pleural procedure history</td>
+<td>Endoscopy, Colonoscopy, Thoracentesis</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Known pattern overlaps:</strong> (1) <code>HAS_CARDIAC_SURGERY</code> includes diagnostic procedures (Echo, EKG) — it is a “cardiac involvement” indicator, not purely surgical. (2) <code>HAS_GI_PROCEDURE</code> includes Thoracentesis (a pleural drainage, not GI) due to shared procedural patterns. (3) <code>HAS_VASCULAR_ACCESS</code> overlaps with <code>HAS_DIALYSIS_SURGERY</code> for dialysis-catheter patients.</p>
+</blockquote>
+<h4 id="coverage-and-signal">Coverage and Signal</h4>
+<table>
+<thead>
+<tr>
+<th>Surgical History Status</th>
+<th>% of Cohort</th>
+<th>Positive Rate</th>
+<th>Lift</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Has any surgical history</td>
+<td>74%</td>
+<td>9.4%</td>
+<td>1.24×</td>
+</tr>
+<tr>
+<td>No surgical history</td>
+<td>26%</td>
+<td>2.3%</td>
+<td>0.30×</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Top individual procedure lifts:</strong> IR Midline Catheter (4.80×), Dialysis Catheter Removal (4.72×), Dialysis Catheter Insertion (4.43×), Dialysis Fistula Creation (4.29×), Foot Debridement (4.20×). All affect &lt;3% of the cohort.</p>
+<h4 id="b-june-hybrid-additions-6-features">B. June Hybrid Additions (6 features)</h4>
+<p>Additional procedure-group indicators that contributed incremental signal in the integrated model, broadening procedural coverage beyond the original high-yield flags.</p>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UROLOGICAL_SURGERY_Surgery</code>, <code>HAND_SURGERY_Surgery</code>, <code>HERNIA_REPAIR_Surgery</code>, <code>GYN_Surgery</code>, <code>ROTATOR_CUFF_REPAIR_Surgery</code>, <code>CYSTOSCOPY_Surgery</code></td>
+<td>Additional procedure groups adding incremental signal</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Clinical interpretation:</strong> This dimension is a classic example of the “high lift in tiny subgroup” pattern. Dialysis and wound/foot procedures affect &lt;3% of the cohort but show 4–5× lift. The primary value comes from the dialysis and wound/foot flags, which are direct markers of advanced diabetic nephropathy and peripheral vascular disease — conditions with very high hospitalisation risk. Despite weak isolated performance, these features contribute additive signal in the combined model by identifying the most severe disease subgroup.</p>
+</blockquote>
+<hr />
+<h3 id="8-a1c-egfr-5-features">8. A1C + eGFR (5 features)</h3>
+<h4 id="important-lookback-window-asymmetry">Important: Lookback Window Asymmetry</h4>
+<table>
+<thead>
+<tr>
+<th>Feature Group</th>
+<th>Lookback Window</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1C features (4)</td>
+<td>22-month standard window</td>
+<td>A1C is drawn regularly for managed T2DM</td>
+</tr>
+<tr>
+<td>eGFR (1)</td>
+<td><strong>5-year extended lookback</strong></td>
+<td>eGFR is drawn less frequently; wider window improves coverage from ∼15% to 26%</td>
+</tr>
+</tbody>
+</table>
+<h4 id="coverage-and-missingness">Coverage and Missingness</h4>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Overall Coverage</th>
+<th>Coverage (TARGET=1)</th>
+<th>Coverage (TARGET=0)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1C features</td>
+<td>66%</td>
+<td>87%</td>
+<td>65%</td>
+</tr>
+<tr>
+<td>most_recent_eGFR</td>
+<td>26%</td>
+<td>39%</td>
+<td>25%</td>
+</tr>
+</tbody>
+</table>
+<p>Missingness is informative: patients with lab results in the system are more engaged in care and/or have more advanced disease requiring monitoring.</p>
+<h4 id="a-glycaemic-control-4-features">A. Glycaemic Control (4 features)</h4>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>most_recent_A1C</code></td>
+<td>Latest glycaemic control status</td>
+</tr>
+<tr>
+<td><code>A1C_delta</code></td>
+<td>Whether glycaemic control is worsening or improving</td>
+</tr>
+<tr>
+<td><code>n_a1c_readings</code></td>
+<td>Monitoring intensity / diabetes follow-up engagement</td>
+</tr>
+<tr>
+<td><code>AVG_A1C</code></td>
+<td>Average glycaemic burden across the feature window</td>
+</tr>
+</tbody>
+</table>
+<h4 id="b-kidney-function-1-feature">B. Kidney Function (1 feature)</h4>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>most_recent_eGFR</code></td>
+<td>Most recent kidney function estimate and CKD-severity context</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Clinical interpretation:</strong> A1C and eGFR are the two most direct clinical markers of T2DM disease progression. Despite high missingness (eGFR at 74%), the dimension contributes through: (1) missingness itself as a signal of care engagement, (2) dose-response between A1C severity and admission rate (3.0% for missing A1C → 12.8% for A1C ≥ 9), and (3) a strong eGFR gradient (2.8% admission rate at G1 → 25.7% at Stage 5 CKD). Note: eGFR uses a 5-year extended lookback (vs 22 months for other features) because it is drawn less frequently.</p>
+</blockquote></div></div><div class="cell"><div class="cell-title">Social History, BMI, Demographics (Rank 9-11)</div><div class="markdown-cell"><hr />
+<h2 id="detailed-feature-definitions-contextual-dimensions-rank-911">Detailed Feature Definitions — Contextual Dimensions (Rank 9–11)</h2>
+<h3 id="9-social-history-sdoh-27-features">9. Social History / SDOH (27 features)</h3>
+<blockquote>
+<p><strong>Important:</strong> Unlike other dimensions, social history has <strong>no date filter</strong> — it captures the patient’s most recent social history ever recorded, regardless of when collected. This is clinically acceptable for stable attributes (education, substance history) but may be stale for dynamic fields (financial strain, food insecurity).</p>
+</blockquote>
+<h4 id="coverage-highly-heterogeneous">Coverage (Highly Heterogeneous)</h4>
+<table>
+<thead>
+<tr>
+<th>Feature Group</th>
+<th>Coverage</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Substance use (alcohol, smoking, tobacco)</td>
+<td>94–96%</td>
+<td>Routinely captured at most encounters</td>
+</tr>
+<tr>
+<td>SDOH screening (financial strain, food insecurity)</td>
+<td>∼12%</td>
+<td>Requires specific questionnaire administration</td>
+</tr>
+<tr>
+<td>Abuse/safety screening</td>
+<td>&lt;5%</td>
+<td>Rarely completed IPV screening</td>
+</tr>
+<tr>
+<td>Financial class (payer)</td>
+<td>∼99%</td>
+<td>Near-complete from encounter records</td>
+</tr>
+</tbody>
+</table>
+<p>The dimension is effectively a <strong>two-tier signal</strong>: strong substance-use coverage with moderate lift, plus sparse SDOH screening data with high lift but affecting only ∼12% of patients.</p>
+<h4 id="a-substance-use-and-behavioural-features">A. Substance-Use and Behavioural Features</h4>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ALCOHOL_USE</code>, <code>SMOKING_TOBACCO_USE</code>, <code>TOBACCO_USE</code>, <code>ILLICIT_DRUG_USER</code></td>
+<td>Behavioural risk, substance exposure, and self-management context</td>
+</tr>
+</tbody>
+</table>
+<h4 id="b-social-strain-and-household-context">B. Social Strain and Household Context</h4>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FIN_RESOURCE_STRAIN</code>, <code>FOOD_INSECURITY_WORRY</code>, <code>FOOD_INSECURITY_SCARCE</code>, <code>DAILY_STRESS</code>, <code>LIVING_W_SPOUSE</code></td>
+<td>Financial strain, food insecurity, stress, and household-support context</td>
+</tr>
+</tbody>
+</table>
+<h4 id="c-abuse-and-safety-screening">C. Abuse and Safety Screening</h4>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PHYSICAL_ABUSE</code>, <code>EMOTIONAL_ABUSE</code>, <code>SEXUAL_ABUSE</code></td>
+<td>Interpersonal safety and trauma-related risk context</td>
+</tr>
+</tbody>
+</table>
+<h4 id="d-education-and-activity">D. Education and Activity</h4>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PHYS_ACT_DAYS_PER_WEEK</code>, <code>YEARS_EDUCATION</code></td>
+<td>Function, health-behaviour context, and broader social positioning</td>
+</tr>
+</tbody>
+</table>
+<h4 id="e-financial-class-payer-context-6-features-june-additions">E. Financial-Class / Payer Context (6 features, June additions)</h4>
+<p>Payer category has near-complete coverage (unlike SDOH screening items at 88–99% missing) and serves as a proxy for access patterns and social vulnerability.</p>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FINANCIAL_CLASS_Medicare_Managed</code>, <code>FINANCIAL_CLASS_Medicare</code>, <code>FINANCIAL_CLASS_Anthem_BCBS</code>, <code>FINANCIAL_CLASS_Commercial</code>, <code>FINANCIAL_CLASS_Medicaid_Managed</code>, <code>FINANCIAL_CLASS_Other</code></td>
+<td>Payer/access context that may influence follow-up patterns, care access, and utilisation burden</td>
+</tr>
+</tbody>
+</table>
+<h4 id="key-lift-signals">Key Lift Signals</h4>
+<table>
+<thead>
+<tr>
+<th>Feature / Category</th>
+<th>Lift</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Food insecurity (code 3 — most severe)</td>
+<td>2.68×</td>
+<td>Strong signal but only ∼12% screened</td>
+</tr>
+<tr>
+<td>Financial strain (code 1)</td>
+<td>2.06×</td>
+<td>Coding is inversely correlated with code values</td>
+</tr>
+<tr>
+<td>Smoking “Some Days”</td>
+<td>1.69×</td>
+<td>Higher risk than “Every Day” (1.0×)</td>
+</tr>
+<tr>
+<td><code>FINANCIAL_CLASS_Other</code></td>
+<td>Strongest single feature</td>
+<td>Near-complete coverage compensates for SDOH sparsity</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Clinical interpretation:</strong> SDOH features remain clinically meaningful but isolated discrimination is limited by incomplete screening coverage (88–99% missing for screening-dependent fields). <code>FINANCIAL_CLASS_Other</code> dominates because payer category has near-complete coverage while SDOH screening items do not — the model effectively uses financial class as a proxy for access and social vulnerability when screening data is unavailable.</p>
+</blockquote>
+<hr />
+<h3 id="10-bmi-2-features">10. BMI (2 features)</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>most_recent_BMI</code></td>
+<td>Most recent body mass index, representing current body habitus</td>
+</tr>
+<tr>
+<td><code>BMI_delta</code></td>
+<td>Change in BMI over time, representing weight gain or weight loss trajectory</td>
+</tr>
+</tbody>
+</table>
+<h4 id="counterintuitive-findings-important-for-clinical-interpretation">Counterintuitive Findings (Important for Clinical Interpretation)</h4>
+<table>
+<thead>
+<tr>
+<th>BMI Category</th>
+<th>% of Cohort</th>
+<th>Positive Rate</th>
+<th>Lift</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Missing BMI</strong></td>
+<td>27%</td>
+<td>1.3%</td>
+<td>0.18× (strongly protective)</td>
+</tr>
+<tr>
+<td>Underweight (&lt;18.5)</td>
+<td>0.4%</td>
+<td>16.6%</td>
+<td><strong>2.21×</strong> (highest risk)</td>
+</tr>
+<tr>
+<td>Normal (18.5–24.9)</td>
+<td>8.5%</td>
+<td>12.4%</td>
+<td>1.65×</td>
+</tr>
+<tr>
+<td>Overweight (25–29.9)</td>
+<td>19%</td>
+<td>9.8%</td>
+<td>1.30×</td>
+</tr>
+<tr>
+<td>Obese I–III (30+)</td>
+<td>45%</td>
+<td>9.0–9.4%</td>
+<td>1.20–1.34×</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why this is counterintuitive in a T2DM population:</strong> (1) Missing BMI is protective because it signals low healthcare engagement (fewer encounters = lower acuity). (2) Underweight/normal BMI in T2DM often indicates cachexia, advanced disease, or unintentional weight loss — NOT healthy body composition. (3) The obese majority clusters in a narrow lift range with minimal differentiation.</p>
+<blockquote>
+<p><strong>Clinical interpretation:</strong> BMI trajectory (<code>BMI_delta</code>) captures meaningful physiologic change — both rapid weight loss (cachexia, advanced disease) and rapid weight gain (fluid overload, decompensation) are clinically concerning. The pair of features is simple but additive.</p>
+</blockquote>
+<hr />
+<h3 id="11-demographics-19-features">11. Demographics (19 features)</h3>
+<h4 id="a-core-patient-context">A. Core Patient Context</h4>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AGE</code>, <code>PCP</code></td>
+<td>Age-related baseline risk and whether the patient has an active primary-care anchor</td>
+</tr>
+</tbody>
+</table>
+<h4 id="b-gender-indicators-3-features">B. Gender Indicators (3 features)</h4>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GENDER_Female</code>, <code>GENDER_Male</code>, <code>GENDER_Other</code></td>
+<td>Broad demographic context</td>
+</tr>
+</tbody>
+</table>
+<h4 id="c-ethnicity-indicators-4-features">C. Ethnicity Indicators (4 features)</h4>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ETHNICITY_Non_Hispanic</code>, <code>ETHNICITY_Hispanic_Latino</code>, <code>ETHNICITY_Declined</code>, <code>ETHNICITY_Unknown</code></td>
+<td>Population context and documentation context</td>
+</tr>
+</tbody>
+</table>
+<h4 id="d-marital-status-indicators-7-features">D. Marital Status Indicators (7 features)</h4>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MARITAL_Married</code>, <code>MARITAL_Single</code>, <code>MARITAL_Widowed</code>, <code>MARITAL_Divorced</code>, <code>MARITAL_Legally_Separated</code>, <code>MARITAL_Life_Partner</code>, <code>MARITAL_Unknown</code></td>
+<td>Household structure and social-support proxies</td>
+</tr>
+</tbody>
+</table>
+<h4 id="e-language-indicators-3-features">E. Language Indicators (3 features)</h4>
+<table>
+<thead>
+<tr>
+<th>Features</th>
+<th>Clinical meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LANG_English</code>, <code>LANG_Spanish</code>, <code>LANG_Other</code></td>
+<td>Communication-context information</td>
+</tr>
+</tbody>
+</table>
+<h4 id="key-lift-signals-and-category-merging-rationale">Key Lift Signals and Category-Merging Rationale</h4>
+<table>
+<thead>
+<tr>
+<th>Feature / Category</th>
+<th>Lift</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MARITAL_Widowed</code></td>
+<td>1.47×</td>
+<td>Social isolation + older age</td>
+</tr>
+<tr>
+<td><code>MARITAL_Life_Partner</code></td>
+<td>1.44×</td>
+<td>Small subgroup</td>
+</tr>
+<tr>
+<td><code>ETHNICITY_Hispanic_Latino</code></td>
+<td>1.39×</td>
+<td>Merged from 5 subcategories (Puerto Rican, Mexican, etc.)</td>
+</tr>
+<tr>
+<td><code>MARITAL_Married</code></td>
+<td>0.82×</td>
+<td>Protective (social support)</td>
+</tr>
+<tr>
+<td><code>LANG_Spanish</code></td>
+<td>0.75×</td>
+<td>Protective</td>
+</tr>
+<tr>
+<td><code>ETHNICITY_Declined</code></td>
+<td>0.56×</td>
+<td>Protective</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Category-merging decisions:</strong> Rare categories (n &lt; 50) were bucketed into “Other”/“Unknown” to avoid noise (e.g., 88 non-English/non-Spanish languages with n ≤ 8 each). Hispanic subcategories were merged because individually too small for reliable features but collectively strong.</p>
+<blockquote>
+<p><strong>Clinical interpretation:</strong> Demographics is the weakest standalone dimension (PR-AUC 0.108, barely above the 0.075 random baseline). It provides contextual framing rather than direct predictive signal. Age is the strongest individual feature; the remaining demographic indicators contribute through interaction with other dimensions rather than independent discrimination.</p>
+</blockquote>
+<hr />
+<p><em>This glossary reflects the June 2026 integrated model design. For detailed change history between iterations, refer to the companion Technical Reference notebook.</em></p></div></div>
+    </div>
+</body>
+</html>
