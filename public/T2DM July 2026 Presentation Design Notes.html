@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T2DM July 2026 Presentation Design Notes</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                         Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6; color: #333;
+            background-color: #f8f9fa; margin: 0; padding: 20px;
+        }
+        .container {
+            max-width: 920px; margin: 0 auto; background: #fff;
+            border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 40px 50px;
+        }
+        h1 {
+            font-size: 2em; color: #1a1a2e;
+            border-bottom: 3px solid #e94560; padding-bottom: 12px; margin-top: 0;
+        }
+        h2 {
+            font-size: 1.5em; color: #16213e;
+            border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-top: 1.5em;
+        }
+        h3 { font-size: 1.25em; color: #0f3460; margin-top: 1.2em; }
+        h4, h5, h6 { color: #16213e; }
+        p { margin: 0.8em 0; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ── Cells ── */
+        .cell { margin-bottom: 8px; }
+        .cell-title {
+            background: #eef2f7; padding: 8px 14px;
+            font-weight: 600; font-size: 1.05em; color: #16213e;
+            border-left: 4px solid #e94560; border-radius: 4px 4px 0 0;
+        }
+        .markdown-cell { padding: 4px 0; }
+
+        /* ── Code blocks ── */
+        .code-cell {
+            background: #282c34; border-radius: 6px;
+            margin: 8px 0; overflow-x: auto;
+        }
+        .code-cell pre { margin: 0; padding: 16px 20px; }
+        .code-cell code {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono',
+                         Menlo, Courier, monospace;
+            font-size: 0.88em; color: #abb2bf; line-height: 1.5;
+        }
+        .markdown-cell code {
+            background: #f0f0f0; padding: 2px 6px; border-radius: 3px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono',
+                         Menlo, Courier, monospace;
+            font-size: 0.9em; color: #c7254e;
+        }
+        .markdown-cell pre {
+            background: #282c34; border-radius: 6px;
+            padding: 16px 20px; overflow-x: auto;
+        }
+        .markdown-cell pre code {
+            background: transparent; color: #abb2bf; padding: 0;
+        }
+
+        /* ── Tables ── */
+        table {
+            border-collapse: collapse; width: 100%;
+            margin: 1em 0; font-size: 0.95em;
+        }
+        th, td { border: 1px solid #d0d7de; padding: 10px 14px; text-align: left; }
+        th { background-color: #f0f3f6; font-weight: 600; color: #1a1a2e; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        tr:hover { background-color: #eef2f7; }
+
+        /* ── Block quotes ── */
+        blockquote {
+            border-left: 4px solid #e94560; margin: 1em 0;
+            padding: 10px 20px; background: #fef9fa; color: #555;
+        }
+
+        /* ── Lists ── */
+        ul, ol { padding-left: 2em; }
+        li { margin: 0.3em 0; }
+
+        /* ── Misc ── */
+        img { max-width: 100%; height: auto; }
+        hr { border: none; border-top: 1px solid #ddd; margin: 2em 0; }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px 24px; }
+            body { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>T2DM July 2026 Presentation Design Notes</h1>
+        <div class="cell"><div class="cell-title">SWD design notes</div><div class="markdown-cell"><h1 id="t2dm-july-2026-presentation-storytelling-with-data-design-notes">T2DM July 2026 Presentation — Storytelling With Data Design Notes</h1>
+<p><strong>Purpose:</strong> This notebook explains how the July clinical summary notebooks and the final PowerPoint were designed using the principles from <em>Storytelling with Data</em>.</p>
+<p><strong>Assets covered:</strong><br />
+- July presentation notebook: <code>4174230041263493</code> — <em>T2DM July 2026 Presentation</em><br />
+- July PowerPoint file: <code>4189709313823315</code> — <code>T2DM_Model1_July_Clinical_Summary.pptx</code><br />
+- July Clinical Summary notebook: <code>1918629561173386</code><br />
+- July Technical Update for Clinical Stakeholders: <code>1918629561173385</code></p>
+<hr />
+<h2 id="1-start-with-context-before-visuals">1. Start with context before visuals</h2>
+<p>The design work followed the SWD requirement to define <strong>who</strong>, <strong>what</strong>, and <strong>how</strong> before building slides:</p>
+<table>
+<thead>
+<tr>
+<th>SWD question</th>
+<th>July answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Who</strong></td>
+<td>Clinical stakeholders reviewing T2DM unplanned admission model progress</td>
+</tr>
+<tr>
+<td><strong>What</strong></td>
+<td>Show that the current model improved to PR-AUC 0.396, explain what that means operationally, and clarify what remains before deployment</td>
+</tr>
+<tr>
+<td><strong>How</strong></td>
+<td>A live review deck that can also stand alone after the meeting</td>
+</tr>
+</tbody>
+</table>
+<p>That context drove the overall tone:<br />
+- Clinical language over DS-internal jargon<br />
+- Operational meaning over raw metrics alone<br />
+- Decision support over technical exhaust</p>
+<p>The resulting <strong>big idea</strong> was effectively:</p>
+<blockquote>
+<p>The current T2DM model improves prioritization meaningfully, but it should be presented as a triage tool and not as a diagnostic system.</p>
+</blockquote>
+<p>Every major slide in the July deck supports that message.</p>
+<hr />
+<h2 id="2-storyboard-before-building">2. Storyboard before building</h2>
+<p>The July deck follows a SWD-style story arc instead of a data dump.</p>
+<h3 id="narrative-arc-used">Narrative arc used</h3>
+<ol>
+<li><strong>Setup</strong> — what the model is and why this matters</li>
+<li><strong>Good news first</strong> — CGM produced the first measurable gain since June</li>
+<li><strong>Operational translation</strong> — top-5% lift and threshold choice explain how the model would be used</li>
+<li><strong>Credibility and boundaries</strong> — two experiments were closed, which increases trust in the remaining direction</li>
+<li><strong>Geographic and implementation context</strong> — market mix and next steps</li>
+<li><strong>Transparency</strong> — feature importance shows clinical face validity</li>
+</ol>
+<p>This is why the slides were not organized as “all methods first, then all charts, then conclusions.”<br />
+Instead, they were sequenced to help a clinician follow the logic from improvement to application to trust.</p>
+<hr />
+<h2 id="3-use-the-simplest-display-that-fits-the-message">3. Use the simplest display that fits the message</h2>
+<p>A core SWD principle is that the chart type should serve the insight, not the other way around.<br />
+The July materials used the following display choices intentionally:</p>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>SWD display choice</th>
+<th>July implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One number matters</td>
+<td>Large callout number</td>
+<td><code>5.8×</code>, <code>+0.009</code>, <code>0.396</code></td>
+</tr>
+<tr>
+<td>Ranked comparison</td>
+<td>Sorted horizontal bar</td>
+<td>Market distribution slide</td>
+</tr>
+<tr>
+<td>Exact threshold choices matter</td>
+<td>Structured table</td>
+<td>Operating points and threshold slides</td>
+</tr>
+<tr>
+<td>Binary experiment outcome</td>
+<td>Side-by-side cards</td>
+<td>Lab trajectory and Milliman closeout slide</td>
+</tr>
+<tr>
+<td>Model transparency</td>
+<td>Feature importance image</td>
+<td>H10 H2O variable importance slide</td>
+</tr>
+</tbody>
+</table>
+<p>Examples of SWD-aligned simplification:<br />
+- The CGM result is shown as a <strong>green delta callout</strong> rather than burying the improvement inside a long metrics table.<br />
+- The prioritization story uses <strong>a large 5.8× callout</strong> because the audience should remember the operational lift more than the underlying formula.<br />
+- Threshold selection stays in a <strong>table</strong>, not a crowded multi-line chart, because exact tradeoffs matter there.</p>
+<hr />
+<h2 id="4-eliminate-clutter">4. Eliminate clutter</h2>
+<p>The July presentation intentionally removes non-essential visual noise.</p>
+<h3 id="swd-clutter-reduction-choices-applied">SWD clutter reduction choices applied</h3>
+<ul>
+<li>Minimal color palette: blue, green, red, orange, gray</li>
+<li>No rainbow palette or decorative gradients</li>
+<li>No 3D charts, donut charts, or overloaded dashboards</li>
+<li>Limited decimal precision where possible</li>
+<li>Direct labels and short explanatory text instead of dense legends</li>
+<li>Large white space around key content so each slide has one focal point</li>
+</ul>
+<p>This is visible in the PowerPoint structure:<br />
+- Slide titles are short and message-led<br />
+- Most slides have only one main visual object<br />
+- Tables are compact and formatted for scanning, not for exhaustive detail<br />
+- Negative findings are grouped together on one “closed experiments” slide rather than scattered</p>
+<p>That is standard SWD behavior: remove anything that competes with the core point.</p>
+<hr />
+<h2 id="5-use-preattentive-attributes-deliberately">5. Use preattentive attributes deliberately</h2>
+<p>SWD teaches that attention should be guided through selective use of color, contrast, size, and position.<br />
+The July presentation uses those deliberately.</p>
+<h3 id="how-attention-was-directed">How attention was directed</h3>
+<table>
+<thead>
+<tr>
+<th>SWD attribute</th>
+<th>July use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Color</strong></td>
+<td>Green for improvement, red for closed/negative, blue for primary structure, gray for secondary context</td>
+</tr>
+<tr>
+<td><strong>Size</strong></td>
+<td>Large headline numbers such as <code>5.8×</code> and <code>0.396</code></td>
+</tr>
+<tr>
+<td><strong>Position</strong></td>
+<td>Main conclusion placed at top-left or center-left where the eye lands first</td>
+</tr>
+<tr>
+<td><strong>Contrast</strong></td>
+<td>Highlighted callout boxes against soft background fills</td>
+</tr>
+<tr>
+<td><strong>Enclosure</strong></td>
+<td>Key metrics placed in bounded callout cards or takeaway boxes</td>
+</tr>
+</tbody>
+</table>
+<p>Important examples:<br />
+- <strong>Green</strong> was reserved for the CGM pass because that is the key positive result.<br />
+- <strong>Red</strong> was reserved for the two closed experiments so the audience can instantly separate “not pursuing” from “working direction.”<br />
+- The <strong>top 4 markets</strong> were accented in the market slide while the rest were muted, so the chart reads as a ranked story, not a flat inventory.</p>
+<p>This follows the SWD rule that if everything is highlighted, nothing is highlighted.</p>
+<hr />
+<h2 id="6-turn-titles-into-conclusions-not-topics">6. Turn titles into conclusions, not topics</h2>
+<p>One of the most important SWD techniques used in the July materials is the shift from topic titles to active-voice conclusion titles.</p>
+<h3 id="examples-of-the-swd-title-pattern">Examples of the SWD title pattern</h3>
+<p>Instead of neutral topic labels, the slides were written to state the point:</p>
+<table>
+<thead>
+<tr>
+<th>Topic style</th>
+<th>SWD message style used in July</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model performance</td>
+<td>The current model improves precision-recall performance to 0.396</td>
+</tr>
+<tr>
+<td>Prioritization</td>
+<td>Targeting the top 5% is 5.8× more efficient than random outreach</td>
+</tr>
+<tr>
+<td>Lab trajectory</td>
+<td>Snapshot labs outperform trajectory features for this task</td>
+</tr>
+<tr>
+<td>Milliman augmentation</td>
+<td>Adding Milliman-only positives did not improve discrimination</td>
+</tr>
+<tr>
+<td>Feature importance</td>
+<td>Diagnosis burden, prior admissions, and medication complexity are the strongest predictors</td>
+</tr>
+</tbody>
+</table>
+<p>That design choice matters because the audience can skim the slide titles alone and still reconstruct the story.</p>
+<hr />
+<h2 id="7-translate-technical-metrics-into-clinical-meaning">7. Translate technical metrics into clinical meaning</h2>
+<p>SWD emphasizes adapting the message to the audience. In the July materials, raw ML terminology was translated into language clinicians can act on.</p>
+<h3 id="translation-decisions-used">Translation decisions used</h3>
+<ul>
+<li><strong>Precision</strong> became <strong>PPV</strong> in clinical-facing materials</li>
+<li><strong>Recall</strong> became <strong>Sensitivity</strong></li>
+<li>Metrics were often restated in plain English such as:</li>
+<li>“Of every 100 flagged patients, about X will have an unplanned admission”</li>
+<li>“Top-5% targeting is 5.8× more efficient than random outreach”</li>
+<li>The model was framed as a <strong>prioritization or triage tool</strong>, not as a high-certainty predictor</li>
+</ul>
+<p>This is one of the clearest ways the SWD skill shaped the final deliverables: the statistics were not removed, but they were translated into decision language.</p>
+<hr />
+<h2 id="8-good-news-first-sequencing-was-intentional">8. Good-news-first sequencing was intentional</h2>
+<p>The July deck leads with the strongest positive result before discussing failure or nuance.<br />
+That is an SWD-informed sequencing choice.</p>
+<h3 id="why-this-was-done">Why this was done</h3>
+<p>If the audience first hears that two experiments failed, they may anchor on disappointment.<br />
+If they first hear that the benchmark improved to <strong>0.396</strong> and that top-5% targeting is <strong>5.8×</strong> more efficient than random outreach, they have a clearer frame for the later nuance.</p>
+<p>So the sequence was:<br />
+1. Improvement<br />
+2. Operational usefulness<br />
+3. Threshold tradeoff<br />
+4. What did not work<br />
+5. Where the model is strongest<br />
+6. What remains next</p>
+<p>That is not spin. It is story structure.<br />
+It helps the audience retain the central message before absorbing the caveats.</p>
+<hr />
+<h2 id="9-why-the-feature-importance-slide-was-added">9. Why the feature importance slide was added</h2>
+<p>The feature importance slide is also consistent with SWD.</p>
+<h3 id="its-purpose-in-the-story">Its purpose in the story</h3>
+<p>The slide is not there to show every predictor.<br />
+It is there to answer a credibility question:</p>
+<blockquote>
+<p>Does the model appear to rely on clinically coherent signals?</p>
+</blockquote>
+<p>That is why the feature importance visual belongs near the end of the story.<br />
+By that point, the audience already knows the model improved. The remaining question is whether the model is believable.</p>
+<p>The slide supports that by showing that the strongest predictors align with recognizable risk themes such as:<br />
+- diagnosis burden<br />
+- prior admissions<br />
+- medication complexity<br />
+- monitoring intensity<br />
+- social risk</p>
+<p>That is a classic SWD move: use the visual to resolve the audience’s next natural question.</p>
+<hr />
+<h2 id="10-how-the-three-july-assets-differ-under-the-same-swd-framework">10. How the three July assets differ under the same SWD framework</h2>
+<p>The same SWD ideas were applied differently across the July materials.</p>
+<table>
+<thead>
+<tr>
+<th>Asset</th>
+<th>SWD emphasis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Clinical Summary notebook</strong></td>
+<td>Most plain-language, presentation-ready, strongest emphasis on takeaway statements</td>
+</tr>
+<tr>
+<td><strong>Technical Update notebook</strong></td>
+<td>More methodological depth, but still translated for clinicians</td>
+</tr>
+<tr>
+<td><strong>PowerPoint notebook + PPTX</strong></td>
+<td>Most visually compressed, built for fast scanning and live presentation</td>
+</tr>
+</tbody>
+</table>
+<p>So the SWD skill was not used to make every asset look identical.<br />
+It was used to make each asset appropriate for its audience and format while preserving the same narrative spine.</p>
+<hr />
+<h2 id="11-specific-swd-techniques-that-were-visibly-used">11. Specific SWD techniques that were visibly used</h2>
+<h3 id="techniques-applied-directly">Techniques applied directly</h3>
+<ul>
+<li>Big-idea-first framing</li>
+<li>Good-news-first sequencing</li>
+<li>Active-voice slide titles</li>
+<li>Large-number callouts for the most important metrics</li>
+<li>Sorted horizontal bars for ranked comparisons</li>
+<li>Minimal, purposeful color palette</li>
+<li>Visual separation of positive vs. closed outcomes</li>
+<li>Plain-language translation of metrics</li>
+<li>One main message per slide</li>
+<li>“So what?” takeaway on major slides</li>
+</ul>
+<h3 id="techniques-deliberately-avoided">Techniques deliberately avoided</h3>
+<ul>
+<li>Dense multi-chart slides</li>
+<li>Technical jargon without translation</li>
+<li>Decorative chart styles</li>
+<li>Tables with excessive precision</li>
+<li>Equal emphasis on every result</li>
+<li>Method details before the audience understands why the result matters</li>
+</ul>
+<hr />
+<h2 id="12-bottom-line">12. Bottom line</h2>
+<p>The July notebooks and presentation were not just formatted nicely. They were structured around SWD principles:</p>
+<ol>
+<li>Start with audience and purpose</li>
+<li>Build a story arc before building visuals</li>
+<li>Choose the simplest display that serves the point</li>
+<li>Remove clutter aggressively</li>
+<li>Guide attention with selective color and size</li>
+<li>Make titles carry the message</li>
+<li>Translate model metrics into operational and clinical meaning</li>
+</ol>
+<p>That is how the SWD skill shaped both the <strong>content</strong> and the <strong>presentation mechanics</strong> of the July review materials.</p>
+<hr />
+<h2 id="reference-notes">Reference notes</h2>
+<ul>
+<li>SWD skill file: <code>skills/storytelling-with-data/SKILL.md</code></li>
+<li>July presentation notebook: <code>4174230041263493</code></li>
+<li>July PowerPoint file: <code>4189709313823315</code></li>
+<li>July Clinical Summary notebook: <code>1918629561173386</code></li>
+<li>July Technical Update notebook: <code>1918629561173385</code></li>
+<li>July Review Strategies notebook: <code>2577277521965363</code></li>
+</ul>
+<p>If needed, this notebook can be extended with a section mapping each individual July slide to the specific SWD move it exemplifies.</p></div></div>
+    </div>
+</body>
+</html>
