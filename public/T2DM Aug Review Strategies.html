@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T2DM Aug Review Strategies</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                         Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6; color: #333;
+            background-color: #f8f9fa; margin: 0; padding: 20px;
+        }
+        .container {
+            max-width: 920px; margin: 0 auto; background: #fff;
+            border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 40px 50px;
+        }
+        h1 {
+            font-size: 2em; color: #1a1a2e;
+            border-bottom: 3px solid #e94560; padding-bottom: 12px; margin-top: 0;
+        }
+        h2 {
+            font-size: 1.5em; color: #16213e;
+            border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-top: 1.5em;
+        }
+        h3 { font-size: 1.25em; color: #0f3460; margin-top: 1.2em; }
+        h4, h5, h6 { color: #16213e; }
+        p { margin: 0.8em 0; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ── Cells ── */
+        .cell { margin-bottom: 8px; }
+        .cell-title {
+            background: #eef2f7; padding: 8px 14px;
+            font-weight: 600; font-size: 1.05em; color: #16213e;
+            border-left: 4px solid #e94560; border-radius: 4px 4px 0 0;
+        }
+        .markdown-cell { padding: 4px 0; }
+
+        /* ── Code blocks ── */
+        .code-cell {
+            background: #282c34; border-radius: 6px;
+            margin: 8px 0; overflow-x: auto;
+        }
+        .code-cell pre { margin: 0; padding: 16px 20px; }
+        .code-cell code {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono',
+                         Menlo, Courier, monospace;
+            font-size: 0.88em; color: #abb2bf; line-height: 1.5;
+        }
+        .markdown-cell code {
+            background: #f0f0f0; padding: 2px 6px; border-radius: 3px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono',
+                         Menlo, Courier, monospace;
+            font-size: 0.9em; color: #c7254e;
+        }
+        .markdown-cell pre {
+            background: #282c34; border-radius: 6px;
+            padding: 16px 20px; overflow-x: auto;
+        }
+        .markdown-cell pre code {
+            background: transparent; color: #abb2bf; padding: 0;
+        }
+
+        /* ── Tables ── */
+        table {
+            border-collapse: collapse; width: 100%;
+            margin: 1em 0; font-size: 0.95em;
+        }
+        th, td { border: 1px solid #d0d7de; padding: 10px 14px; text-align: left; }
+        th { background-color: #f0f3f6; font-weight: 600; color: #1a1a2e; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        tr:hover { background-color: #eef2f7; }
+
+        /* ── Block quotes ── */
+        blockquote {
+            border-left: 4px solid #e94560; margin: 1em 0;
+            padding: 10px 20px; background: #fef9fa; color: #555;
+        }
+
+        /* ── Lists ── */
+        ul, ol { padding-left: 2em; }
+        li { margin: 0.3em 0; }
+
+        /* ── Misc ── */
+        img { max-width: 100%; height: auto; }
+        hr { border: none; border-top: 1px solid #ddd; margin: 2em 0; }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px 24px; }
+            body { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>T2DM Aug Review Strategies</h1>
+        <div class="cell"><div class="cell-title">August 2026 Review — Strategy and Planning</div><div class="markdown-cell"><h1 id="t2dm-model-1-august-2026-review-strategies">T2DM Model 1 — August 2026 Review Strategies</h1>
+<p><strong>Project:</strong> Population Health – Diabetes (T2DM Unplanned Admission Prediction)<br />
+<strong>Review target date:</strong> TBD (mid-August 2026)<br />
+<strong>Author:</strong> cdharmawardhana@mercy.com<br />
+<strong>Current benchmark:</strong> PR-AUC <strong>0.396</strong> (H10, CGM User Flag, 2026-07-18)<br />
+<strong>Target:</strong> PR-AUC <strong>&gt; 0.400</strong></p>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>This notebook tracks three workstreams for the August review cycle:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Workstream</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Loose ends from July review</strong> — CGM FE merger documentation, clinical follow-up items</td>
+<td>Not started</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Three remaining experiments</strong> — Missingness Indicators, Utilization Patterns, Baseline Feature Recovery</td>
+<td>Not started</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>August review deliverables</strong> — Clinical Summary, Technical Update, updated Experiment Log</td>
+<td>Not started</td>
+</tr>
+</tbody>
+</table></div></div><div class="cell"><div class="cell-title">Workstream 1: July Review Loose Ends</div><div class="markdown-cell"><hr />
+<h2 id="workstream-1-loose-ends-from-july-review">Workstream 1: Loose Ends from July Review</h2>
+<h3 id="1a-cgm-fe-merger-documentation-7-documents">1A. CGM FE Merger Documentation (7 documents)</h3>
+<p>CGM_USER has been coded into the Medications FE notebook. The following documentation sync remains:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Asset</th>
+<th>What to update</th>
+<th>Done?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>T2DM Feature Experiment Testbed (2840701918664769)</td>
+<td>Note in Section 15: CGM merged to Medications, standalone table retained, next all-11 run anticipates PR-AUC 0.396</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>2</td>
+<td>T2DM Model 1 Internal Technical Reference (1739283995607964)</td>
+<td>Medications dimension: 56 → 57 features, add CGM_USER definition</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>3</td>
+<td>T2DM Feature Glossary (3415191388875928)</td>
+<td>Add CGM_USER entry with definition, sources, coverage, clinical rationale</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>4</td>
+<td>diabetes project.md (4186534141193874)</td>
+<td>Dated engineering note on the merger</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>5</td>
+<td>T2DM Experiment Log (1021462973792902)</td>
+<td>Append engineering row for CGM FE merger</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Agent memory (.assistant_instructions.md)</td>
+<td>vw_meds_features_target 56 → 57, CGM_USER home documented</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>7</td>
+<td>CGM Data Source Assessment (579862478805135)</td>
+<td>Note that CGM_USER is now canonically produced by Medications FE notebook</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Plan file:</strong> <code>plans_and_prompts/T2DM_CGM_FE_Merger_Plan.md</code> (ID: 2361480920779475)</p>
+<hr />
+<h3 id="1c-cgm-verification-runs-confirms-0009-is-real">1C. CGM Verification Runs (confirms +0.009 is real)</h3>
+<p><strong>Purpose:</strong> Re-run XGBoost standalone meds + all-11 combined after CGM_USER is natively in <code>vw_meds_features_target</code>. Then run H2O on the updated export to verify the +0.009 gain from H10 is reproducible with the merged feature source.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Run</th>
+<th>Testbed cells</th>
+<th>Expected features</th>
+<th>Benchmark</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Medications standalone (XGBoost)</td>
+<td>3 → 4 → 19 → 20</td>
+<td>57 (was 56)</td>
+<td>0.2571</td>
+<td>⏳ Running</td>
+</tr>
+<tr>
+<td>2</td>
+<td>All 11 Combined (XGBoost)</td>
+<td>54 → 55</td>
+<td>284 (was 283)</td>
+<td>0.3730 (C3)</td>
+<td>⏳ Queued</td>
+</tr>
+<tr>
+<td>3</td>
+<td>All 11 Combined export + H2O DAI</td>
+<td>56 (export) → H2O</td>
+<td>~284</td>
+<td>0.396 (H10)</td>
+<td>⏳ Queued</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pass criteria:</strong><br />
+- Meds standalone: PR-AUC ≥ 0.2571 (no regression from adding 1 binary feature)<br />
+- All-11 XGBoost: PR-AUC ≥ 0.3730 (no regression; expect ~0.373–0.377)<br />
+- All-11 H2O: PR-AUC ≥ 0.393 (within ±0.005 of H10’s 0.396 confirms gain is real, not stochastic)</p>
+<p><strong>After all three runs complete, paste this prompt:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">CGM</span><span class="w"> </span><span class="n">verification</span><span class="w"> </span><span class="n">runs</span><span class="w"> </span><span class="n">complete</span><span class="p">.</span><span class="w"> </span><span class="n">Here</span><span class="w"> </span><span class="k">are</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="nl">results</span><span class="p">:</span>
+
+<span class="mf">1.</span><span class="w"> </span><span class="n">Med</span><span class="w"> </span><span class="n">standalone</span><span class="w"> </span><span class="nl">XGBoost</span><span class="p">:</span><span class="w"> </span><span class="o">[</span><span class="n">N_FEATURES</span><span class="o">]</span><span class="w"> </span><span class="n">features</span><span class="p">,</span><span class="w"> </span><span class="n">Test</span><span class="w"> </span><span class="n">PR</span><span class="o">-</span><span class="n">AUC</span><span class="w"> </span><span class="o">[</span><span class="n">VALUE</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">run_id</span><span class="w"> </span><span class="o">[</span><span class="n">RUN_ID</span><span class="o">]</span>
+<span class="mf">2.</span><span class="w"> </span><span class="ow">All</span><span class="o">-</span><span class="mi">11</span><span class="w"> </span><span class="nl">XGBoost</span><span class="p">:</span><span class="w"> </span><span class="o">[</span><span class="n">N_FEATURES</span><span class="o">]</span><span class="w"> </span><span class="n">features</span><span class="p">,</span><span class="w"> </span><span class="n">Test</span><span class="w"> </span><span class="n">PR</span><span class="o">-</span><span class="n">AUC</span><span class="w"> </span><span class="o">[</span><span class="n">VALUE</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">run_id</span><span class="w"> </span><span class="o">[</span><span class="n">RUN_ID</span><span class="o">]</span>
+<span class="mf">3.</span><span class="w"> </span><span class="ow">All</span><span class="o">-</span><span class="mi">11</span><span class="w"> </span><span class="n">H2O</span><span class="w"> </span><span class="nl">DAI</span><span class="p">:</span><span class="w"> </span><span class="o">[</span><span class="n">N_FEATURES</span><span class="o">]</span><span class="w"> </span><span class="n">original</span><span class="w"> </span><span class="n">features</span><span class="p">,</span><span class="w"> </span><span class="n">Test</span><span class="w"> </span><span class="n">PR</span><span class="o">-</span><span class="n">AUC</span><span class="w"> </span><span class="o">[</span><span class="n">VALUE</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="o">[</span><span class="n">FILENAME</span><span class="o">]</span>
+
+<span class="k">Update</span><span class="w"> </span><span class="ow">all</span><span class="w"> </span><span class="n">experiment</span><span class="w"> </span><span class="n">tracking</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">closeout</span><span class="w"> </span><span class="nl">pattern</span><span class="p">:</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Experiment</span><span class="w"> </span><span class="nf">Log</span><span class="err">:</span><span class="w"> </span><span class="k">Section</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">(</span><span class="n">Medications</span><span class="w"> </span><span class="k">row</span><span class="err">:</span><span class="w"> </span><span class="mi">57</span><span class="w"> </span><span class="n">features</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PR</span><span class="o">-</span><span class="n">AUC</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">Section</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">combined</span><span class="w"> </span><span class="n">run</span><span class="p">)</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Testbed</span><span class="w"> </span><span class="nl">Appendix</span><span class="p">:</span><span class="w"> </span><span class="k">Section</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="n">header</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">Section</span><span class="w"> </span><span class="mi">15</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="k">update</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Internal</span><span class="w"> </span><span class="n">Technical</span><span class="w"> </span><span class="nl">Reference</span><span class="p">:</span><span class="w"> </span><span class="n">Medications</span><span class="w"> </span><span class="n">dimension</span><span class="w"> </span><span class="n">PR</span><span class="o">-</span><span class="n">AUC</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">combined</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="k">section</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Agent</span><span class="w"> </span><span class="nl">memory</span><span class="p">:</span><span class="w"> </span><span class="n">all_11_combined</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">history</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">med</span><span class="w"> </span><span class="n">standalone</span><span class="w"> </span><span class="n">benchmark</span>
+<span class="o">-</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">strategy</span><span class="w"> </span><span class="nl">notebook</span><span class="p">:</span><span class="w"> </span><span class="n">mark</span><span class="w"> </span><span class="mi">1</span><span class="n">C</span><span class="w"> </span><span class="n">items</span><span class="w"> </span><span class="n">done</span>
+
+<span class="k">If</span><span class="w"> </span><span class="n">H2O</span><span class="w"> </span><span class="n">PR</span><span class="o">-</span><span class="n">AUC</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">0.393</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="o">+</span><span class="mf">0.009</span><span class="w"> </span><span class="n">gain</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">confirmed</span><span class="w"> </span><span class="nc">real</span><span class="p">.</span><span class="w"> </span><span class="k">Update</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">working</span><span class="w"> </span><span class="n">benchmark</span><span class="w"> </span><span class="n">accordingly</span><span class="p">.</span>
+<span class="k">If</span><span class="w"> </span><span class="n">H2O</span><span class="w"> </span><span class="n">PR</span><span class="o">-</span><span class="n">AUC</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.393</span><span class="p">,</span><span class="w"> </span><span class="n">investigate</span><span class="w"> </span><span class="err">—</span><span class="w"> </span><span class="n">possible</span><span class="w"> </span><span class="n">stochastic</span><span class="w"> </span><span class="n">gain</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">source</span><span class="o">-</span><span class="nc">table</span><span class="w"> </span><span class="k">join</span><span class="w"> </span><span class="nf">difference</span><span class="p">.</span>
+</code></pre></div>
+
+<hr />
+<h3 id="1b-clinical-review-follow-up-items-from-july-21-meeting">1B. Clinical Review Follow-Up Items (from July 21 meeting)</h3>
+<p>These were committed to in the post-review email to Drs. Hebert and Clore:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Item</th>
+<th>Action required</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Cost of model upkeep after deployment</td>
+<td>Internal DS team discussion to scope ongoing maintenance (scoring infra, retraining cadence, monitoring)</td>
+<td>August review</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Deployment effort and timeline</td>
+<td>Preliminary estimate for validated model → live care management workflow</td>
+<td>August review</td>
+</tr>
+</tbody>
+</table>
+<p>Neither requires model code — these are planning/estimation deliverables.</p></div></div><div class="cell"><div class="markdown-cell"><p><strong>1. Experiment closeout update pattern</strong> — a 7-step checklist triggered any time an H2O or XGBoost experiment is closed (PASS or FAIL). Every session closing an experiment must update all of these before the task is considered complete:</p>
+<ul>
+<li>Testbed appendix (notebook 2840701918664769)</li>
+<li>Experiment Log (file 1021462973792902)</li>
+<li>Internal Technical Reference (notebook 1739283995607964)</li>
+<li>July Technical Update for Clinical Stakeholders (notebook 1918629561173385)</li>
+<li>Clinical Summary (notebook 1918629561173386)</li>
+<li>July Review Strategies (notebook 2577277521965363)</li>
+<li>Agent memory (.assistant_instructions.md)</li>
+</ul>
+<p><strong>2. Review-Cycle Documentation Sync Prompt</strong> — a standard prompt file at plans_and_prompts/T2DM_Review_Cycle_Sync_Prompt.md (ID 3195293855768028) to paste at the start of each review cycle chat. Covers 5 tasks: C1 cohort discrepancy check, U1 dimension PR-AUCs, U2 combined model metrics, U3 feature counts, U4 methodology description.</p>
+<p><strong>3. Review folder notebook philosophy</strong> — added this session: the two-notebook structure for each review_MMDDYYYY/ folder (Technical Update = statistical depth at clinical level; Clinical Summary = presentation-ready slide source material).</p>
+<p>One gap worth noting: the sync prompt and closeout pattern cover <strong>DS-internal documents</strong> well, but the Clinical Summary and Technical Update were only added to the closeout checklist recently (this session). If you want, I can verify all 7 closeout items are current for the H10 CGM experiment that's clearly been running in this notebook.</p></div></div><div class="cell"><div class="cell-title">Workstream 2: August Experiments (Target PR-AUC > 0.40)</div><div class="markdown-cell"><hr />
+<h2 id="workstream-2-three-remaining-experiments">Workstream 2: Three Remaining Experiments</h2>
+<p><strong>Goal:</strong> If two or three succeed, combined performance should reach <strong>PR-AUC 0.400–0.408</strong>.</p>
+<hr />
+<h3 id="experiment-a-missingness-indicators-monitoring-gaps">Experiment A: Missingness Indicators (Monitoring Gaps)</h3>
+<p><strong>Hypothesis:</strong> Patients with no A1C in two years, no eGFR, or no lipid panel are at systematically higher risk — absence of monitoring as a risk signal in itself.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Features to create</td>
+<td>Binary flags: <code>no_a1c_22mo</code>, <code>no_egfr_22mo</code>, <code>no_lipid_22mo</code>, <code>no_creatinine_22mo</code>, plus a composite count</td>
+</tr>
+<tr>
+<td>Source tables</td>
+<td>Existing lab dimension tables (already joined); check for NULL/missing</td>
+</tr>
+<tr>
+<td>Effort</td>
+<td>Low — computed from existing feature tables, no new joins</td>
+</tr>
+<tr>
+<td>Expected benefit</td>
+<td>Small incremental improvement</td>
+</tr>
+<tr>
+<td>FE home</td>
+<td>TBD — likely A1C + eGFR or a new monitoring dimension</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="experiment-b-care-utilization-patterns">Experiment B: Care Utilization Patterns</h3>
+<p><strong>Hypothesis:</strong> How patients use the health system (visit regularity, no-show rate, repeat ED attendance, care fragmentation across departments) carries predictive signal not captured by the current utilization dimension.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Features to create</td>
+<td>Visit frequency, no-show rate, ED bounce-back count, department fragmentation index, days between visits (variability)</td>
+</tr>
+<tr>
+<td>Source tables</td>
+<td><code>cp__pat_enc</code>, scheduling tables (need access confirmation)</td>
+</tr>
+<tr>
+<td>Effort</td>
+<td>Medium — requires scheduling table access</td>
+</tr>
+<tr>
+<td>Expected benefit</td>
+<td>Small incremental improvement</td>
+</tr>
+<tr>
+<td>FE home</td>
+<td>Likely <code>tbl_util_features_target</code> (extend from 6 features)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="experiment-c-baseline-feature-recovery">Experiment C: Baseline Feature Recovery</h3>
+<p><strong>Hypothesis:</strong> Of the ~373 columns in the original 854-feature baseline model not yet evaluated in the current 11-dimension approach, some subset (20–40 features) may carry residual signal.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Approach</td>
+<td>Compare <code>tbl_baseline_features_target</code> columns against current 11 joined features. Identify non-overlapping columns with non-trivial variance. Append top candidates and re-run H2O.</td>
+</tr>
+<tr>
+<td>Source tables</td>
+<td><code>bsmh_ds_ph_wip.tbl_baseline_features_target</code> (1,071 columns, 301,443 rows)</td>
+</tr>
+<tr>
+<td>Effort</td>
+<td>Low — one H2O run on appended data</td>
+</tr>
+<tr>
+<td>Expected benefit</td>
+<td>Small incremental improvement</td>
+</tr>
+<tr>
+<td>FE home</td>
+<td>Standalone supplement (like the Pharm Subclass flags pattern)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="experiment-prioritization">Experiment Prioritization</h3>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Experiment</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1st</td>
+<td>Missingness Indicators</td>
+<td>Lowest effort, no new data access needed, clearest clinical story</td>
+</tr>
+<tr>
+<td>2nd</td>
+<td>Baseline Feature Recovery</td>
+<td>Low effort, one H2O run, potentially high signal from known-good features</td>
+</tr>
+<tr>
+<td>3rd</td>
+<td>Care Utilization Patterns</td>
+<td>Medium effort, requires scheduling table access confirmation</td>
+</tr>
+</tbody>
+</table></div></div><div class="cell"><div class="cell-title">Workstream 3: August Review Deliverables</div><div class="markdown-cell"><hr />
+<h2 id="workstream-3-august-review-deliverables">Workstream 3: August Review Deliverables</h2>
+<h3 id="documents-to-produce">Documents to Produce</h3>
+<table>
+<thead>
+<tr>
+<th>Deliverable</th>
+<th>Location</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T2DM Model 1 August Clinical Summary</td>
+<td><code>review_082026/</code></td>
+<td>Created (empty)</td>
+</tr>
+<tr>
+<td>T2DM Model 1 August Technical Update for Clinical Stakeholders</td>
+<td><code>review_082026/</code></td>
+<td>Created (empty)</td>
+</tr>
+<tr>
+<td>Updated Experiment Log</td>
+<td>file:1021462973792902</td>
+<td>Pending experiment results</td>
+</tr>
+<tr>
+<td>Updated Testbed Appendix</td>
+<td>notebook:2840701918664769</td>
+<td>Pending experiment results</td>
+</tr>
+<tr>
+<td>Updated Internal Technical Reference</td>
+<td>notebook:1739283995607964</td>
+<td>Pending experiment results</td>
+</tr>
+</tbody>
+</table>
+<h3 id="clinical-follow-up-deliverables-non-model">Clinical Follow-Up Deliverables (non-model)</h3>
+<table>
+<thead>
+<tr>
+<th>Deliverable</th>
+<th>Owner</th>
+<th>Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cost of upkeep after deployment</td>
+<td>DS team (internal scoping first)</td>
+<td>One-pager or table</td>
+</tr>
+<tr>
+<td>Deployment effort and timeline estimate</td>
+<td>DS team</td>
+<td>Preliminary scope document</td>
+</tr>
+</tbody>
+</table>
+<h3 id="review-folder-structure">Review Folder Structure</h3>
+<div class="codehilite"><pre><span></span><code>review_082026/
+├── T2DM Aug Review Strategies          (this notebook — sprint plan)
+├── T2DM Model 1 August Clinical Summary (presentation-ready, plain language)
+└── T2DM Model 1 August Technical Update  (statistical depth, clinician-facing)
+</code></pre></div>
+
+<p>Follows the two-notebook structure established in July: Technical Update = statistical depth at clinical level; Clinical Summary = presentation-ready slide source material.</p></div></div>
+    </div>
+</body>
+</html>
