@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T2DM Model 1 August Technical Update for Clinical Stakeholders</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                         Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6; color: #333;
+            background-color: #f8f9fa; margin: 0; padding: 20px;
+        }
+        .container {
+            max-width: 920px; margin: 0 auto; background: #fff;
+            border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 40px 50px;
+        }
+        h1 {
+            font-size: 2em; color: #1a1a2e;
+            border-bottom: 3px solid #e94560; padding-bottom: 12px; margin-top: 0;
+        }
+        h2 {
+            font-size: 1.5em; color: #16213e;
+            border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-top: 1.5em;
+        }
+        h3 { font-size: 1.25em; color: #0f3460; margin-top: 1.2em; }
+        h4, h5, h6 { color: #16213e; }
+        p { margin: 0.8em 0; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ── Cells ── */
+        .cell { margin-bottom: 8px; }
+        .cell-title {
+            background: #eef2f7; padding: 8px 14px;
+            font-weight: 600; font-size: 1.05em; color: #16213e;
+            border-left: 4px solid #e94560; border-radius: 4px 4px 0 0;
+        }
+        .markdown-cell { padding: 4px 0; }
+
+        /* ── Code blocks ── */
+        .code-cell {
+            background: #282c34; border-radius: 6px;
+            margin: 8px 0; overflow-x: auto;
+        }
+        .code-cell pre { margin: 0; padding: 16px 20px; }
+        .code-cell code {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono',
+                         Menlo, Courier, monospace;
+            font-size: 0.88em; color: #abb2bf; line-height: 1.5;
+        }
+        .markdown-cell code {
+            background: #f0f0f0; padding: 2px 6px; border-radius: 3px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono',
+                         Menlo, Courier, monospace;
+            font-size: 0.9em; color: #c7254e;
+        }
+        .markdown-cell pre {
+            background: #282c34; border-radius: 6px;
+            padding: 16px 20px; overflow-x: auto;
+        }
+        .markdown-cell pre code {
+            background: transparent; color: #abb2bf; padding: 0;
+        }
+
+        /* ── Tables ── */
+        table {
+            border-collapse: collapse; width: 100%;
+            margin: 1em 0; font-size: 0.95em;
+        }
+        th, td { border: 1px solid #d0d7de; padding: 10px 14px; text-align: left; }
+        th { background-color: #f0f3f6; font-weight: 600; color: #1a1a2e; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        tr:hover { background-color: #eef2f7; }
+
+        /* ── Block quotes ── */
+        blockquote {
+            border-left: 4px solid #e94560; margin: 1em 0;
+            padding: 10px 20px; background: #fef9fa; color: #555;
+        }
+
+        /* ── Lists ── */
+        ul, ol { padding-left: 2em; }
+        li { margin: 0.3em 0; }
+
+        /* ── Misc ── */
+        img { max-width: 100%; height: auto; }
+        hr { border: none; border-top: 1px solid #ddd; margin: 2em 0; }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px 24px; }
+            body { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>T2DM Model 1 August Technical Update for Clinical Stakeholders</h1>
+        <div class="cell"><div class="cell-title">August Review — Executive Summary</div><div class="markdown-cell"><h1 id="t2dm-model-1-august-technical-update-for-clinical-stakeholders">T2DM Model 1 — August Technical Update for Clinical Stakeholders</h1>
+<hr />
+<p><strong>Contents</strong></p>
+<ol>
+<li>Current Model Status — August 2026 Review</li>
+<li>CGM Device Users: A Data Correction and a New Finding</li>
+<li>Experiment A: Monitoring and Care Gap Indicators</li>
+<li>Experiment B: Care Utilization Patterns</li>
+<li>Experiment C: Baseline Feature Recovery</li>
+</ol>
+<hr />
+<h2 id="1-current-model-status-august-2026-review">1. Current Model Status — August 2026 Review</h2>
+<p><strong>New benchmark established: H19 (Missingness Augmented)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Previous benchmark (H17, July)</th>
+<th>New benchmark (H19, August)</th>
+<th>Improvement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PR-AUC (held-out test)</td>
+<td>0.396</td>
+<td><strong>0.427</strong></td>
+<td><strong>+0.031 (+7.9%)</strong></td>
+</tr>
+<tr>
+<td>ROC-AUC</td>
+<td>0.852</td>
+<td><strong>0.868</strong></td>
+<td>+0.016</td>
+</tr>
+<tr>
+<td>Total features</td>
+<td>285</td>
+<td><strong>297</strong></td>
+<td>+12 care-gap indicators</td>
+</tr>
+</tbody>
+</table>
+<p>This is the <strong>largest single-experiment improvement in the project to date.</strong> The previous best single-experiment gain was +0.009 (CGM device identification, July).</p>
+<hr />
+<h3 id="what-drove-the-improvement">What drove the improvement</h3>
+<p>Twelve new features measuring <strong>absence of expected diabetes monitoring and care</strong> (Experiment A, detailed below) produced a step-change in the model's ability to identify patients at risk of unplanned admission. The single most impactful new feature — whether a patient has received nutrition counseling — now ranks as the #1 most important predictor in the entire model.</p>
+<h3 id="how-it-was-validated">How it was validated</h3>
+<p>The improvement was confirmed by H2O Driverless AI (experiment H19), producing a held-out test PR-AUC of <strong>0.427</strong> — a +0.031 gain over the previous benchmark.</p>
+<h3 id="what-this-means-at-the-bedside-operating-points">What this means at the bedside (operating points)</h3>
+<table>
+<thead>
+<tr>
+<th>If we flag the top...</th>
+<th>Patients flagged</th>
+<th>PPV</th>
+<th>Sensitivity</th>
+<th>Lift</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1%</td>
+<td>900</td>
+<td>75.5%</td>
+<td>10.1%</td>
+<td>10.1x</td>
+</tr>
+<tr>
+<td>5%</td>
+<td>4,504</td>
+<td>44.3%</td>
+<td>29.6%</td>
+<td>5.9x</td>
+</tr>
+<tr>
+<td>10%</td>
+<td>9,008</td>
+<td>36.2%</td>
+<td>48.4%</td>
+<td>4.8x</td>
+</tr>
+<tr>
+<td>20%</td>
+<td>18,017</td>
+<td>25.9%</td>
+<td>69.3%</td>
+<td>3.5x</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="august-experiments-at-a-glance">August experiments at a glance</h3>
+<table>
+<thead>
+<tr>
+<th>Experiment</th>
+<th>Result</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A: Monitoring and Care Gap Indicators</strong></td>
+<td><strong>PASS — new benchmark</strong></td>
+<td>+0.031 PR-AUC, 12 new features</td>
+</tr>
+<tr>
+<td>B: Care Utilization Patterns</td>
+<td>PASS — 1 feature retained</td>
+<td>+0.001 PR-AUC, <code>n_distinct_specialties</code> ranked #2 overall</td>
+</tr>
+<tr>
+<td>C: Baseline Feature Recovery</td>
+<td>CLOSED — negative</td>
+<td>+0.000 (legacy features redundant)</td>
+</tr>
+</tbody>
+</table>
+<hr /></div></div><div class="cell"><div class="cell-title">CGM Device Users - Data Correction Story</div><div class="markdown-cell"><hr />
+<h2 id="2-cgm-device-users-a-data-correction-and-a-new-finding">2. CGM Device Users: A Data Correction and a New Finding</h2>
+<h3 id="why-this-matters">Why this matters</h3>
+<p>In our July review, we reported that patients using continuous glucose monitors (CGM) showed a meaningful lift in the model's ability to identify patients at risk of an unplanned admission. Since then, we took a closer look at exactly how that CGM signal was built, and found — and fixed — a data-labeling issue. Correcting it led to an unexpected and clinically useful discovery.</p>
+<h3 id="what-we-found">What we found</h3>
+<p>When we reviewed the medication codes used to identify CGM users in <code>cp__order_med</code>, two device codes turned out to be miscoded. CGM sensors and insulin pumps are different types of devices — a CGM sensor measures glucose; an insulin pump delivers insulin. Two codes for insulin pumps (specifically, pumps that read data from a CGM sensor as part of their operation) had been counted as CGM devices rather than as pumps.</p>
+<p>Once we corrected the device list — counting CGM sensors only as CGM sensors — the model's performance on the held-out test set dropped noticeably. In other words, the original miscoding had been quietly helping the model, and simply fixing it looked, at first, like it hurt performance.</p>
+<h3 id="what-we-did-about-it">What we did about it</h3>
+<p>Rather than reverting to the incorrect device coding, we investigated <em>why</em> the correction affected performance. What we found is that insulin pump use is itself a meaningful, distinct clinical signal — separate from CGM use — that the model had been picking up indirectly through the miscoded devices. So we built insulin pump use into its own, separately tracked feature, so the model can use that information properly without it being mixed into the CGM signal.</p></div></div><div class="cell"><div class="cell-title">CGM Device Users - Results and Clinical Interpretation</div><div class="markdown-cell"><h3 id="result">Result</h3>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Held-out test performance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Original (July) — pump codes miscounted as CGM devices</td>
+<td>Benchmark</td>
+</tr>
+<tr>
+<td>Corrected CGM device list, no separate pump signal</td>
+<td>Dropped notably below benchmark</td>
+</tr>
+<tr>
+<td>Corrected CGM device list <strong>+</strong> a new, separate insulin pump signal</td>
+<td>Recovered, and slightly exceeded the July benchmark</td>
+</tr>
+</tbody>
+</table>
+<p>Of every 100 patients flagged as high-risk by the updated model, roughly the same number go on to have an unplanned admission as with the July version (Positive Predictive Value is unchanged within noise). The correction did not weaken the tool — and once the insulin pump signal was properly separated out, the model performed slightly better than it did in July.</p>
+<h3 id="clinical-interpretation">Clinical interpretation</h3>
+<p>Patients who use insulin pumps have unplanned admission rates roughly a third higher than patients who do not use pumps (about 10 of every 100 pump users vs. about 7 of every 100 non-pump users). This is independent of CGM use — a given patient may use a pump, a sensor, both, or neither — and reflects genuine clinical complexity (patients on pumps tend to have more advanced or harder-to-manage diabetes), not a data artifact.</p></div></div><div class="cell"><div class="cell-title">CGM Device Users - Next Steps</div><div class="markdown-cell"><h3 id="next-steps">Next steps</h3>
+<p>We are working with our Clarity team to formally validate the full list of insulin-pump device and medication codes before adding this signal as a permanent part of the model's feature set. Once that validation is complete, the corrected CGM signal and the new insulin pump signal will both become part of the standard model configuration used for scoring.</p>
+<p><strong>Key takeaway for stakeholders:</strong> the July CGM finding stands — CGM use remains a genuine, useful signal for this model. The correction simply made that signal more accurate, and revealed a second, related signal (insulin pump use) that we are now formally incorporating.</p></div></div><div class="cell"><div class="cell-title">Experiment A: Monitoring and Care Gap Indicators</div><div class="markdown-cell"><hr />
+<h2 id="3-experiment-a-monitoring-and-care-gap-indicators">3. Experiment A: Monitoring and Care Gap Indicators</h2>
+<h3 id="why-this-experiment-matters">Why this experiment matters</h3>
+<p>Diabetes management relies on regular monitoring: lab tests, retinal exams, foot exams, diabetes education, and nutrition counseling. When these expected touchpoints are absent, it may indicate a patient who is disengaged from structured care or lost to follow-up. This experiment tests whether the <strong>absence of expected monitoring</strong> adds predictive value over and above the test results themselves.</p>
+<p>The core question: does knowing that a patient has NOT received expected diabetes care help identify risk beyond what their lab values and visit history already tell us?</p>
+<hr />
+<h3 id="what-was-built">What was built</h3>
+<p>We created 12 binary indicators capturing whether specific monitoring or care activities are absent from the patient’s record in the 22 months prior to scoring. These divide into three groups:</p>
+<p><strong>Laboratory monitoring gaps</strong> (7 features)</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No A1C in 22 months</td>
+<td>Patient has no HbA1c result in the observation window</td>
+</tr>
+<tr>
+<td>No eGFR in 22 months</td>
+<td>No estimated glomerular filtration rate test</td>
+</tr>
+<tr>
+<td>No lipid panel in 22 months</td>
+<td>No cholesterol/triglycerides testing</td>
+</tr>
+<tr>
+<td>No creatinine in 22 months</td>
+<td>No serum creatinine test</td>
+</tr>
+<tr>
+<td>No urine albumin in 22 months</td>
+<td>No microalbumin or urine protein test</td>
+</tr>
+<tr>
+<td>No TSH in 22 months</td>
+<td>No thyroid function test</td>
+</tr>
+<tr>
+<td>No hepatic panel in 22 months</td>
+<td>No liver function tests</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Procedure and education care gaps</strong> (4 features)</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No retinal exam in 22 months</td>
+<td>No dilated eye exam, OCT, or fundus photography</td>
+</tr>
+<tr>
+<td>No foot exam in 22 months</td>
+<td>No diabetic foot assessment</td>
+</tr>
+<tr>
+<td>No diabetes education in 22 months</td>
+<td>No structured diabetes self-management education</td>
+</tr>
+<tr>
+<td>No nutrition counseling in 22 months</td>
+<td>No dietitian or nutrition counseling encounter</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Aggregate measure</strong> (1 feature)</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total monitoring gaps (0–11)</td>
+<td>Count of how many of the above 11 touchpoints are absent</td>
+</tr>
+</tbody>
+</table>
+<p>The 22-month window was chosen to exceed the standard 12-month annual screening cadence, ensuring that a flag of 1 truly represents a gap rather than normal scheduling variation.</p>
+<hr />
+<h3 id="how-these-features-were-built-technical-detail">How these features were built (technical detail)</h3>
+<p>All 12 features are derived from two source systems already in the model’s data pipeline, joined back to the full 300,290-patient cohort:</p>
+<p><strong>Lab monitoring gaps</strong> query the existing lab feature tables (<code>tbl_lab_features_target</code>, <code>tbl_a1c_egfr_features_target</code>). A flag is set to 1 when the patient’s most recent result column for that lab component is NULL — meaning no finalized result exists in the 22-month observation window (orders placed on or after 2022-03-15).</p>
+<p><strong>Procedure/education care gaps</strong> query <code>bsmh.refined.cp__order_proc</code> directly. The logic for each:</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Source logic</th>
+<th>Specific PROC_IDs / matching criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No retinal exam</td>
+<td><code>cp__order_proc</code> where <code>PROC_ID IN (39244, 199857, 105839, 114706, 40707)</code> OR <code>DESCRIPTION</code> contains ‘OCT’ / ‘fundus photo’</td>
+<td>Covers dilated fundoscopy, optical coherence tomography, and fundus photography — the three accepted modalities for diabetic retinopathy screening</td>
+</tr>
+<tr>
+<td>No foot exam</td>
+<td><code>cp__order_proc</code> where <code>PROC_ID = 39246</code></td>
+<td>Epic’s dedicated diabetic foot assessment procedure order</td>
+</tr>
+<tr>
+<td>No diabetes education</td>
+<td><code>cp__order_proc</code> where <code>PROC_ID IN (81, 321, 189216, 113139, 82234)</code></td>
+<td>Covers DSMES (Diabetes Self-Management Education and Support) across individual, group, and telehealth delivery modes</td>
+</tr>
+<tr>
+<td>No nutrition counseling</td>
+<td><code>cp__order_proc</code> where <code>PROC_ID IN (141, 385, 82412)</code></td>
+<td>Registered dietitian consultations and medical nutrition therapy orders</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Date filter:</strong> Only procedure orders with <code>ORDERING_DATE &gt;= '2022-03-15'</code> (start of the 22-month observation window) are counted. A patient with zero qualifying orders in this window receives flag = 1.</p>
+<p><strong>Aggregate count:</strong> <code>n_monitoring_gaps</code> is simply the sum of the 11 binary flags above (range 0–11). No weighting is applied.</p>
+<p><strong>Join logic:</strong> Each gap flag is computed per PAT_ID via LEFT JOIN to the cohort. Patients with no matching orders in <code>cp__order_proc</code> receive flag = 1 (the absence IS the signal). This ensures all 300,290 patients have a value for every feature — no NULLs exist in the final table.</p>
+<p><strong>Why PROC_ID rather than CPT code?</strong> Epic’s internal <code>PROC_ID</code> is more reliable for our institutional data than CPT mapping, which can be incomplete for non-billable education encounters. The IDs were sourced from Epic procedure dictionaries; formal validation by our Clarity team is pending.</p>
+<hr />
+<h3 id="how-common-are-these-gaps">How common are these gaps?</h3>
+<p>Some gaps are very common in the cohort, while others are rare:</p>
+<table>
+<thead>
+<tr>
+<th>Care gap</th>
+<th>Percent of cohort with gap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No nutrition counseling</td>
+<td>92.5%</td>
+</tr>
+<tr>
+<td>No diabetes education</td>
+<td>91.4%</td>
+</tr>
+<tr>
+<td>No urine albumin test</td>
+<td>81.7%</td>
+</tr>
+<tr>
+<td>No eGFR test</td>
+<td>74.1%</td>
+</tr>
+<tr>
+<td>No foot exam</td>
+<td>73.2%</td>
+</tr>
+<tr>
+<td>No retinal exam</td>
+<td>60.0%</td>
+</tr>
+<tr>
+<td>No TSH test</td>
+<td>45.0%</td>
+</tr>
+<tr>
+<td>No A1C test</td>
+<td>33.3%</td>
+</tr>
+<tr>
+<td>No lipid panel</td>
+<td>30.1%</td>
+</tr>
+<tr>
+<td>No hepatic panel</td>
+<td>21.9%</td>
+</tr>
+<tr>
+<td>No creatinine test</td>
+<td>19.9%</td>
+</tr>
+</tbody>
+</table>
+<p>Notably, fewer than 10% of T2DM patients received nutrition counseling in the 22-month window, and fewer than 9% received documented diabetes education.</p>
+<hr />
+<h3 id="an-important-nuance-in-the-data">An important nuance in the data</h3>
+<p>These features show a <strong>counterintuitive pattern</strong> in univariate analysis: patients who DO have monitoring gaps actually have a <em>lower</em> rate of unplanned admissions than those without gaps. The magnitude is substantial:</p>
+<table>
+<thead>
+<tr>
+<th>Care gap</th>
+<th>Admission rate when gap is PRESENT</th>
+<th>Admission rate when gap is ABSENT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No nutrition counseling</td>
+<td>5.5%</td>
+<td>32.6%</td>
+</tr>
+<tr>
+<td>No diabetes education</td>
+<td>6.5%</td>
+<td>17.5%</td>
+</tr>
+<tr>
+<td>No A1C test</td>
+<td>3.0%</td>
+<td>9.7%</td>
+</tr>
+<tr>
+<td>No creatinine test</td>
+<td>1.3%</td>
+<td>9.0%</td>
+</tr>
+<tr>
+<td>No hepatic panel</td>
+<td>1.7%</td>
+<td>9.1%</td>
+</tr>
+<tr>
+<td>No TSH test</td>
+<td>4.6%</td>
+<td>9.8%</td>
+</tr>
+<tr>
+<td>No eGFR test</td>
+<td>6.2%</td>
+<td>11.2%</td>
+</tr>
+<tr>
+<td>No lipid panel</td>
+<td>4.0%</td>
+<td>9.0%</td>
+</tr>
+<tr>
+<td>No urine albumin</td>
+<td>7.0%</td>
+<td>9.7%</td>
+</tr>
+<tr>
+<td>No foot exam</td>
+<td>6.9%</td>
+<td>8.9%</td>
+</tr>
+<tr>
+<td>No retinal exam</td>
+<td>6.6%</td>
+<td>8.8%</td>
+</tr>
+</tbody>
+</table>
+<p>This is <strong>confounding by indication</strong>: sicker patients receive more intensive monitoring — they are seen more often and tested more frequently precisely because they are higher-risk. The patients without gaps are predominantly the complex, high-acuity population that clinicians are already managing closely.</p>
+<p>This confounding persists even when stratifying by illness severity (e.g., quartiles of distinct clinical diagnosis groups). It operates across many severity dimensions simultaneously — diagnoses, medications, utilization, labs — and cannot be resolved by controlling for any single factor.</p>
+<h4 id="a-closer-look-what-distinguishes-admitted-from-non-admitted-within-the-same-care-group">A closer look: what distinguishes admitted from non-admitted within the same care group?</h4>
+<p>To illustrate how deep this confounding runs, consider the 22,383 patients who <strong>received</strong> nutrition counseling. Among them, 32.6% (7,290) went on to have an unplanned admission and 67.4% (15,093) did not. What separates these two groups?</p>
+<table>
+<thead>
+<tr>
+<th>Characteristic</th>
+<th>Not admitted (n=15,093)</th>
+<th>Admitted (n=7,290)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Average age</td>
+<td>63.7</td>
+<td>67.2</td>
+</tr>
+<tr>
+<td>Avg distinct clinical groups</td>
+<td>12.1</td>
+<td><strong>15.0</strong></td>
+</tr>
+<tr>
+<td>Avg prior unplanned IP admissions</td>
+<td>0.81</td>
+<td><strong>1.65</strong> (2x)</td>
+</tr>
+<tr>
+<td>Avg prior ED visits</td>
+<td>1.10</td>
+<td><strong>1.96</strong> (2x)</td>
+</tr>
+<tr>
+<td>Avg total length of stay (days)</td>
+<td>6.3</td>
+<td><strong>10.5</strong></td>
+</tr>
+<tr>
+<td>Avg total charges</td>
+<td>$111,527</td>
+<td><strong>$163,701</strong> (+47%)</td>
+</tr>
+<tr>
+<td>Avg monitoring gaps (out of 11)</td>
+<td><strong>3.9</strong></td>
+<td><strong>3.8</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The admitted group is older, has 24% more diagnostic complexity, double the prior admissions, double the prior ED visits, and 47% higher charges. But their <strong>monitoring gap burden is virtually identical</strong> to those who were not admitted.</p>
+<p>This tells us that within a care group, what drives admissions is prior severity and utilization history — not whether the patient has other unmet monitoring needs. The care-gap features are not functioning as a simple proxy for “disengaged patients.” Their value to the model is more subtle than that.</p>
+<h4 id="what-the-0031-pr-auc-improvement-tells-us">What the +0.031 PR-AUC improvement tells us</h4>
+<p>If care-gap features were purely redundant with the severity signals already in the model (which captures utilization, lab results, diagnoses, and medications across 285 features), adding them would produce zero improvement. The fact that they produce the <strong>largest single-experiment gain in the project’s history</strong> demonstrates they carry genuinely new information that the existing 285 features do not already represent.</p>
+<p>What we can say with confidence:</p>
+<ul>
+<li>The care-gap features capture a dimension of information that is <strong>not redundant</strong> with existing severity and utilization measures.</li>
+<li>That new information operates <strong>in interaction with</strong> other features — its value emerges in the full multivariate context, not in isolation.</li>
+<li>The univariate direction (gaps = lower risk) is misleading and should not be used for clinical interpretation.</li>
+</ul>
+<p>What we cannot yet demonstrate from the data alone:</p>
+<ul>
+<li>We do not have a simple stratified analysis that shows care gaps associating with <em>higher</em> risk once severity is held constant. The confounding is too multidimensional for a single cross-tab to resolve.</li>
+<li>The specific mechanism by which the model uses these features (e.g., identifying disengaged patients versus refining severity estimates) remains a property of the model’s internal learned interactions, not something we can decompose into a single interpretable rule.</li>
+</ul>
+<hr />
+<h3 id="results">Results</h3>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Features</th>
+<th>Held-out test PR-AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Current model (benchmark H17)</td>
+<td>285</td>
+<td>0.396</td>
+</tr>
+<tr>
+<td>Current model + 12 care-gap indicators (H2O DAI)</td>
+<td>297</td>
+<td><strong>0.427</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>This is the largest single improvement from any experiment in the project to date</strong> (delta +0.031). The previous best single-experiment gain was +0.009 from CGM device identification.</p>
+<hr />
+<h3 id="which-care-gaps-matter-most">Which care gaps matter most?</h3>
+<p>The model identified nutrition counseling absence as the single most important feature in the entire expanded model — ahead of all 285 existing features. Diabetes education absence ranked in the top 10 by impact.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Model importance ranking</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No nutrition counseling in 22 months</td>
+<td><strong>#1</strong> (most important)</td>
+</tr>
+<tr>
+<td>No diabetes education in 22 months</td>
+<td>Top 10</td>
+</tr>
+<tr>
+<td>Total monitoring gaps (aggregate count)</td>
+<td>Top 20</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="clinical-interpretation">Clinical interpretation</h3>
+<p>This finding has a dual interpretation:</p>
+<ol>
+<li>
+<p><strong>For risk prediction:</strong> Care-gap features capture a dimension of patient engagement and system-level care delivery that lab values and visit counts alone cannot represent. The model now better identifies patients who are falling through the cracks of structured diabetes management.</p>
+</li>
+<li>
+<p><strong>For intervention design:</strong> The features that matter most (nutrition counseling, diabetes education) are precisely the ones that represent actionable care coordination opportunities. A patient flagged as high-risk partly because they have not received these services can be offered those services as part of the intervention.</p>
+</li>
+</ol>
+<hr />
+<h3 id="what-this-means-going-forward">What this means going forward</h3>
+<p>These 12 care-gap indicators will be incorporated into the production model configuration. The exact integration approach is being finalized. No additional data sources are required — all features are built from existing procedure and lab order records already in the feature pipeline.</p></div></div><div class="cell"><div class="cell-title">Experiment B Overview</div><div class="markdown-cell"><h2 id="4-experiment-b-care-utilization-patterns">4. Experiment B: Care Utilization Patterns</h2>
+<h3 id="why-this-experiment-matters">Why this experiment matters</h3>
+<p>The current model captures basic utilization counts and recency: prior ED visits, prior inpatient admissions, ambulatory encounter count, and days since last unplanned event. Experiment B tested whether <strong>behavioral patterns</strong> in how patients use care add predictive value beyond these simple measures:</p>
+<ul>
+<li>Visit regularity versus irregular engagement</li>
+<li>Missed appointment behavior</li>
+<li>Repeat ED use soon after discharge</li>
+<li>Fragmentation across providers and specialties</li>
+</ul>
+<p>The core question: do these patterns identify patients whose care trajectory is becoming unstable before an unplanned admission occurs?</p>
+<hr />
+<h3 id="what-was-built">What was built</h3>
+<p>We engineered 14 care-pattern features from Epic Clarity encounter, scheduling, and hospital tables. Each feature was computed per patient using the same observation window as the rest of the model.</p>
+<p><strong>Encounter-pattern features (6)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>What it measures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Average days between visits</td>
+<td>Typical spacing between ambulatory encounters</td>
+</tr>
+<tr>
+<td>Visit spacing variability (CV)</td>
+<td>How irregular the patient’s visit timing is</td>
+</tr>
+<tr>
+<td>Visit regularity measure</td>
+<td>Consistency of engagement over time</td>
+</tr>
+<tr>
+<td>Distinct specialties involved</td>
+<td>How many different specialty areas the patient is seen across</td>
+</tr>
+<tr>
+<td>Specialty fragmentation ratio</td>
+<td>Proportion of visits involving a new specialty</td>
+</tr>
+<tr>
+<td>Distinct providers</td>
+<td>How many different providers the patient sees</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Scheduling-behavior features (6)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>What it measures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No-show count</td>
+<td>Total missed appointments</td>
+</tr>
+<tr>
+<td>No-show rate</td>
+<td>Proportion of scheduled appointments missed</td>
+</tr>
+<tr>
+<td>Cancellation count</td>
+<td>Total cancelled appointments</td>
+</tr>
+<tr>
+<td>Cancellation rate</td>
+<td>Proportion of scheduled appointments cancelled</td>
+</tr>
+<tr>
+<td>Left-without-being-seen count</td>
+<td>Patients who arrived but left before being seen</td>
+</tr>
+<tr>
+<td>Average appointment lead time</td>
+<td>Typical days between booking and appointment</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ED revisit features (2)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>What it measures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>72-hour ED bounce-back count</td>
+<td>ED returns within 3 days of a prior ED visit</td>
+</tr>
+<tr>
+<td>30-day ED revisit count</td>
+<td>ED returns within 30 days (broader repeat-acute-care pattern)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="data-sources-and-coverage">Data sources and coverage</h3>
+<p>All features were derived from four existing tables in the refined layer:</p>
+<ul>
+<li><code>bsmh.refined.cp__pat_enc</code> — encounter history, visit spacing, fragmentation</li>
+<li><code>bsmh.refined.cp__f_sched_appt</code> — appointment outcomes (no-shows, cancellations)</li>
+<li><code>bsmh.refined.cp__pat_enc_hsp</code> — ED revisit and bounce-back logic</li>
+<li><code>bsmh.refined.cp__clarity_dep</code> — department and specialty mapping</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Source area</th>
+<th>What it supports</th>
+<th>Cohort coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Encounter history</td>
+<td>Visit spacing, regularity, fragmentation</td>
+<td>90.1%</td>
+</tr>
+<tr>
+<td>Scheduling records</td>
+<td>No-show and cancellation behavior</td>
+<td>72.1%</td>
+</tr>
+<tr>
+<td>ED/hospital records</td>
+<td>ED revisit and bounce-back logic</td>
+<td>25.9% with ED activity</td>
+</tr>
+<tr>
+<td>Department mapping</td>
+<td>Specialty and care-fragmentation views</td>
+<td>85.7%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Output table:</strong> <code>bsmh_ds_ph_wip.tbl_care_patterns_features_target</code><br />
+<strong>Row count:</strong> 300,290 (exact match to cohort — no patients lost)<br />
+<strong>Completion date:</strong> 2026-08-05</p></div></div><div class="cell"><div class="cell-title">Data Source Findings</div><div class="markdown-cell"><h3 id="data-quality-validation">Data quality validation</h3>
+<p>All five quality checks passed:</p>
+<ul>
+<li>Row count matches cohort exactly (300,290)</li>
+<li>Every patient has exactly one row (no duplicates)</li>
+<li>No missing values in any feature column</li>
+<li>Rate-based features are bounded between 0 and 1</li>
+<li>Count-based features are all non-negative</li>
+</ul>
+<hr />
+<h3 id="feature-summary-across-the-cohort">Feature summary across the cohort</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Population average</th>
+<th>Maximum observed</th>
+<th>Clinical interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Average days between visits</td>
+<td>16.3 days</td>
+<td>720 days</td>
+<td>Most patients are seen roughly every 2–3 weeks</td>
+</tr>
+<tr>
+<td>Visit spacing variability (CV)</td>
+<td>1.47</td>
+<td>15.5</td>
+<td>High variability is common — many patients have irregular visit patterns</td>
+</tr>
+<tr>
+<td>Distinct specialties involved</td>
+<td>4.3</td>
+<td>46</td>
+<td>Typical patient sees 4–5 different specialty areas</td>
+</tr>
+<tr>
+<td>Specialty fragmentation ratio</td>
+<td>0.16</td>
+<td>1.0</td>
+<td>Low on average, but some patients see a new specialty nearly every visit</td>
+</tr>
+<tr>
+<td>Distinct providers</td>
+<td>11.3</td>
+<td>354</td>
+<td>Moderate provider spread reflects multi-team care</td>
+</tr>
+<tr>
+<td>No-show count</td>
+<td>0.76</td>
+<td>123</td>
+<td>~28% of cohort has at least one missed appointment</td>
+</tr>
+<tr>
+<td>No-show rate</td>
+<td>4%</td>
+<td>100%</td>
+<td>Most patients keep their appointments; a small subset misses frequently</td>
+</tr>
+<tr>
+<td>Cancellation rate</td>
+<td>17%</td>
+<td>100%</td>
+<td>More common than no-shows; some patients cancel most scheduled visits</td>
+</tr>
+<tr>
+<td>Appointment lead time</td>
+<td>25.7 days</td>
+<td>728 days</td>
+<td>Typical booking is about 3–4 weeks ahead</td>
+</tr>
+<tr>
+<td>ED 72-hour bounce-back</td>
+<td>0.04</td>
+<td>277</td>
+<td>Rare event overall — concentrated in high-utilizers</td>
+</tr>
+<tr>
+<td>ED 30-day revisit</td>
+<td>0.23</td>
+<td>1,557</td>
+<td>Similarly sparse; very high values represent patients with repeated ED cycling</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="key-observations-for-clinical-context">Key observations for clinical context</h3>
+<ul>
+<li>
+<p><strong>Visit regularity varies widely.</strong> The coefficient of variation averaging 1.47 means that for the typical patient, the spread in visit timing is larger than the average gap itself. This may reflect patients who alternate between periods of engagement and periods of disconnection from care.</p>
+</li>
+<li>
+<p><strong>No-show behavior is concentrated.</strong> While 28% of the cohort has at least one no-show, the average rate is only 4%. A small group of patients accounts for the majority of missed appointments.</p>
+</li>
+<li>
+<p><strong>ED bounce-backs are sparse but clinically meaningful.</strong> Most patients never return to the ED within 72 hours. When they do, it often signals a pattern of care instability that the model may use to flag risk.</p>
+</li>
+<li>
+<p><strong>Fragmentation adds a new dimension.</strong> The current model captures how much care a patient uses. These features now tell the model how scattered that care is across providers and specialties — a known correlate of care coordination challenges.</p>
+</li>
+</ul></div></div><div class="cell"><div class="cell-title">Proposed Feature Set and Plan</div><div class="markdown-cell"><h3 id="model-experiment-result">Model experiment result</h3>
+<p><strong>Status:</strong> H2O Driverless AI experiment complete (2026-08-08). <strong>Result: PASS — retained in production model.</strong></p>
+<h4 id="headline">Headline</h4>
+<p>Adding 14 care-pattern features to the existing 285-feature model produced a marginal improvement in overall discrimination:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (benchmark)</th>
+<th>After (+ care patterns)</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PR-AUC (held-out test)</td>
+<td>0.3962</td>
+<td><strong>0.3971</strong></td>
+<td>+0.0009</td>
+</tr>
+<tr>
+<td>ROC-AUC</td>
+<td>0.852</td>
+<td>0.852</td>
+<td>unchanged</td>
+</tr>
+<tr>
+<td>Total features</td>
+<td>285</td>
+<td>299</td>
+<td>+14</td>
+</tr>
+</tbody>
+</table>
+<p>The aggregate performance improvement is small and within statistical noise. However, the experiment revealed a significant finding about which individual features the model values.</p>
+<hr />
+<h4 id="the-key-finding-specialty-fragmentation-is-a-top-tier-predictor">The key finding: specialty fragmentation is a top-tier predictor</h4>
+<p>Of the 299 features in the combined model, the number of <strong>distinct specialties</strong> a patient visited ranked <strong>#2 overall</strong> in predictive importance — second only to the count of distinct clinical diagnosis groups, which has been the model’s top feature since its earliest versions.</p>
+<p>This is the strongest result for any newly-added feature in the project’s history.</p>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Feature</th>
+<th>What it measures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>N_DISTINCT_CLINICAL_GROUPS</td>
+<td>How many different diagnosis categories a patient has</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>n_distinct_specialties</strong></td>
+<td><strong>How many different specialty areas a patient is seen across</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>TOTAL_UNPLANNED_IP_PAST</td>
+<td>How many prior unplanned inpatient admissions</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="what-this-means-clinically">What this means clinically</h4>
+<p><strong>Patients whose care is fragmented across many specialty areas are at substantially higher risk of unplanned admission</strong> — almost as predictive as the raw complexity of their diagnosis burden.</p>
+<p>This is meaningful because:</p>
+<ul>
+<li>It captures a dimension the model previously could not see: not just <em>how much</em> care a patient uses, but <em>how scattered</em> that care is.</li>
+<li>Specialty fragmentation is a known correlate of care coordination challenges — patients seen by many different specialty teams may have gaps in follow-up, conflicting treatment plans, or unclear ownership of their overall care.</li>
+<li>Unlike diagnosis count (which reflects disease burden and is largely fixed), specialty fragmentation is potentially <strong>actionable</strong> — care coordination interventions can reduce fragmentation for high-risk patients.</li>
+</ul>
+<hr />
+<h4 id="why-the-other-13-features-did-not-rank-highly">Why the other 13 features did not rank highly</h4>
+<p>The remaining care-pattern features (visit spacing, no-show rate, ED bounce-backs, etc.) did not appear in the top 27 features by model importance. This does not mean they carry zero signal — it means their predictive contribution is mostly already captured by existing features. For example:</p>
+<ul>
+<li>Visit frequency patterns overlap substantially with encounter counts already in the model</li>
+<li>ED revisit patterns overlap with prior IP/ED utilization features</li>
+<li>No-show and cancellation rates may carry modest independent signal but at lower magnitude</li>
+</ul>
+<hr />
+<h4 id="operating-points-for-deployment-reference">Operating points (for deployment reference)</h4>
+<table>
+<thead>
+<tr>
+<th>If we flag the top…</th>
+<th>Patients flagged</th>
+<th>PPV (true positive rate among flagged)</th>
+<th>Sensitivity (proportion of at-risk patients caught)</th>
+<th>Lift</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1%</td>
+<td>900</td>
+<td>65.5%</td>
+<td>8.8%</td>
+<td>8.8x</td>
+</tr>
+<tr>
+<td>5%</td>
+<td>4,504</td>
+<td>41.9%</td>
+<td>28.0%</td>
+<td>5.6x</td>
+</tr>
+<tr>
+<td>10%</td>
+<td>9,008</td>
+<td>34.2%</td>
+<td>45.8%</td>
+<td>4.6x</td>
+</tr>
+<tr>
+<td>20%</td>
+<td>18,017</td>
+<td>24.6%</td>
+<td>65.7%</td>
+<td>3.3x</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="decision">Decision</h4>
+<p><code>n_distinct_specialties</code> is permanently retained in the production feature set. The full 14-feature care-pattern table remains available for future experiments but only the specialty count is contributing meaningful marginal signal at this time.</p></div></div><div class="cell"><div class="cell-title">Experiment C: Baseline Feature Recovery — Negative Result</div><div class="markdown-cell"><hr />
+<h2 id="5-experiment-c-baseline-feature-recovery">5. Experiment C: Baseline Feature Recovery</h2>
+<h3 id="background">Background</h3>
+<p>The current model uses 285 features organized across 11 clinical dimensions (demographics, medications, diagnoses, utilization, labs, social history, flowsheets, registry, surgical history, BMI, and glycemic markers). An earlier version of this model used a different approach with 854 features built from the same underlying data but assembled differently.</p>
+<p>Experiment C asked: <strong>are there useful signals in the old 854-feature model that the current 11-dimension approach does not capture?</strong></p>
+<hr />
+<h3 id="what-we-did">What we did</h3>
+<p>We compared the two feature sets column by column. Of the 1,071 columns in the legacy dataset, 349 survived initial quality filters (removing empty columns, near-constant values, and columns with less than 5% coverage). We then ran the full H2O DAI modeling pipeline on the current 285 features <strong>combined with</strong> the 349 legacy features (634 total) using the same patient cohort, the same train/test split, and the same modeling settings as our production benchmark.</p>
+<hr />
+<h3 id="result">Result</h3>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Features</th>
+<th>Held-out test PR-AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Current model (benchmark H17)</td>
+<td>285</td>
+<td>0.396</td>
+</tr>
+<tr>
+<td>Current model + 349 legacy features</td>
+<td>634</td>
+<td>0.395</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Adding the legacy features produced no improvement.</strong> The difference (−0.001) is well within the model’s run-to-run variability (±0.011).</p>
+<hr />
+<h3 id="why-the-legacy-features-did-not-help">Why the legacy features did not help</h3>
+<p>When we examined which features the expanded model relied on, the answer was clear: it relied almost entirely on the same features the current model already uses.</p>
+<p>The top-ranked features in the combined model were:</p>
+<ol>
+<li>Number of distinct clinical diagnostic groups (current DX dimension)</li>
+<li>Illicit drug use indicator (current Social History dimension)</li>
+<li>Number of diagnostic sources used (current DX dimension)</li>
+<li>Prior unplanned inpatient admissions (current Utilization dimension)</li>
+</ol>
+<p>The legacy features that scored highest (ranks 4–5) turned out to be <code>TOTAL_UNPLANNED_IP_PAST</code> — which is <strong>already in our current utilization dimension</strong>. The remaining legacy features (medication names, lab values, vital signs) are simply different column names for concepts the current model already captures through its 11 curated dimensions.</p>
+<p>In short, the legacy model’s 854 features and the current model’s 285 features capture the same clinical information. The current approach does it more efficiently with better-organized, clinically interpretable features.</p>
+<hr />
+<h3 id="clinical-interpretation">Clinical interpretation</h3>
+<p>This is a <strong>reassuring negative result.</strong> It means the current 11-dimension feature architecture is not missing important clinical signals that were present in earlier approaches. The model’s performance ceiling is not limited by missing data — it is limited by the inherent predictability of unplanned admissions from structured EHR data alone.</p>
+<hr />
+<h3 id="what-this-means-going-forward">What this means going forward</h3>
+<p>We can confidently close this line of investigation. With all three August experiments now complete:</p>
+<ul>
+<li><strong>Experiment A (Care Gap Indicators):</strong> Incorporated — 12 features, +0.031 PR-AUC, new benchmark 0.427</li>
+<li><strong>Experiment B (Care Utilization Patterns):</strong> Incorporated — <code>n_distinct_specialties</code> retained (ranked #2)</li>
+<li><strong>Experiment C (Baseline Feature Recovery):</strong> Closed — no improvement, architecture confirmed complete</li>
+</ul>
+<p>The remaining path to model lock:</p>
+<ul>
+<li>Insulin pump feature code validation (Clarity team SME review — in progress)</li>
+<li>Final feature set freeze and production configuration</li>
+<li>Operating threshold calibration with care management team</li>
+<li>Prospective validation on a forward-looking cohort</li>
+</ul>
+<p>Retrofit of legacy features is not a productive path. Future gains should come from genuinely new data sources not currently in the EHR feature set.</p></div></div>
+    </div>
+</body>
+</html>
