@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T2DM Unplanned Admission Risk Prediction Model — August 2026 Clinical Review</title>
+<style>
+  :root{
+    --navy:#002D72;
+    --green:#009A44;
+    --ink:#242B35;
+    --slate:#5D6670;
+    --gray:#6B7280;
+    --blue:#005EB8;
+    --red:#C8102E;
+    --accent-green:#2CA02C;
+    --accent-blue:#1F77B4;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"Segoe UI",Arial,Helvetica,sans-serif;
+    background:#e9edf2;
+    color:var(--ink);
+    line-height:1.45;
+  }
+  .deck{
+    max-width:1000px;
+    margin:0 auto;
+    padding:24px 16px 60px;
+  }
+  .slide{
+    background:#ffffff;
+    border:1px solid #d3d9e0;
+    border-radius:6px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    padding:34px 40px 40px;
+    margin-bottom:28px;
+    position:relative;
+    overflow:hidden;
+  }
+  .slide.title{
+    background:linear-gradient(135deg,#002D72 0%,#001a45 100%);
+    color:#fff;
+  }
+  .pagenum{
+    position:absolute;
+    left:16px;
+    bottom:14px;
+    font-size:12px;
+    color:var(--slate);
+  }
+  .brand{
+    position:absolute;
+    right:24px;
+    bottom:14px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.5px;
+    color:#ffffff;
+  }
+  .slide:not(.title) .brand{color:var(--navy);}
+  h1.title-main{
+    font-size:32px;
+    margin:6px 0 18px;
+    font-weight:800;
+  }
+  .kicker{
+    color:var(--green);
+    font-weight:600;
+    margin-bottom:22px;
+    font-size:16px;
+  }
+  h2.slide-head{
+    color:var(--navy);
+    font-size:22px;
+    margin:0 0 6px;
+    font-weight:700;
+    border-bottom:3px solid var(--green);
+    padding-bottom:10px;
+    display:inline-block;
+  }
+  .subhead{
+    color:var(--slate);
+    font-size:14px;
+    margin:12px 0 18px;
+  }
+  .author{font-size:13px;color:#c9d3e6;margin-bottom:4px;}
+  /* title facts grid */
+  .facts{margin-top:8px;}
+  .fact-row{
+    display:grid;
+    grid-template-columns:190px 1fr;
+    gap:8px;
+    padding:7px 0;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    font-size:14px;
+  }
+  .fact-row .label{font-weight:700;}
+  .fact-row .val{color:#e6ecf7;}
+  .fact-row .val .ok{color:var(--green);font-weight:700;}
+  /* agenda */
+  .agenda-item{
+    display:grid;
+    grid-template-columns:40px 220px 1fr;
+    gap:14px;
+    align-items:start;
+    padding:12px 0;
+    border-bottom:1px solid #e3e7ec;
+  }
+  .agenda-item .num{
+    color:var(--green);
+    font-size:26px;
+    font-weight:800;
+    line-height:1;
+  }
+  .agenda-item .t{color:var(--navy);font-weight:700;}
+  .agenda-item .d{color:var(--ink);font-size:14px;}
+  /* tables */
+  table{
+    border-collapse:collapse;
+    width:100%;
+    font-size:13.5px;
+    margin:14px 0;
+  }
+  thead th{
+    background:var(--navy);
+    color:#fff;
+    text-align:left;
+    padding:9px 12px;
+    font-weight:700;
+  }
+  tbody td{
+    padding:8px 12px;
+    border-bottom:1px solid #e3e7ec;
+  }
+  tbody tr:nth-child(even){background:#f5f7fa;}
+  td.b,th.b{font-weight:700;}
+  .rec-row{background:#eafaf0 !important;}
+  .pos{color:var(--green);font-weight:700;}
+  .neg{color:var(--red);font-weight:700;}
+  /* two column layout */
+  .cols{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+    margin-top:6px;
+  }
+  .cols-3{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:20px;
+    margin-top:6px;
+  }
+  .block-label{
+    color:var(--green);
+    font-weight:700;
+    font-size:12.5px;
+    letter-spacing:.4px;
+    margin:14px 0 4px;
+  }
+  .block-navy{
+    color:var(--navy);
+    font-weight:700;
+    margin:12px 0 4px;
+  }
+  p{margin:6px 0;}
+  ul{margin:6px 0 6px 18px;padding:0;}
+  li{margin:4px 0;font-size:14px;}
+  .callout{
+    background:#f0f4f9;
+    border-left:4px solid var(--navy);
+    padding:12px 16px;
+    border-radius:4px;
+    color:var(--navy);
+    font-weight:600;
+    margin-top:16px;
+    font-size:14px;
+  }
+  .callout.green{border-left-color:var(--green);}
+  .metric-cards{display:flex;gap:16px;margin:10px 0 6px;}
+  .metric-card{
+    background:#eef3f8;
+    border-radius:6px;
+    padding:12px 18px;
+    text-align:center;
+    flex:1;
+  }
+  .metric-card .big{font-size:26px;font-weight:800;}
+  .metric-card .big.gr{color:var(--accent-green);}
+  .metric-card .big.bl{color:var(--accent-blue);}
+  .metric-card .cap{font-size:12px;color:var(--gray);margin-top:2px;}
+  .rank-badge{
+    display:inline-block;
+    background:var(--blue);
+    color:#fff;
+    font-size:26px;
+    font-weight:800;
+    padding:6px 16px;
+    border-radius:6px;
+  }
+  .big-stat{font-size:26px;font-weight:800;color:var(--blue);margin-top:10px;}
+  .big-stat-red{color:var(--blue);}
+  .start-here{
+    background:var(--navy);
+    color:#fff;
+    padding:12px 16px;
+    border-radius:4px;
+    font-weight:700;
+    margin-top:16px;
+    font-size:14px;
+  }
+  .rec-tag{color:var(--green);font-weight:700;font-size:13px;margin-top:6px;}
+  @media(max-width:720px){
+    .cols,.cols-3{grid-template-columns:1fr;}
+    .agenda-item{grid-template-columns:34px 1fr;}
+    .agenda-item .d{grid-column:1 / -1;}
+    .fact-row{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- Slide 1 -->
+  <section class="slide title">
+    <div class="author">Chamila Dharmawardhana &nbsp;·&nbsp; August 25, 2026</div>
+    <h1 class="title-main">T2DM Unplanned Admission Risk Prediction Model</h1>
+    <div class="kicker">August 2026 Clinical Review</div>
+    <div class="facts">
+      <div class="fact-row"><span class="label">Cohort:</span><span class="val">300,290 patients with T2DM</span></div>
+      <div class="fact-row"><span class="label">Baseline risk:</span><span class="val">7.47% will have an unplanned admission in the next 12 months</span></div>
+      <div class="fact-row"><span class="label">Current benchmark:</span><span class="val">PR-AUC 0.427 <span class="ok">✓</span>&nbsp; (was 0.396 in July)</span></div>
+      <div class="fact-row"><span class="label">Gain this cycle:</span><span class="val">+0.031 (+7.9%) — largest single-experiment gain in the project</span></div>
+      <div class="fact-row"><span class="label">Key finding:</span><span class="val">Missed care (no nutrition counseling) is now the #1 risk predictor</span></div>
+      <div class="fact-row"><span class="label">August experiments:</span><span class="val">2 completed&nbsp; ·&nbsp; 1 PASS + new benchmark&nbsp; ·&nbsp; 1 PASS + feature retained</span></div>
+    </div>
+    <div class="brand">BON SECOURS MERCY HEALTH</div>
+  </section>
+
+  <!-- Slide 2 -->
+  <section class="slide">
+    <h2 class="slide-head">What We'll Cover</h2>
+    <div class="agenda-item">
+      <div class="num">1</div>
+      <div class="t">Headline result</div>
+      <div class="d">Care Gap Indicators raised the benchmark to PR-AUC 0.427 — the project's biggest gain.</div>
+    </div>
+    <div class="agenda-item">
+      <div class="num">2</div>
+      <div class="t">Model in practice</div>
+      <div class="d">What 5.9× lift means for care management, with updated operating points.</div>
+    </div>
+    <div class="agenda-item">
+      <div class="num">3</div>
+      <div class="t">A data correction done right</div>
+      <div class="d">CGM coding was fixed and insulin pump use emerged as a distinct clinical signal.</div>
+    </div>
+    <div class="agenda-item">
+      <div class="num">4</div>
+      <div class="t">Utilization patterns</div>
+      <div class="d">Care fragmentation and no-show behavior are measurable and ready for September.</div>
+    </div>
+    <div class="agenda-item">
+      <div class="num">5</div>
+      <div class="t">What comes next</div>
+      <div class="d">The path to model lock and deployment readiness.</div>
+    </div>
+    <div class="pagenum">2</div>
+    <div class="brand">BON SECOURS MERCY HEALTH</div>
+  </section>
+
+  <!-- Slide 3 -->
+  <section class="slide">
+    <h2 class="slide-head">The Model Is a Prioritization Tool — Updated Operating Points</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Operating strategy</th>
+          <th>Patients / cycle</th>
+          <th>PPV</th>
+          <th>Sensitivity</th>
+          <th>Lift</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="b">High-confidence (top 1%)</td><td>~900</td><td>~76%</td><td>~10%</td><td>10.1×</td></tr>
+        <tr class="rec-row"><td class="b">Balanced start (top 5%)</td><td>~4,500</td><td>~44%</td><td>~30%</td><td class="b">5.9×</td></tr>
+        <tr><td class="b">Broad outreach (top 10%)</td><td>~9,000</td><td>~36%</td><td>~48%</td><td>4.8×</td></tr>
+        <tr><td class="b">High-volume (top 20%)</td><td>~18,000</td><td>~26%</td><td>~69%</td><td>3.5×</td></tr>
+        <tr><td class="b">Random selection</td><td>Any</td><td>~7.5%</td><td>Proportional</td><td>1.0×</td></tr>
+      </tbody>
+    </table>
+    <div class="rec-tag">◆ Recommended start</div>
+    <div class="cols">
+      <div>
+        <div class="block-navy">How care teams use this</div>
+        <p>At top 5%, a care manager finds about 44 true high-risk patients per 100 reviewed—5.9× more productive than random review.</p>
+      </div>
+      <div>
+        <div class="block-navy">What changed vs. July</div>
+        <p>PPV rose from ~39% to ~44% at top 5%: about 5 more true high-risk patients per 100 reviewed, or ~225 fewer wasted contacts per 4,500-patient cycle.</p>
+      </div>
+    </div>
+    <div class="start-here">START HERE&nbsp; ·&nbsp; Use the top-5% threshold, then recalibrate after one live review cycle based on actual team capacity.</div>
+    <div class="pagenum">3</div>
+    <div class="brand">BON SECOURS MERCY HEALTH</div>
+  </section>
+
+  <!-- Slide 4 -->
+  <section class="slide">
+    <h2 class="slide-head">Patients Missing Expected Diabetes Care Are the Strongest Signal of Risk</h2>
+    <div class="metric-cards">
+      <div class="metric-card"><div class="big gr">+0.031</div><div class="cap">PR-AUC improvement (+7.9%)</div></div>
+      <div class="metric-card"><div class="big bl">0.427</div><div class="cap">New benchmark (was 0.396)</div></div>
+    </div>
+    <div class="cols">
+      <div>
+        <div class="block-label">12 CARE-GAP INDICATORS</div>
+        <p>No A1C, eGFR, lipid panel, retinal exam, foot exam, nutrition counseling, diabetes education, plus aggregate gap count. The 22-month window exceeds annual screening cadence.</p>
+        <table>
+          <thead><tr><th>Metric</th><th>July</th><th>August</th></tr></thead>
+          <tbody>
+            <tr><td>PR-AUC</td><td>0.396</td><td>0.427 ✓</td></tr>
+            <tr><td>PPV at top 5%</td><td>~39%</td><td>~44%</td></tr>
+            <tr><td>Sensitivity</td><td>~27%</td><td>~30%</td></tr>
+          </tbody>
+        </table>
+        <div class="block-navy">#1 predictor: no nutrition counseling in 22 months</div>
+        <ul>
+          <li>Fewer than 8% received nutrition counseling.</li>
+          <li>Fewer than 9% received documented diabetes education.</li>
+          <li>These gaps are common—and highly predictive.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="block-label">FOR RISK PREDICTION</div>
+        <p style="color:var(--navy)">The model is measurably better at identifying who will be admitted. These features capture information no other feature provides.</p>
+        <div class="block-label">FOR INTERVENTION DESIGN</div>
+        <p style="color:var(--navy)">The model tells care teams WHO needs attention. What intervention is appropriate (care coordination, medication review, follow-up) is a clinical judgment for each patient.</p>
+      </div>
+    </div>
+    <div class="callout">The model uses care gaps to improve risk identification — it tells care teams WHO needs attention. It does NOT prescribe a specific intervention. What each patient needs is a clinical decision.</div>
+    <div class="pagenum">4</div>
+    <div class="brand">BON SECOURS MERCY HEALTH</div>
+  </section>
+
+  <!-- Slide 5 -->
+  <section class="slide">
+    <h2 class="slide-head">An Important Nuance: Sicker Patients Get MORE Monitoring</h2>
+    <div class="subhead">The raw data shows a counterintuitive pattern: patients who DO have gaps show lower admission rates — often dramatically so.</div>
+    <table>
+      <thead>
+        <tr><th>Care gap</th><th>Admission Rate (gap present)</th><th>Admission Rate (gap absent)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>No nutrition counseling</td><td class="pos">5.5%</td><td class="neg">32.6%</td></tr>
+        <tr><td>No diabetes education</td><td class="pos">6.5%</td><td class="neg">17.5%</td></tr>
+        <tr><td>No A1C test</td><td class="pos">3.0%</td><td class="neg">9.7%</td></tr>
+        <tr><td>No creatinine test</td><td class="pos">1.3%</td><td class="neg">9.0%</td></tr>
+      </tbody>
+    </table>
+    <div class="cols">
+      <div>
+        <div class="block-label">CONFOUNDING BY INDICATION</div>
+        <p>Sicker patients receive more monitoring precisely because they are higher-risk. Among nutrition counseling recipients, admitted and non-admitted patients have virtually identical gap burdens (3.8 vs 3.9 out of 11) — what separates them is prior severity: 2× prior admissions, 2× ED visits, +47% charges.</p>
+      </div>
+      <div>
+        <div class="block-label">WHAT THE +0.031 GAIN PROVES</div>
+        <p>If care-gap features were purely redundant with existing severity measures, they would add zero. The largest gain in the project's history demonstrates they carry genuinely new information — but that information operates in multivariate interaction, not as a simple rule.</p>
+      </div>
+    </div>
+    <div class="callout">The relationship is real but complex. The model uses care gaps to identify WHO is at risk — not to prescribe what to do about it. Intervention decisions remain clinical.</div>
+    <div class="pagenum">5</div>
+    <div class="brand">BON SECOURS MERCY HEALTH</div>
+  </section>
+
+  <!-- Slide 6 -->
+  <section class="slide">
+    <h2 class="slide-head">A Data Correction Revealed a New Clinical Signal — Insulin Pump Use</h2>
+    <div class="subhead">In July, CGM use was reported as a meaningful predictor. A data-labeling correction led to a clinically useful discovery.</div>
+    <div class="cols-3">
+      <div>
+        <div class="block-label">WHAT HAPPENED</div>
+        <p>Two insulin pump device codes had been miscounted as CGM sensors. Correcting the device list initially dropped performance—meaning the miscoding had been quietly helping.</p>
+      </div>
+      <div>
+        <div class="block-label">WHAT WE DISCOVERED</div>
+        <p>Insulin pump use is a meaningful, distinct clinical signal. About 10 per 100 pump users were admitted versus about 7 per 100 non-pump users—a one-third higher rate consistent with greater clinical complexity.</p>
+      </div>
+      <div>
+        <div class="block-label">RESOLUTION</div>
+        <p>Corrected the CGM list to sensors only, then built insulin pump use as its own feature. The model recovered and slightly exceeded the July benchmark; Clarity SME validation is in progress.</p>
+      </div>
+    </div>
+    <div class="big-stat">~10 vs. ~7</div>
+    <p style="color:var(--ink);font-size:14px;margin-top:0;">admissions per 100 pump vs. non-pump users</p>
+    <div class="callout">The July CGM finding stands. Transparent correction produced a more accurate CGM signal and revealed insulin pump use as a second, distinct signal.</div>
+    <div class="pagenum">6</div>
+    <div class="brand">BON SECOURS MERCY HEALTH</div>
+  </section>
+
+  <!-- Slide 7 -->
+  <section class="slide">
+    <h2 class="slide-head">How Patients Use Care Is Now Measurable — Ready for September</h2>
+    <div class="cols">
+      <div>
+        <span class="rank-badge">#2</span>
+        <div class="block-navy" style="margin-top:12px;">MODEL IMPORTANCE RANK</div>
+        <p style="color:var(--navy);font-weight:700;margin:2px 0;">n_distinct_specialties</p>
+        <div class="block-navy">14 care-pattern features</div>
+        <p>Built and validated across 300,290 rows with no nulls, then staged for September.</p>
+        <ul>
+          <li>Encounter patterns</li>
+          <li>Scheduling behavior</li>
+          <li>ED revisit patterns</li>
+        </ul>
+      </div>
+      <div>
+        <div class="subhead">Beyond visit counts, all five engagement-pattern areas are feasible with existing data.</div>
+        <table>
+          <thead><tr><th>Feature area</th><th>What it captures</th><th>Coverage</th></tr></thead>
+          <tbody>
+            <tr><td class="b">Visit spacing &amp; regularity</td><td>Consistent or erratic care?</td><td>90%</td></tr>
+            <tr><td class="b">No-show &amp; cancellation behavior</td><td>Patient disengagement?</td><td>72%</td></tr>
+            <tr><td class="b">ED bounce-back (72h / 30d)</td><td>Repeat acute care use</td><td>26% with ED</td></tr>
+            <tr><td class="b">Department &amp; specialty fragmentation</td><td>How spread across the system?</td><td>86%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="block-label">FEATURE SET</div>
+    <p>Visit spacing, variability, regularity, distinct specialties/providers, fragmentation ratio, no-show and cancellation counts/rates, left-without-being-seen, appointment lead time, and 72-hour / 30-day ED revisits.</p>
+    <div class="callout">28% of T2DM patients had ≥1 no-show—consistent with identifying care trajectories that may be becoming unstable.</div>
+    <div class="pagenum">7</div>
+    <div class="brand">BON SECOURS MERCY HEALTH</div>
+  </section>
+
+  <!-- Slide 8 -->
+  <section class="slide">
+    <h2 class="slide-head">The Path Forward: From Model Improvement to Deployment Readiness</h2>
+    <div class="subhead">With the benchmark at 0.427 and all experiments complete, the model development phase is closing. The path ahead is about clinical verification and production deployment.</div>
+    <table>
+      <thead><tr><th>Step</th><th>What it tests / requires</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td class="b">Patient chart review</td><td>Clinicians review sample of flagged patients — confirms clinical alignment, informs threshold</td><td>Next step</td></tr>
+        <tr><td class="b">Prediction delivery decision</td><td>Dashboard, Epic integration, or staged? Clinical workflow should drive the choice</td><td>Decision needed</td></tr>
+        <tr><td class="b">Scoring infrastructure</td><td>H2O model packaged as scheduled scoring pipeline against live patient cohort</td><td>After decisions</td></tr>
+        <tr><td class="b">Ongoing maintenance</td><td>Retraining cadence, drift monitoring, cost of upkeep (DS team estimate forthcoming)</td><td>DS scoping</td></tr>
+        <tr><td class="b">Model lock</td><td>Feature set frozen after insulin pump code validation (Clarity team)</td><td>After model lock</td></tr>
+        <tr><td class="b">Prospective Validation</td><td>Forward-looking cohort test on locked model before go-live</td><td>After model lock</td></tr>
+      </tbody>
+    </table>
+    <div class="block-label">AUGUST EXPERIMENT SCORECARD</div>
+    <table>
+      <thead><tr><th>Experiment</th><th>Result</th><th>Impact</th></tr></thead>
+      <tbody>
+        <tr><td class="b">A: Monitoring &amp; Care Gaps</td><td>PASS — new benchmark</td><td>+0.031 PR-AUC · 12 features · #1 predictor</td></tr>
+        <tr><td class="b">B: Care Utilization Patterns</td><td>PASS — 1 feature retained</td><td>+0.001 PR-AUC · 14 features for September</td></tr>
+      </tbody>
+    </table>
+    <div class="callout">The model is ready for clinical verification. Next: patient chart review, then this group decides where predictions should live — that answer shapes the deployment timeline and effort.</div>
+    <div class="pagenum">8</div>
+    <div class="brand">BON SECOURS MERCY HEALTH</div>
+  </section>
+
+</div>
+</body>
+</html>
