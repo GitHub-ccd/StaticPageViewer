@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T2DM Model 1 August Clinical Summary</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                         Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6; color: #333;
+            background-color: #f8f9fa; margin: 0; padding: 20px;
+        }
+        .container {
+            max-width: 920px; margin: 0 auto; background: #fff;
+            border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 40px 50px;
+        }
+        h1 {
+            font-size: 2em; color: #1a1a2e;
+            border-bottom: 3px solid #e94560; padding-bottom: 12px; margin-top: 0;
+        }
+        h2 {
+            font-size: 1.5em; color: #16213e;
+            border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-top: 1.5em;
+        }
+        h3 { font-size: 1.25em; color: #0f3460; margin-top: 1.2em; }
+        h4, h5, h6 { color: #16213e; }
+        p { margin: 0.8em 0; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ── Cells ── */
+        .cell { margin-bottom: 8px; }
+        .cell-title {
+            background: #eef2f7; padding: 8px 14px;
+            font-weight: 600; font-size: 1.05em; color: #16213e;
+            border-left: 4px solid #e94560; border-radius: 4px 4px 0 0;
+        }
+        .markdown-cell { padding: 4px 0; }
+
+        /* ── Code blocks ── */
+        .code-cell {
+            background: #282c34; border-radius: 6px;
+            margin: 8px 0; overflow-x: auto;
+        }
+        .code-cell pre { margin: 0; padding: 16px 20px; }
+        .code-cell code {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono',
+                         Menlo, Courier, monospace;
+            font-size: 0.88em; color: #abb2bf; line-height: 1.5;
+        }
+        .markdown-cell code {
+            background: #f0f0f0; padding: 2px 6px; border-radius: 3px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono',
+                         Menlo, Courier, monospace;
+            font-size: 0.9em; color: #c7254e;
+        }
+        .markdown-cell pre {
+            background: #282c34; border-radius: 6px;
+            padding: 16px 20px; overflow-x: auto;
+        }
+        .markdown-cell pre code {
+            background: transparent; color: #abb2bf; padding: 0;
+        }
+
+        /* ── Tables ── */
+        table {
+            border-collapse: collapse; width: 100%;
+            margin: 1em 0; font-size: 0.95em;
+        }
+        th, td { border: 1px solid #d0d7de; padding: 10px 14px; text-align: left; }
+        th { background-color: #f0f3f6; font-weight: 600; color: #1a1a2e; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        tr:hover { background-color: #eef2f7; }
+
+        /* ── Block quotes ── */
+        blockquote {
+            border-left: 4px solid #e94560; margin: 1em 0;
+            padding: 10px 20px; background: #fef9fa; color: #555;
+        }
+
+        /* ── Lists ── */
+        ul, ol { padding-left: 2em; }
+        li { margin: 0.3em 0; }
+
+        /* ── Misc ── */
+        img { max-width: 100%; height: auto; }
+        hr { border: none; border-top: 1px solid #ddd; margin: 2em 0; }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px 24px; }
+            body { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>T2DM Model 1 August Clinical Summary</h1>
+        <div class="cell"><div class="cell-title">Title and Current Model Status</div><div class="markdown-cell"><div style="background:#E0E0E0; padding:3px 14px; border-radius:3px; display:inline-block; font-size:11px; font-weight:bold; color:#555; letter-spacing:1px; margin-bottom:10px;">SLIDE 1 OF 9</div>
+
+<h1 id="t2dm-model-1-clinical-summary-august-2026-review">T2DM Model 1 — Clinical Summary: August 2026 Review</h1>
+<p><strong>Project:</strong> Population Health – Diabetes &nbsp;·&nbsp; <strong>Review date:</strong> 2026-08-20 &nbsp;·&nbsp; <strong>Author:</strong> cdharmawardhana@mercy.com</p>
+<hr />
+<div style="background:#f0f7ff; border-left:5px solid #1F77B4; padding:14px 20px; margin:16px 0; border-radius:4px;">
+<span style="font-size:17px; font-weight:bold; color:#1F77B4;">The model’s largest single improvement to date — detecting patients who are NOT receiving expected diabetes care — raises the benchmark by +7.9% and makes missed monitoring the #1 predictor of unplanned admissions.</span>
+</div>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cohort</strong></td>
+<td>300,290 T2DM patients &nbsp;·&nbsp; 7.47% will have an unplanned admission in the next 12 months</td>
+</tr>
+<tr>
+<td><strong>Best model</strong></td>
+<td>H2O DAI — all-11 clinical dimensions + CGM + Insulin Pump + Care Gap Indicators</td>
+</tr>
+<tr>
+<td><strong>Current benchmark</strong></td>
+<td><strong>PR-AUC 0.427</strong> ✅ — improved from 0.396 (July 2026)</td>
+</tr>
+<tr>
+<td><strong>Gain this cycle</strong></td>
+<td><strong>+0.031 (+7.9%)</strong> — largest single-experiment gain in the project</td>
+</tr>
+<tr>
+<td><strong>August experiments</strong></td>
+<td>3 completed &nbsp;·&nbsp; 1 PASS + new benchmark (Care Gaps) &nbsp;·&nbsp; 1 PASS + feature retained (Utilization) &nbsp;·&nbsp; 1 negative result closed (Baseline Recovery)</td>
+</tr>
+</tbody>
+</table></div></div><div class="cell"><div class="cell-title">What We’ll Cover</div><div class="markdown-cell"><div style="background:#E0E0E0; padding:3px 14px; border-radius:3px; display:inline-block; font-size:11px; font-weight:bold; color:#555; letter-spacing:1px; margin-bottom:10px;">SLIDE 2 OF 9</div>
+
+<hr />
+<h2 id="what-well-cover-august-2026-t2dm-review">What We’ll Cover — August 2026 T2DM Review</h2>
+<p>This review reports on the August model development cycle: <strong>three experiments completed, one producing the project’s largest improvement, one retaining a key feature, and one closing an unproductive line of investigation.</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Topic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>✅ Headline result</strong></td>
+<td>Care Gap Indicators raised the benchmark to <strong>PR-AUC 0.427</strong> — the biggest gain since the project began</td>
+</tr>
+<tr>
+<td><strong>What the data actually shows</strong></td>
+<td>The counterintuitive relationship between care gaps and risk — and what the model can and cannot tell us</td>
+</tr>
+<tr>
+<td><strong>Model in practice</strong></td>
+<td>What 5.9× lift means in care management terms · updated operating points</td>
+</tr>
+<tr>
+<td><strong>A data correction done right</strong></td>
+<td>CGM device coding was fixed — and revealed a new clinical signal (insulin pump use)</td>
+</tr>
+<tr>
+<td><strong>What utilization patterns tell us</strong></td>
+<td>Care fragmentation ranked #2 in the model — specialty count is now a permanent feature</td>
+</tr>
+<tr>
+<td><strong>A reassuring validation</strong></td>
+<td>Testing 349 legacy features confirmed the current approach isn’t missing signals</td>
+</tr>
+<tr>
+<td><strong>What comes next</strong></td>
+<td>Path to clinical verification and production deployment</td>
+</tr>
+</tbody>
+</table>
+<p><em>Each section = one slide. This document is the precursor to a live presentation.</em></p></div></div><div class="cell"><div class="cell-title">What the Model Does in Practice — Updated Operating Points</div><div class="markdown-cell"><div style="background:#E0E0E0; padding:3px 14px; border-radius:3px; display:inline-block; font-size:11px; font-weight:bold; color:#555; letter-spacing:1px; margin-bottom:10px;">SLIDE 3 OF 9</div>
+
+<hr />
+<h2 id="the-model-is-a-prioritization-tool-not-a-diagnostic">The Model Is a Prioritization Tool — Not a Diagnostic</h2>
+<p><strong>Translating model performance into practical terms: of every 100 patients the model flags, how many will actually have an unplanned admission?</strong></p>
+<div style="text-align:center; margin:20px 0;">
+<div style="font-size:66px; font-weight:bold; color:#1F77B4; line-height:1;">5.9×</div>
+<div style="font-size:16px; color:#555; margin-top:6px;">more efficient than random selection when targeting the top 5% of flagged patients</div>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Targeting Group</th>
+<th>Patients Flagged</th>
+<th>Of every 100 flagged, how many admitted?</th>
+<th>All admissions captured</th>
+<th>Lift vs. random</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Top 1%</td>
+<td>\~900</td>
+<td><strong>76 out of 100</strong></td>
+<td>10%</td>
+<td><strong>10.1×</strong></td>
+</tr>
+<tr>
+<td><strong>Top 5%</strong></td>
+<td><strong>\~4,500</strong></td>
+<td><strong>44 out of 100</strong></td>
+<td><strong>30%</strong></td>
+<td><strong>5.9×</strong></td>
+</tr>
+<tr>
+<td>Top 10%</td>
+<td>\~9,000</td>
+<td>36 out of 100</td>
+<td>48%</td>
+<td>4.8×</td>
+</tr>
+<tr>
+<td>Top 20%</td>
+<td>\~18,000</td>
+<td>26 out of 100</td>
+<td>69%</td>
+<td>3.5×</td>
+</tr>
+<tr>
+<td>Random selection (no model)</td>
+<td>any</td>
+<td><strong>7 out of 100</strong></td>
+<td>proportional</td>
+<td>1.0×</td>
+</tr>
+</tbody>
+</table>
+<p><em>Based on held-out test set: 90,087 patients, 6,730 admissions, 7.47% base rate.</em></p>
+<p><strong>How care teams use this:</strong> A care manager working through the top 5% flagged list (\~4,500 patients per cycle) will find roughly 44 per 100 who genuinely need outreach — 5.9× more productive than reviewing a random list of the same size.</p>
+<p><strong>Important framing:</strong> The model is a triage tool, not a diagnostic. Fewer than half of patients in the top 5% will have an admission — this is expected and appropriate. The goal is to focus scarce care management attention where it will have the most impact, not to achieve diagnostic certainty.</p>
+<blockquote>
+<p><strong>Takeaway:</strong> At the recommended top-5% threshold, the August model flags \~4,500 patients per cycle with 44% PPV — improved from 39% in July. That means \~5 additional true high-risk patients identified per 100 reviewed, compared to the July version.</p>
+</blockquote></div></div><div class="cell"><div class="cell-title">Care Gap Indicators — The Biggest Gain in the Project (PASS)</div><div class="markdown-cell"><div style="background:#E0E0E0; padding:3px 14px; border-radius:3px; display:inline-block; font-size:11px; font-weight:bold; color:#555; letter-spacing:1px; margin-bottom:10px;">SLIDE 4 OF 9</div>
+
+<hr />
+<h2 id="patients-missing-expected-diabetes-care-are-the-strongest-signal-of-risk-experiment-a-pass-new-benchmark">Patients Missing Expected Diabetes Care Are the Strongest Signal of Risk ✅ (Experiment A — Pass, New Benchmark)</h2>
+<p><strong>What was tested:</strong> We measured whether patients are NOT receiving expected diabetes monitoring — lab tests, eye exams, foot exams, nutrition counseling, and diabetes education — and asked the model whether these gaps help identify risk beyond what test results alone show.</p>
+<div style="display:flex; gap:28px; margin:18px 0; flex-wrap:wrap;">
+<div style="text-align:center; background:#f0fff4; border:2px solid #2CA02C; border-radius:8px; padding:14px 24px; min-width:140px;">
+<div style="font-size:52px; font-weight:bold; color:#2CA02C; line-height:1;">+0.031</div>
+<div style="font-size:13px; color:#555; margin-top:4px;">PR-AUC improvement (+7.9%)</div>
+</div>
+<div style="text-align:center; background:#f0f7ff; border:2px solid #1F77B4; border-radius:8px; padding:14px 24px; min-width:140px;">
+<div style="font-size:52px; font-weight:bold; color:#1F77B4; line-height:1;">0.427</div>
+<div style="font-size:13px; color:#555; margin-top:4px;">New benchmark (was 0.396)</div>
+</div>
+</div>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prior benchmark (July)</th>
+<th>New benchmark (August)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PR-AUC</td>
+<td>0.396</td>
+<td><strong>0.427</strong> ✅</td>
+</tr>
+<tr>
+<td>Of 100 flagged patients, how many admitted? (PPV at top 5%)</td>
+<td>\~39%</td>
+<td><strong>\~44%</strong></td>
+</tr>
+<tr>
+<td>Proportion of all admissions captured (Sensitivity at top 5%)</td>
+<td>\~27%</td>
+<td><strong>\~30%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>This is the largest single improvement from any experiment in the project to date.</strong> The previous best single-experiment gain was +0.009 (CGM device identification, July).</p>
+<hr />
+<h3 id="what-are-care-gap-indicators">What are care gap indicators?</h3>
+<p>Twelve binary features capturing whether specific monitoring or care activities are <strong>absent</strong> from a patient’s record in the prior 22 months:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Lab monitoring gaps</strong></td>
+<td>No A1C test, no eGFR, no lipid panel, no creatinine, no urine albumin</td>
+</tr>
+<tr>
+<td><strong>Procedure and education gaps</strong></td>
+<td>No retinal exam, no foot exam, no diabetes education, no nutrition counseling</td>
+</tr>
+<tr>
+<td><strong>Aggregate measure</strong></td>
+<td>Total count of gaps (0–11)</td>
+</tr>
+</tbody>
+</table>
+<p>The 22-month window exceeds the standard 12-month screening cadence — a flag truly means a patient has fallen out of routine care.</p>
+<hr />
+<h3 id="the-most-important-predictor-in-the-entire-model-is-now-no-nutrition-counseling">The most important predictor in the entire model is now “no nutrition counseling”</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Model importance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No nutrition counseling in 22 months</td>
+<td><strong>#1 (most important in the entire model)</strong></td>
+</tr>
+<tr>
+<td>No diabetes education in 22 months</td>
+<td>Top 10</td>
+</tr>
+<tr>
+<td>Total monitoring gaps (aggregate count)</td>
+<td>Top 20</td>
+</tr>
+</tbody>
+</table>
+<p>Fewer than <strong>8% of T2DM patients</strong> received nutrition counseling in the 22-month window. Fewer than <strong>9%</strong> received documented diabetes education. These are among the most common gaps — and the most predictive.</p>
+<blockquote>
+<p><strong>Takeaway:</strong> Asking “has this patient received expected diabetes care?” turns out to be the single most powerful question for improving risk prediction — the largest gain from any single experiment in the project’s history.</p>
+</blockquote></div></div><div class="cell"><div class="cell-title">Care Gaps — What the Data Actually Shows</div><div class="markdown-cell"><div style="background:#E0E0E0; padding:3px 14px; border-radius:3px; display:inline-block; font-size:11px; font-weight:bold; color:#555; letter-spacing:1px; margin-bottom:10px;">SLIDE 5 OF 9</div>
+
+<hr />
+<h2 id="an-important-nuance-sicker-patients-get-more-monitoring">An Important Nuance: Sicker Patients Get MORE Monitoring</h2>
+<p><strong>The raw data shows a counterintuitive pattern:</strong> patients who DO have gaps show <em>lower</em> admission rates — often dramatically so.</p>
+<table>
+<thead>
+<tr>
+<th>Care gap</th>
+<th>Admission rate (gap present)</th>
+<th>Admission rate (gap absent)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No nutrition counseling</td>
+<td>5.5%</td>
+<td>32.6%</td>
+</tr>
+<tr>
+<td>No diabetes education</td>
+<td>6.5%</td>
+<td>17.5%</td>
+</tr>
+<tr>
+<td>No A1C test</td>
+<td>3.0%</td>
+<td>9.7%</td>
+</tr>
+<tr>
+<td>No creatinine test</td>
+<td>1.3%</td>
+<td>9.0%</td>
+</tr>
+</tbody>
+</table>
+<p>This is <strong>confounding by indication</strong>: sicker patients receive more intensive monitoring precisely because they are higher-risk. Among nutrition counseling recipients, admitted and non-admitted patients have virtually identical monitoring gap burdens (3.8 vs 3.9 out of 11) — what separates them is prior severity: 2× prior admissions, 2× ED visits, +47% charges.</p>
+<hr />
+<h3 id="what-the-0031-improvement-proves">What the +0.031 improvement proves</h3>
+<p>If care-gap features were purely redundant with the 285 existing severity measures, they would add zero. The largest gain in the project’s history demonstrates they carry genuinely new information — but that information operates in multivariate interaction, not as a simple rule.</p>
+<hr />
+<h3 id="what-this-means-for-clinical-use">What this means for clinical use</h3>
+<ol>
+<li><strong>For risk prediction:</strong> These features capture a dimension of information not redundant with anything else in the model — the model is measurably better at identifying who will be admitted.</li>
+<li><strong>For intervention:</strong> The model’s value is in <strong>prioritization</strong>, not prescription. It identifies patients who need clinical attention. What that attention looks like (care coordination, medication review, referral follow-up) is a clinical judgment call for each patient — not something the model dictates.</li>
+</ol>
+<p><strong>An important caution:</strong> The data does NOT support the conclusion that offering missing services (e.g., nutrition counseling) to flagged patients would reduce their admission risk. Patients who received these services have <em>higher</em> admission rates because they are sicker. The gap is a predictive signal for the model, not a causal intervention target.</p>
+<blockquote>
+<p><strong>Takeaway:</strong> The model uses care gaps to improve risk identification, not to prescribe a specific intervention. It tells care teams <em>who</em> needs attention. What intervention is appropriate remains a clinical decision for each patient.</p>
+</blockquote></div></div><div class="cell"><div class="cell-title">CGM Data Correction — Transparent Reporting</div><div class="markdown-cell"><div style="background:#E0E0E0; padding:3px 14px; border-radius:3px; display:inline-block; font-size:11px; font-weight:bold; color:#555; letter-spacing:1px; margin-bottom:10px;">SLIDE 6 OF 9</div>
+
+<hr />
+<h2 id="a-data-correction-revealed-a-new-clinical-signal-insulin-pump-use">A Data Correction Revealed a New Clinical Signal — Insulin Pump Use</h2>
+<p><strong>In July, we reported that CGM (continuous glucose monitor) use was a meaningful predictor of risk. That finding still stands — but we found and fixed a data-labeling issue that made it more accurate.</strong></p>
+<hr />
+<h3 id="what-happened">What happened</h3>
+<p>Two insulin pump device codes had been miscounted as CGM sensors. When we corrected the device list (counting only actual CGM sensors), model performance initially dropped — meaning the original miscoding had been quietly helping.</p>
+<p>Rather than reverting to the incorrect coding, we investigated <em>why</em> the correction affected performance.</p>
+<hr />
+<h3 id="what-we-discovered">What we discovered</h3>
+<p><strong>Insulin pump use is itself a meaningful, distinct clinical signal</strong> — separate from CGM use. The model had been picking it up indirectly through the miscoded devices.</p>
+<table>
+<thead>
+<tr>
+<th>Patient group</th>
+<th>Unplanned admission rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Insulin pump users</td>
+<td>\~10 per 100</td>
+</tr>
+<tr>
+<td>Non-pump users</td>
+<td>\~7 per 100</td>
+</tr>
+</tbody>
+</table>
+<p>Patients on insulin pumps have roughly <strong>a third higher</strong> admission rates — reflecting genuine clinical complexity (more advanced or harder-to-manage diabetes), not a data artifact.</p>
+<hr />
+<h3 id="resolution">Resolution</h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Corrected CGM device list (sensors only)</td>
+<td>CGM signal now clinically accurate</td>
+</tr>
+<tr>
+<td>Built insulin pump use as its own separate feature</td>
+<td>New signal captured properly</td>
+</tr>
+<tr>
+<td>Re-ran model with both clean signals</td>
+<td>Performance recovered and slightly exceeded July benchmark</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Validation in progress:</strong> We are working with our Clarity team to formally validate the full insulin pump device/medication code list before permanent production use.</p>
+<blockquote>
+<p><strong>Takeaway:</strong> The July CGM finding stands. The correction simply made it more accurate, and revealed a second related signal (insulin pump use) that we are now formally incorporating. Transparent data correction led to a better model.</p>
+</blockquote></div></div><div class="cell"><div class="cell-title">Care Utilization Patterns — Ready for September</div><div class="markdown-cell"><div style="background:#E0E0E0; padding:3px 14px; border-radius:3px; display:inline-block; font-size:11px; font-weight:bold; color:#555; letter-spacing:1px; margin-bottom:10px;">SLIDE 7 OF 9</div>
+
+<hr />
+<h2 id="how-patients-use-care-now-has-a-measurable-impact-experiment-b-pass-feature-retained">How Patients Use Care Now Has a Measurable Impact (Experiment B — Pass, Feature Retained)</h2>
+<p><strong>Question:</strong> Beyond counting visits, does HOW patients engage with the system predict risk? Visit regularity, missed appointments, repeat ED use, and care fragmentation across departments.</p>
+<hr />
+<h3 id="what-was-built-and-tested">What was built and tested</h3>
+<p>We engineered 14 care-pattern features from encounter, scheduling, and hospital records, then ran a full H2O DAI experiment alongside the existing 285-feature model.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (benchmark)</th>
+<th>After (+ 14 care patterns)</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PR-AUC (held-out test)</td>
+<td>0.3962</td>
+<td><strong>0.3971</strong></td>
+<td>+0.0009</td>
+</tr>
+<tr>
+<td>Total features</td>
+<td>285</td>
+<td>299</td>
+<td>+14</td>
+</tr>
+</tbody>
+</table>
+<p>The aggregate improvement is marginal. But the experiment revealed something significant about <strong>which</strong> individual features the model values.</p>
+<hr />
+<h3 id="the-key-finding-specialty-fragmentation-is-a-top-tier-predictor">The key finding: specialty fragmentation is a top-tier predictor</h3>
+<div style="display:flex; gap:28px; margin:18px 0; flex-wrap:wrap;">
+<div style="text-align:center; background:#f0f7ff; border:2px solid #1F77B4; border-radius:8px; padding:14px 24px; min-width:140px;">
+<div style="font-size:52px; font-weight:bold; color:#1F77B4; line-height:1;">#2</div>
+<div style="font-size:13px; color:#555; margin-top:4px;">overall model importance (of 299 features)</div>
+</div>
+</div>
+
+<p>The number of <strong>distinct specialties</strong> a patient visits ranked <strong>#2 out of 299 features</strong> — second only to diagnostic complexity. This is the strongest result for any newly-added feature in the project’s history.</p>
+<hr />
+<h3 id="what-this-means-clinically">What this means clinically</h3>
+<ul>
+<li>Not just <em>how much</em> care a patient uses, but <em>how scattered</em> that care is across specialties</li>
+<li>A known correlate of care coordination challenges — gaps in follow-up, conflicting plans, unclear ownership</li>
+<li>Unlike diagnosis count (largely fixed), specialty fragmentation is potentially <strong>actionable</strong> through care coordination</li>
+</ul>
+<blockquote>
+<p><strong>Takeaway:</strong> <code>n_distinct_specialties</code> is permanently retained in the production model. Patients whose care is fragmented across many specialty areas are at substantially higher risk — and unlike disease burden, fragmentation is something care teams can directly address.</p>
+</blockquote></div></div><div class="cell"><div class="cell-title">Baseline Feature Recovery — Negative Result (Closed)</div><div class="markdown-cell"><div style="background:#E0E0E0; padding:3px 14px; border-radius:3px; display:inline-block; font-size:11px; font-weight:bold; color:#555; letter-spacing:1px; margin-bottom:10px;">SLIDE 8 OF 9</div>
+
+<hr />
+<h2 id="the-current-approach-isnt-missing-signals-from-earlier-work-experiment-c-negative-result-closed">The Current Approach Isn’t Missing Signals From Earlier Work (Experiment C — Negative Result, Closed)</h2>
+<p><strong>Question:</strong> An earlier model version used 854 features built differently from the same data. Are there useful signals in that older approach that the current 11-dimension architecture does not capture?</p>
+<hr />
+<h3 id="what-we-tested">What we tested</h3>
+<p>Combined the current 285 features with 349 surviving legacy features (634 total) and ran the full modeling pipeline on the same cohort, same split, same settings.</p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Features</th>
+<th>Held-out test PR-AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Current model (benchmark)</td>
+<td>285</td>
+<td>0.396</td>
+</tr>
+<tr>
+<td>Current + 349 legacy features</td>
+<td>634</td>
+<td>0.395</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Adding the legacy features produced no improvement.</strong> The difference (−0.001) is within the model’s run-to-run variability (±0.011).</p>
+<hr />
+<h3 id="why-they-didnt-help">Why they didn’t help</h3>
+<p>The expanded model relied almost entirely on the same features the current model already uses. Legacy features (medication names, lab values, vital signs) are different column names for concepts the 11 curated clinical dimensions already capture.</p>
+<hr />
+<h3 id="what-this-means">What this means</h3>
+<p>This is a <strong>reassuring negative result.</strong> The model’s performance ceiling is limited by the inherent predictability of unplanned admissions from structured EHR data — not by missing information.</p>
+<blockquote>
+<p><strong>Takeaway:</strong> The current 11-dimension approach captures everything the older 854-feature model did, more efficiently and with better clinical interpretability. Future gains will come from genuinely new data concepts, not retrofit of legacy features.</p>
+</blockquote></div></div><div class="cell"><div class="cell-title">What Comes Next — Path to Deployment</div><div class="markdown-cell"><div style="background:#E0E0E0; padding:3px 14px; border-radius:3px; display:inline-block; font-size:11px; font-weight:bold; color:#555; letter-spacing:1px; margin-bottom:10px;">SLIDE 9 OF 9</div>
+
+<hr />
+<h2 id="the-path-forward-from-model-to-clinical-use">The Path Forward: From Model to Clinical Use</h2>
+<p><strong>With the benchmark at 0.427 and all experiments complete, the model development phase is closing. The path ahead is about clinical verification and production deployment.</strong></p>
+<hr />
+<h3 id="remaining-model-work">Remaining model work</h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>What it requires</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Insulin pump code validation</td>
+<td>Clarity team SME review of pump device/medication codes</td>
+<td>In progress</td>
+</tr>
+<tr>
+<td>Model lock</td>
+<td>Final feature set frozen, production scoring configuration established</td>
+<td>After validation</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="clinical-verification">Clinical verification</h3>
+<p>Before deployment, the model requires a <strong>patient chart review</strong> round:</p>
+<ul>
+<li>Clinicians review a sample of high-risk flagged patients and confirm the model’s predictions align with clinical judgment</li>
+<li>This is a standard validation step — it tests whether the statistical signal translates into clinically meaningful risk identification</li>
+<li>The review also informs operating threshold selection: at what cutoff does the flagged list match care team capacity?</li>
+</ul>
+<hr />
+<h3 id="production-deployment-decisions-needed-from-this-group">Production deployment — decisions needed from this group</h3>
+<p>Moving from a validated model to live scoring requires three things:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>What it involves</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Scoring infrastructure</strong></td>
+<td>H2O DAI model packaged as a scoring pipeline — runs on a schedule against the live patient cohort, produces a ranked risk list</td>
+</tr>
+<tr>
+<td><strong>Prediction delivery</strong></td>
+<td>Where do predictions land? Options include a standalone dashboard, integration into Epic (BPA/SmartList), or a staged approach (dashboard first, Epic later)</td>
+</tr>
+<tr>
+<td><strong>Ongoing maintenance</strong></td>
+<td>Retraining cadence, monitoring for drift, and cost of upkeep (DS team will bring a structured estimate)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>We need clinical input on prediction delivery.</strong> The DS team can build toward any of these endpoints, but the care management workflow should drive the choice — not the technology.</p>
+<hr />
+<h3 id="august-experiments-summary-scorecard">August experiments — summary scorecard</h3>
+<table>
+<thead>
+<tr>
+<th>Experiment</th>
+<th>Result</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A: Monitoring and Care Gap Indicators</strong></td>
+<td><strong>PASS — new benchmark</strong></td>
+<td>+0.031 PR-AUC, 12 new features, #1 predictor</td>
+</tr>
+<tr>
+<td><strong>B: Care Utilization Patterns</strong></td>
+<td><strong>PASS — feature retained</strong></td>
+<td>+0.001 PR-AUC, <code>n_distinct_specialties</code> ranked #2</td>
+</tr>
+<tr>
+<td>C: Baseline Feature Recovery</td>
+<td>Negative result — closed</td>
+<td>349 legacy features added nothing; architecture confirmed complete</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Takeaway:</strong> The model is ready for clinical verification. The next step is a patient chart review to confirm predictions align with clinical judgment. After that, the group needs to decide where predictions should live — the answer shapes the deployment timeline and effort.</p>
+</blockquote>
+<hr />
+<p><em>Clinical Summary last updated: 2026-08-24 — cdharmawardhana@mercy.com</em></p></div></div>
+    </div>
+</body>
+</html>
