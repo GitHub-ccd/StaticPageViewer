@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SWD Talk Teleprompter</title>
+<style>
+  :root {
+    --bg: #111418;
+    --panel: #1a1f26;
+    --text: #e9edf2;
+    --muted: #8b95a3;
+    --accent: #5aa9ff;
+    --demo: #f2a33a;
+    --demo-bg: #2a2214;
+    --border: #2b323c;
+    --fs: 30px;
+  }
+  body.light {
+    --bg: #fbfbf9;
+    --panel: #ffffff;
+    --text: #1b1f24;
+    --muted: #66707c;
+    --accent: #1f6fd1;
+    --demo: #b46a00;
+    --demo-bg: #fff4e3;
+    --border: #e1e4e8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    padding: 16px 32px 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel);
+  }
+  #num {
+    font-size: 44px;
+    font-weight: 800;
+    color: var(--accent);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  #num small { font-size: 20px; color: var(--muted); font-weight: 600; }
+  #title { font-size: 28px; font-weight: 700; line-height: 1.2; flex: 1; }
+  #timer {
+    font-size: 24px;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  #timer.running { color: var(--text); }
+  #progress { height: 4px; background: var(--border); }
+  #bar { height: 100%; width: 0; background: var(--accent); transition: width .2s; }
+  main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 32px 40px;
+  }
+  .slide { display: none; max-width: 1100px; margin: 0 auto; }
+  .slide.active { display: block; }
+  .slide p {
+    font-size: var(--fs);
+    line-height: 1.5;
+    margin: 0 0 0.85em;
+  }
+  .demo {
+    margin-top: 1.4em;
+    border: 2px solid var(--demo);
+    background: var(--demo-bg);
+    border-radius: 12px;
+    padding: 20px 24px 8px;
+  }
+  .demo h2 {
+    margin: 0 0 0.6em;
+    color: var(--demo);
+    font-size: calc(var(--fs) * 0.95);
+  }
+  .demo .tag {
+    display: inline-block;
+    font-weight: 800;
+    color: var(--demo);
+    font-size: calc(var(--fs) * 0.85);
+    letter-spacing: .02em;
+    margin-bottom: 0.15em;
+  }
+  footer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 32px;
+    border-top: 1px solid var(--border);
+    background: var(--panel);
+    font-size: 18px;
+    color: var(--muted);
+  }
+  #next { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #next b { color: var(--text); font-weight: 600; }
+  button {
+    font: inherit;
+    font-size: 18px;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 14px;
+    cursor: pointer;
+  }
+  button:hover { border-color: var(--accent); }
+  #help { font-size: 14px; }
+  @media (max-width: 700px) {
+    header, main, footer { padding-left: 16px; padding-right: 16px; }
+    #num { font-size: 32px; }
+    #title { font-size: 20px; }
+    #help { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div id="num">1 <small>/ 32</small></div>
+  <div id="title"></div>
+  <div id="timer" title="Click or press T to start/pause · R to reset">00:00</div>
+</header>
+<div id="progress"><div id="bar"></div></div>
+
+<main id="main">
+
+<section class="slide" data-title="Title Slide">
+<p>Good morning, everyone. My name is Chamila Dharmawardhana, and I'm a data scientist on the Population Health diabetes team.</p>
+<p>For the next forty minutes I'm going to talk about one project — but this talk is not really about the model.</p>
+<p>So you have an anchor: we built a risk model for patients with type 2 diabetes. It predicts which patients are likely to have an unplanned hospital admission in the next twelve months. About 300,000 patients, and roughly 7.5% of them have an unplanned admission within a year — a classic imbalanced classification problem.</p>
+<p>That's all the model detail you need for now. What I want to talk about is how the same model went from being hard to explain to being something clinicians could actually act on.</p>
+<p>If you remember one sentence from this talk, make it this one: Same model. Same data. Same metrics. Only the communication changed.</p>
+</section>
+
+<section class="slide" data-title="Table of Contents">
+<p>Over the summer, a few people asked me how our review presentations suddenly got so much better. The honest answer is that I didn't suddenly get better at making slides. I adopted a framework, and then I made it run on every single review.</p>
+<p>Here's the roadmap. First, the origin story — what our documents looked like before and after. Second, the framework itself — six moves you can apply to any data presentation. Third, why it matters specifically for clinical ML. Fourth, the part I think this room will find most interesting: the implementation — I encoded the framework into a file that an AI coding assistant loads every time it helps me build a review, so the framework runs whether or not I remember it on a given day. Then before and after — the June and July decks side by side, and the August care-gap story — and lessons learned.</p>
+<p>A heads-up: twice during this talk I'll leave the slides to show you the real files — the July deck exactly as clinicians received it, and the skill file itself. Everything else I've brought into the slides.</p>
+<p>Let's start with the origin story.</p>
+</section>
+
+<section class="slide" data-title="The Before State">
+<p>Here's where we started. This is May 2026 — the source draft of the first clinical summary we wrote for this project, before it was turned into slides.</p>
+<p>If you've ever written a model card or an experiment summary, it will look very familiar, because it's exactly how we're trained to write. It opens with cohort and target definition. Then inclusion criteria. Then exclusion criteria. Then a parameters table. Then a line saying the positive rate is 7.52%, and a note that class imbalance is typical for hospitalization prediction.</p>
+<p>Every word of it is correct. And it had every classic problem of a data scientist presenting to clinicians.</p>
+<p>Topic titles, not finding titles. "Cohort &amp; Target Definition" tells you nothing. No heading tells you the point.</p>
+<p>Methods before meaning. The reader got inclusion criteria before they got any reason to care.</p>
+<p>Jargon without translation. The headline metric was PR-AUC 0.382. That's a perfectly good number for us. But what does a care manager do with it? Who do they call on Monday morning?</p>
+<p>No Big Idea. Nowhere in the document was there one sentence that said: here is what this means.</p>
+<p>It was also organized by technical category — cohort, features, model, limitations — rather than by story logic.</p>
+<p>The verdict: technically correct, and clinically useless for the people it was written for.</p>
+</section>
+
+<section class="slide" data-title="Three Things Changed">
+<p>Between June and July, three things happened.</p>
+<p>First: I read the book. Storytelling with Data by Cole Nussbaumer Knaflic. It's not about being artistic. It's a practical, step-by-step framework for communicating with data. Anyone can follow it.</p>
+<p>Second: I codified it as a skill file — a set of machine-readable instructions that an AI coding assistant loads and follows. Not personal notes. Instructions.</p>
+<p>Third: I built templates and workflows that put the framework into the standard monthly review cycle, so no one reinvents the wheel each month.</p>
+<p>The quality improvement came from adopting a framework and systematizing it — not from sudden talent.</p>
+</section>
+
+<section class="slide" data-title="Before/After Comparison">
+<p>Here's the side by side.</p>
+<p>Before: "Model Performance" — a topic. After: "The model identifies high-risk patients 5.9 times better than chance" — a finding. The title IS the takeaway.</p>
+<p>Before: PR-AUC 0.382. After: "Of every 100 flagged, 44 will actually be admitted."</p>
+<p>That 5.9 is just lift over the base rate: about 44% PPV divided by a 7.5% base rate. Nothing new statistically — it's the same information answering the question a care manager actually has: of every hundred people you hand me, how many really need me?</p>
+<p>Precision and recall became PPV and sensitivity. I'll come back to why in Part 3.</p>
+<p>The order went from methods-first to good news first. One big number and one accent color per slide. And the structure went from a data dump to setup, tension, resolution.</p>
+<p>Nothing about the model changed. Every change was in the communication.</p>
+<p>Here's what that looked like on a real slide.</p>
+</section>
+
+<section class="slide" data-title="What Clinicians Actually Saw">
+<p>Here's what clinicians actually saw. On the left, the June deck — the last one before the framework. On the right, July. Same project, one month apart. Both are rebuilt here from the real decks.</p>
+<p>June's results slide is called "Key Clinical Findings." A topic. Then five bullets — and the first one is "Test PR-AUC 0.387 versus prior 0.382."</p>
+<p>July's version of that slide: "The Model Is a Prioritization Tool — Not a Diagnostic." The July title tells you the conclusion before you read a single number. Then one big number, 5.9×, and a table that answers the care manager's question: at the recommended top 5%, 44 of every 100 flagged are admitted. And we say the limit out loud — fewer than half — so it's a triage tool, not a diagnostic.</p>
+<p>Topic title versus finding title. A metric versus a meaning. I'll come back to these two decks in Part 5. First, the framework that produced the one on the right.</p>
+</section>
+
+<section class="slide" data-title="Six Moves, in Order">
+<p>Now the framework itself. Six moves, done in order. These aren't optional, and the order matters. Most bad decks skip the first two — they go straight to making charts.</p>
+<p>Understand the context. Storyboard before you build. Choose the right display. Eliminate clutter. Direct attention. And tell a story on every slide.</p>
+<p>You'll notice this slide follows its own rule: only the first two moves are in color, because that's the point of the slide. Let's take them one at a time.</p>
+</section>
+
+<section class="slide" data-title="Move 1: Understand the Context">
+<p>Move 1: before you write a single notebook cell, answer three questions.</p>
+<p>WHO is the audience? For us, clinical leadership. They know the problem clinically, not statistically.</p>
+<p>WHAT do you need them to do? Approve the next experiment phase — and trust the model.</p>
+<p>HOW will they consume it? A live 30-minute review, and the slides also have to stand alone afterward.</p>
+<p>For this room, think of this as the requirements spec. You wouldn't write code without knowing the requirement. This is the requirement for the deck.</p>
+<p>Then you write the Big Idea, from a simple template: the finding, does something specific, which means a concrete impact.</p>
+<p>"The T2DM model identifies high-risk patients 5.9 times more efficiently than random outreach, enabling targeted care management that could prevent thousands of unplanned admissions per cycle."</p>
+<p>And the rule is strict: every slide must serve the Big Idea, or it gets cut.</p>
+</section>
+
+<section class="slide" data-title="Move 2: Storyboard Before Building">
+<p>Move 2: draft the story arc as a bulleted outline before any code or chart cells.</p>
+<p>Setup is what is. Tension is what's wrong or unknown. Resolution is what we found, and what to do about it.</p>
+<p>Here's the July storyboard. Why this cohort matters. Then good news first — a new feature based on continuous glucose monitoring gave the first benchmark gain since June. Then what that means operationally. Then credibility — two experiments were closed because they didn't help. Then where the highest-risk patients are. Then what comes next before we lock the model.</p>
+<p>Compare that to June, which followed the technical order: team, cohort, architecture, findings, limitations.</p>
+<p>July's logic was improvement → application → trust → next steps. It was sequenced so a clinician could follow it — not so a reviewer could audit it.</p>
+</section>
+
+<section class="slide" data-title="Move 3: Choose the Right Display">
+<p>Move 3: the simplest display that shows the finding. Never pick a chart because it looks sophisticated.</p>
+<p>Every row here is something we actually used. The 5.9× was a large text callout — no chart at all. Markets were a sorted horizontal bar. The benchmark over time was a line. Operating points were a table. Experiment outcomes were side-by-side cards.</p>
+<p>And some things are simply never used: 3D charts, dual axes, pie charts with more than five slices, donuts, radar charts. If you catch yourself reaching for one, stop and ask what story you're actually trying to tell.</p>
+</section>
+
+<section class="slide" data-title="Move 4: Eliminate Clutter">
+<p>Move 4: clutter is anything that uses visual space without adding information — and most default chart settings are clutter.</p>
+<p>Borders and heavy gridlines go. Tick marks and repeated axis titles go. Legends go — label the series directly. Extra decimals go: 7.5%, not 7.47%. Rainbow palettes go.</p>
+<p>The test is simple: if you removed this element and the chart still says the same thing, remove it.</p>
+</section>
+
+<section class="slide" data-title="Move 5: Direct Attention">
+<p>Move 5: if everything is highlighted, nothing is.</p>
+<p>Color, bold, size, and position are processed by the eye before conscious thought — they're called preattentive attributes. The rule is to use exactly one primary attribute per chart. Everything else gets gray.</p>
+<p>We fixed the palette for the whole project. Blue for structure. Green for a passed experiment. Red for a closed experiment. Orange for alerts and reference lines. And gray is the default — color is reserved for exactly what you want the audience to remember.</p>
+<p>This deck follows the same rule. When we get to the translation table in a few minutes, watch where your eye goes — only one row is blue.</p>
+</section>
+
+<section class="slide" data-title="Move 6: Tell a Story in Every Cell">
+<p>Move 6: every slide tells one story.</p>
+<p>The pattern: an active-voice title that states the finding. One or two sentences of plain-language summary. One chart, table, or callout. And a closing takeaway.</p>
+<p>"Model Performance" became "The model identifies high-risk patients 5.9 times better than chance." "Lab Trajectory Results" became "Snapshot labs already capture the information — trajectories add nothing."</p>
+<p>Every title has to pass the "so what" test: if the audience remembers only one sentence from this slide, which sentence should it be? That sentence is the title. If you can't write it, the slide isn't ready.</p>
+<p>Let's see all six moves in the actual July PowerPoint.</p>
+<div class="demo">
+<h2>Demo 1 — July PowerPoint</h2>
+<p>This is the July clinical summary deck, as clinicians received it. I'll walk through a few slides and name the move behind each design choice.</p>
+<p><span class="tag">JULY SLIDE 1</span><br>The Big Idea is the first thing on the first slide. That's Move 1.</p>
+<p><span class="tag">JULY SLIDE 2</span><br>Read the order: good news first, then how to use the model, then what we ruled out. That's Move 2 — the storyboard.</p>
+<p><span class="tag">JULY SLIDE 4</span><br>One big number, no chart. That's Move 3, the simplest display, and Move 5, one point of attention.</p>
+<p><span class="tag">JULY SLIDE 6</span><br>Closed experiments are red cards. Color does the work before you read anything — Move 5.</p>
+<p><span class="tag">JULY SLIDE 7</span><br>Sorted horizontal bar, top four in blue, everything else gray, no legend. Moves 3, 4, and 5 on one chart.</p>
+<p><span class="tag">FLIP BACK THROUGH THE TITLES</span><br>And every single title states a finding. That's Move 6.</p>
+<p>Let's go back to the slides.</p>
+</div>
+</section>
+
+<section class="slide" data-title="The Audience Gap">
+<p>The people who build a model and the people who decide whether to deploy it speak different languages. This table shows what that looks like.</p>
+<p>We say: "PR-AUC improved from 0.387 to 0.396." They hear: "Some number got slightly bigger." What we should say: "The model now identifies high-risk patients more precisely — the first improvement since June."</p>
+<p>We say: "Two experiments closed due to negative delta." They hear: "Things failed." What we should say: "We tested two directions, confirmed they don't help, and can now focus on what works."</p>
+<p>We say: "F1-optimal threshold at 0.205." They hear: nothing. Silence. What we should say: "At the recommended operating point, the care team reviews about 4,500 patients per cycle."</p>
+<p>And here's the one that matters most. We say: "Precision at top 5% is 43.6%." They hear: "Less than half are correct?"</p>
+<p>Think about that. A correct, good statistic actively lowered their confidence. What we should say: "Of every 100 patients we flag, about 44 will actually have an unplanned admission — 5.9 times better than a random list."</p>
+<p>Same number. Completely different reaction.</p>
+</section>
+
+<section class="slide" data-title="Clinical Translation Table">
+<p>So every metric gets a sentence a care manager could act on.</p>
+<p>Notice where your eye went — the one blue row. Lift of 5.9 at the top 5% becomes: "Targeting the top 5% is 5.9 times more efficient than random outreach."</p>
+<p>Precision becomes "of every 100 flagged, about 44 are admitted." Recall becomes "we capture about 30% of everyone who will be admitted." ROC-AUC 0.847 becomes "the model ranks a high-risk patient above a low-risk one 84.7% of the time." The overfit gap becomes "performance barely drops on patients the model has never seen."</p>
+<p>The important part: this table lives inside the skill file. So every review document uses the same words for the same numbers, every month.</p>
+<p>And we say the limit out loud. Top-5% targeting is strong prioritization, not high accuracy. PPV only passes 50% in roughly the top 1%. It's a triage tool, not a diagnostic. Get that wrong and clinicians either over-trust the model or dismiss it.</p>
+<p>Spoiler for the end of the talk: translation turned out to be the single highest-leverage change of the whole project.</p>
+</section>
+
+<section class="slide" data-title="Trust Is the Product">
+<p>In clinical ML, the presentation IS the product — at least until deployment. Clinicians decide whether to act on a model based on whether they trust the team presenting it.</p>
+<p>Transparency about failures — closed experiments are shown, not buried. Clinical face validity — the top features make medical sense. Operational translation — their workflow, not our metrics. Appropriate humility — triage tool, not diagnostic. And good-news-first sequencing — story structure, not spin.</p>
+<p>Two vocabulary rules are now hard-coded into every clinical document.</p>
+<p>Rule one: name the production model, never the benchmarking tool. The production model is built in H2O Driverless AI. We use XGBoost internally for benchmarking. If a clinical document mentions both, people start asking which model is the real one.</p>
+<p>Rule two: say PPV and sensitivity, never precision and recall. I know that one feels backwards here, because precision and recall are our words. They mean exactly the same things. But clinicians trained in epidemiology already know PPV and sensitivity — to them, precision and recall are just machine-learning jargon.</p>
+<p>Both rules came out of real experience on this project, and both are written into the workflow, not left to memory.</p>
+<p>Which raises the question: how do you make rules like these — and the whole framework — happen automatically every month?</p>
+</section>
+
+<section class="slide" data-title="The Skill File">
+<p>This is the most important implementation decision in the whole story.</p>
+<p>The framework doesn't live in my personal notes. It lives in a skill file — a structured markdown document that an AI coding assistant loads before it builds any review deliverable.</p>
+<p>When the assistant loads it, every design decision is already specified — title style, color, sequencing, translation — before the first cell is written. So the output is consistent, and it doesn't depend on me remembering every rule on a busy day.</p>
+<p>It's a style guide that the tool actually reads and follows — rather than one that sits on a wiki.</p>
+<p>Let me open it and show you.</p>
+<div class="demo">
+<h2>Demo 2 — The Skill File</h2>
+<p>Here's the skill file. It's just markdown.</p>
+<p>First, the triggers. Any review notebook, clinical summary, or presentation — the assistant loads this before it writes anything.</p>
+<p>This is the same table you just saw on Slide 15. It's what turns every metric into plain language.</p>
+<p>The default storyboard for every review: the problem, what we tried, the result, clinical impact, model transparency, geography, and what's next — with an owner and a timeline.</p>
+<p>And ten checks that run before any deck goes out. Big Idea on slide one. Every title states a finding. Every metric translated.</p>
+<p>Back to the slides.</p>
+</div>
+</section>
+
+<section class="slide" data-title="Seven Deliverables">
+<p>Every review cycle produces the same seven deliverables.</p>
+<p>The Clinical Summary is for clinical leadership, and it gets the strongest storytelling treatment — because its audience is furthest from the statistics. The Technical Update is for a mixed audience: more depth, still translated. Review Strategies is for the data team. The Presentation notebook has slide-formatted cells plus the python code that generates the PowerPoint for async distribution. The Design Notes record which move each design choice applied, and why. And the Context Bridge is written for next month's assistant session.</p>
+<p>And every review follows the same seven-step arc you just saw in the skill file — so stakeholders know what to expect and can track progress month over month.</p>
+</section>
+
+<section class="slide" data-title="Numbers Flow One Direction">
+<p>Every experiment we run in H2O Driverless AI produces a Word document report.</p>
+<p>An extraction skill — ten phases — turns that report into a structured markdown file.</p>
+<p>The numbers are verified and entered into the Experiment Log. The Experiment Log is the single source of truth.</p>
+<p>From the log, a sync prompt carries each new number into our living reference documents — and only then are the review deliverables written, with the storytelling skill loaded.</p>
+<p>If you think of the Experiment Log as a source table, every document is a downstream view, and the sync prompt is the refresh job.</p>
+<p>The one rule: numbers flow in one direction. No document invents its own metrics.</p>
+<p>Here's what the refresh job actually looks like.</p>
+</section>
+
+<section class="slide" data-title="The Sync Prompt">
+<p>Two tasks from the sync prompt, word for word. Task C1 handles cohort numbers. It exists because cohort counts once drifted between documents — and look at the stale values it hunts for: 299,224 and 7.52%. That's the May draft you saw on Slide 3. Now 300,290 patients and 7.47% are enforced in every document, every cycle — no exceptions.</p>
+<p>Task U2 runs when the benchmark moves. It's how a new PR-AUC reaches every document instead of landing in one and getting missed in another. And the Experiment Log is append-only — historical rows are permanent.</p>
+<p>If the Experiment Log is the source table, this is the refresh job — and the checklist is its assertions. Every task ends with a checkbox. The same tasks run every cycle — it's systematic, not heroic.</p>
+</section>
+
+<section class="slide" data-title="H2O Extraction Pipeline">
+<p>Let me zoom into that first arrow — the extraction step — because it's what makes the pipeline possible.</p>
+<p>The extraction skill takes an H2O model report and runs it through ten automated phases.</p>
+<p>Phase 4 — Cumulative Gains digitization — is where the operating points at 1, 5, 10, and 20 percent come from. Those are the centerpiece of every clinical summary. Phase 5 — the PR curve — feeds the translation table. And Phase 10 saves it all as reusable markdown — the raw material for the next review.</p>
+<p>Without this pipeline, every review cycle would mean manual transcription from H2O's UI — error-prone, inconsistent, and exactly the kind of drudgery that kills momentum.</p>
+</section>
+
+<section class="slide" data-title="Context Bridge + Experiment Pattern">
+<p>Two more patterns remove rework from every cycle.</p>
+<p>The Context Bridge. Each cycle ends by writing down the state of the project — the benchmark, the status of every experiment, open items, key document IDs. So the next session starts without having to rediscover anything. It's Move 1 — know your context — applied to the production process itself.</p>
+<p>The Experiment Announcement Pattern. Every passed or closed experiment is reported the same way: the result, the change against the benchmark, the decision, why, and the takeaway.</p>
+<p>Good result or bad, same structure — so reviews are scannable and comparable across months.</p>
+</section>
+
+<section class="slide" data-title="June vs. July Side by Side">
+<p>In Part 1 you saw one slide from each deck. This table is the rest of the comparison between the June deck and the July deck — both exactly as clinicians received them. Rather than read it to you, let me zoom in on the two rows that matter most: what the titles say, and what happened to negative results.</p>
+</section>
+
+<section class="slide" data-title="Read Only the Titles">
+<p>Here's a test you can run on your next deck: read only the titles.</p>
+<p>One binary feature raised the benchmark for the first time since June. The model is a prioritization tool, not a diagnostic. Threshold choice converts model performance into operational value. Three paths were closed. High-risk patients are concentrated in four markets. Three strategies remain before final model lock. And the strongest predictors are diagnosis burden, prior admissions, and medication complexity.</p>
+<p>Listen to just the titles… That's the whole story.</p>
+<p>Now June. Project Team. Cohort and Target Definition. Geographic Distribution by Market. Key Clinical Findings. Limitations and Next Steps. You know what every slide is about. You don't know what any of them found.</p>
+</section>
+
+<section class="slide" data-title="What Each Deck Did With Negative Results">
+<p>Negative results. In June, a closed experiment got one bullet — "Tier A enrichment experiment closed (no lift)" — the eighth line of a twelve-line slide called Limitations and Next Steps.</p>
+<p>July gave closed paths their own slide — and the title states the finding. Every card has the same structure: what was tested, the change against the benchmark, why it closed, and the decision. And this is one of the few places red appears, because in our palette red means exactly one thing: a closed experiment.</p>
+<p>One more detail worth noticing. In June we planned lab trajectories and expected a gain of 0.005 to 0.015. In July we reported it plainly: minus 0.003, closed. A failed experiment, framed as what we learned. That's what builds trust.</p>
+</section>
+
+<section class="slide" data-title="Evolution Across Cycles">
+<p>Five review cycles. PR-AUC went from 0.382 to 0.430. And the third box is this deck itself — built from the same skill.</p>
+<p>May: no framework. June: more content, still no framework. July: the skill file is created — Big Idea, finding titles, translation, the fixed palette, a generated PowerPoint. August: the fullest application yet. September: markdown-first, a milestone validated by clinical subject-matter experts, and the context bridge.</p>
+<p>And I want to be very explicit about this. Storytelling did not raise the PR-AUC. The modeling work did — the glucose monitoring feature in July, care-gap indicators in August, and the expert-validated combined model in September.</p>
+<p>What storytelling changed was whether anyone outside the data team understood those gains.</p>
+<p>August gave us the hardest test of that — so I'll walk you through it the way the August deck walked clinicians through it: three slides, setup, tension, resolution.</p>
+</section>
+
+<section class="slide" data-title="August Care Gaps: Setup">
+<p>The August care-gap result was the hardest storytelling challenge of the project. A finding that contradicts intuition needs the full setup, tension, and resolution arc.</p>
+<p>The care-gap features gave the project its largest single gain — plus 0.031 in PR-AUC, to 0.427 — and "no nutrition counseling in 22 months" became the number-one predictor in the whole model.</p>
+<p>So you'd expect: patients missing expected diabetes care get admitted more often.</p>
+</section>
+
+<section class="slide" data-title="August Care Gaps: Tension">
+<p>Now look. Patients with the gap — no nutrition counseling — have an admission rate of 5.5%. Patients who did get counseling: 32.6%. The exact opposite of intuition.</p>
+<p>And it's not one odd feature. Diabetes education, A1C testing, creatinine testing — same direction every time.</p>
+<p>Read literally, this says skip the counseling and patients do better. That's wrong — and if the story stops here, someone in the room will draw exactly that conclusion.</p>
+</section>
+
+<section class="slide" data-title="August Care Gaps: Resolution">
+<p>This is confounding by indication. Sicker patients get more care. Among patients who received counseling, the admitted and non-admitted groups had almost identical gap burdens — 3.8 versus 3.9 out of 11.</p>
+<p>What separated them was prior severity: twice the prior admissions, twice the ED visits, and 47% higher charges.</p>
+<p>And the +0.031 still matters: if these features were purely redundant with existing severity measures, they would add nothing. They carry new information — it just isn't a simple rule.</p>
+<p>So we stated the guardrail explicitly to clinicians: the model uses care gaps to identify who is at risk, not to prescribe what to do about it. This is prioritization, not prescription.</p>
+<p>A feature can be strongly predictive precisely because it's a proxy for severity. If you don't tell that story clearly, someone in the room will draw a causal conclusion.</p>
+<p>That's Move 2 at its most powerful.</p>
+</section>
+
+<section class="slide" data-title="Intentionality, Not Decoration">
+<p>One last artifact. We keep a Design Notes document that maps every design choice in the July deck to the move behind it.</p>
+<p>The glucose monitoring result leads — good news first. Markets are a sorted horizontal bar — simplest display. Closed experiments are red cards — color is preattentive.</p>
+<p>And feature importance comes last. Why? Because it answers the audience's final question: should I trust this? By then they've seen the result and what it means operationally. The features confirm that the model makes clinical sense.</p>
+<p>And every one of these decks — June to August — was generated with python, so content, layout, and styling are all defined in code and always match the palette.</p>
+<p>This is proof of intent, not decoration.</p>
+</section>
+
+<section class="slide" data-title="Five Things That Worked">
+<p>Five lessons.</p>
+<p>One: framework plus automation equals consistency. Quality no longer depends on remembering the rules.</p>
+<p>Two: good news first isn't spin. It's structure that helps people remember.</p>
+<p>Three: translation moved stakeholders more than any chart redesign. Turning "precision of 43.6%" into "of every 100 flagged, 44 will be admitted" was the highest-leverage change of the whole project.</p>
+<p>Four: closed experiments build trust. Showing what failed raised our credibility.</p>
+<p>Five: a generated PowerPoint means no drift between the notebook and the deck.</p>
+<p>Two things surprised me. The care-gap finding you just saw was the hardest storytelling challenge — contradicting intuition needs the full arc. And the monthly cadence fit the framework perfectly: each review cycle is its own episode, with its own setup, tension, and resolution, inside a larger project story.</p>
+</section>
+
+<section class="slide" data-title="What's Next">
+<p>The framework is portable. The next step is to use it beyond this project.</p>
+<p>First: extend it to other Population Health projects. The clinical translation table and experiment patterns can adapt to CHF, COPD, and other risk models.</p>
+<p>Second: build a library of reusable presentation patterns any team can load.</p>
+<p>Third: apply the same approach to always-on monitoring dashboards — not just monthly reviews.</p>
+<p>So let me close where I started.</p>
+<p>Same model. Same data. Same metrics. The communication framework changed everything else.</p>
+<p>And because it lives in a skill file rather than in my head, it can travel to your projects too.</p>
+<p>Thank you. I'm happy to take questions.</p>
+</section>
+
+</main>
+
+<footer>
+  <button id="prev" aria-label="Previous slide">◀</button>
+  <button id="nextBtn" aria-label="Next slide">▶</button>
+  <div id="next"></div>
+  <button id="smaller" aria-label="Smaller text">A−</button>
+  <button id="bigger" aria-label="Larger text">A+</button>
+  <button id="theme" aria-label="Toggle light/dark">◐</button>
+  <span id="help">→ / PgDn next · ← / PgUp back · type number + Enter to jump</span>
+</footer>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var main = document.getElementById('main');
+  var numEl = document.getElementById('num');
+  var titleEl = document.getElementById('title');
+  var nextEl = document.getElementById('next');
+  var bar = document.getElementById('bar');
+  var root = document.documentElement;
+  var i = 0, typed = '';
+
+  function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+
+  var fs = parseInt(load('swd_fs'), 10) || 30;
+  function setFs(v) { fs = Math.max(16, Math.min(64, v)); root.style.setProperty('--fs', fs + 'px'); store('swd_fs', fs); }
+  setFs(fs);
+  if (load('swd_theme') === 'light') document.body.classList.add('light');
+
+  function show(n) {
+    i = Math.max(0, Math.min(total - 1, n));
+    slides.forEach(function (s, k) { s.classList.toggle('active', k === i); });
+    numEl.innerHTML = (i + 1) + ' <small>/ ' + total + '</small>';
+    titleEl.textContent = slides[i].getAttribute('data-title');
+    nextEl.innerHTML = i < total - 1
+      ? 'Next: <b>Slide ' + (i + 2) + ' — ' + slides[i + 1].getAttribute('data-title') + '</b>'
+      : '<b>End of talk</b>';
+    bar.style.width = ((i + 1) / total * 100) + '%';
+    main.scrollTop = 0;
+    store('swd_slide', i);
+    try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) {}
+  }
+
+  var start = parseInt((location.hash || '').slice(1), 10);
+  show(start ? start - 1 : (parseInt(load('swd_slide'), 10) || 0));
+
+  // Timer
+  var timerEl = document.getElementById('timer');
+  var elapsed = 0, running = false, last = 0;
+  function fmt(ms) { var s = Math.floor(ms / 1000); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+  function tick() { if (running) { var now = Date.now(); elapsed += now - last; last = now; timerEl.textContent = fmt(elapsed); } }
+  setInterval(tick, 250);
+  function toggleTimer() { running = !running; last = Date.now(); timerEl.classList.toggle('running', running); }
+  function resetTimer() { elapsed = 0; timerEl.textContent = '00:00'; }
+  timerEl.addEventListener('click', toggleTimer);
+
+  document.getElementById('prev').onclick = function () { show(i - 1); };
+  document.getElementById('nextBtn').onclick = function () { show(i + 1); };
+  document.getElementById('smaller').onclick = function () { setFs(fs - 2); };
+  document.getElementById('bigger').onclick = function () { setFs(fs + 2); };
+  document.getElementById('theme').onclick = function () {
+    document.body.classList.toggle('light');
+    store('swd_theme', document.body.classList.contains('light') ? 'light' : 'dark');
+  };
+
+  document.addEventListener('keydown', function (e) {
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') { e.preventDefault(); show(i + 1); typed = ''; }
+    else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Backspace') { e.preventDefault(); show(i - 1); typed = ''; }
+    else if (k === 'ArrowDown') { main.scrollBy({ top: 120, behavior: 'smooth' }); }
+    else if (k === 'ArrowUp') { main.scrollBy({ top: -120, behavior: 'smooth' }); }
+    else if (k === 'Home') show(0);
+    else if (k === 'End') show(total - 1);
+    else if (k === '+' || k === '=') setFs(fs + 2);
+    else if (k === '-' || k === '_') setFs(fs - 2);
+    else if (k === 't' || k === 'T') toggleTimer();
+    else if (k === 'r' || k === 'R') resetTimer();
+    else if (/^[0-9]$/.test(k)) { typed += k; }
+    else if (k === 'Enter' && typed) { show(parseInt(typed, 10) - 1); typed = ''; }
+  });
+})();
+</script>
+</body>
+</html>
