@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model 2 Teleprompter</title>
+<style>
+  :root {
+    --bg: #0b0d10;
+    --fg: #f2f4f7;
+    --dim: #5b6572;
+    --accent: #ffd54a;
+    --panel: #151a21;
+    --line: #2a323d;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; background: var(--bg); color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+
+  #bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+    display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center;
+    padding: 10px 14px; background: var(--panel); border-bottom: 1px solid var(--line);
+    font-size: 14px;
+  }
+  #bar.hidden { display: none; }
+  button, select {
+    background: #222a34; color: var(--fg); border: 1px solid var(--line);
+    border-radius: 8px; padding: 8px 12px; font-size: 14px; cursor: pointer;
+  }
+  button:hover, select:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); color: #111; border-color: var(--accent); font-weight: 700; min-width: 84px; }
+  label { display: inline-flex; align-items: center; gap: 6px; color: #b8c1cc; }
+  input[type=range] { width: 130px; accent-color: var(--accent); }
+  .grow { flex: 1; }
+  #status { color: #b8c1cc; font-variant-numeric: tabular-nums; }
+
+  #progress { position: fixed; left: 0; top: 0; height: 4px; width: 0; background: var(--accent); z-index: 20; }
+
+  #guide {
+    position: fixed; left: 0; right: 0; top: 38vh; height: 0; z-index: 5; pointer-events: none;
+    border-top: 2px dashed rgba(255, 213, 74, .45);
+  }
+  #guide::before {
+    content: "▶"; position: absolute; left: 10px; top: -13px; color: var(--accent); font-size: 18px;
+  }
+
+  #scroller {
+    position: fixed; inset: 0; overflow-y: auto; scroll-behavior: auto;
+    padding: 0 8vw;
+  }
+  #scroller.mirror #content { transform: scaleX(-1); }
+  #content { max-width: 1100px; margin: 0 auto; }
+  .spacer-top { height: 38vh; }
+  .spacer-bottom { height: 70vh; }
+
+  section.slide { padding: 0 0 6vh; }
+  .marker {
+    display: flex; align-items: baseline; gap: 14px;
+    margin: 4vh 0 3vh; padding: 10px 14px;
+    background: #1b222b; border-left: 6px solid var(--accent); border-radius: 6px;
+    color: var(--accent); font-size: 0.55em; letter-spacing: .02em; text-transform: none;
+  }
+  .marker .num { font-weight: 800; white-space: nowrap; }
+  .marker .ttl { color: #d7dde5; font-weight: 500; }
+  section.appendix .marker { border-left-color: #7fb3ff; }
+  section.appendix .marker .num { color: #7fb3ff; }
+
+  p.para {
+    margin: 0 0 1.1em; line-height: 1.5; font-weight: 600;
+    color: var(--dim); transition: color .2s;
+  }
+  p.para.read { color: #7b8694; }
+  p.para.current { color: var(--fg); }
+
+  body.no-appendix section.appendix { display: none; }
+
+  #help {
+    position: fixed; right: 14px; bottom: 14px; z-index: 10; background: var(--panel);
+    border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font-size: 12px; color: #b8c1cc;
+    max-width: 320px; line-height: 1.6;
+  }
+  #help.hidden { display: none; }
+  kbd { background: #222a34; border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 11px; color: var(--fg); }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<div id="bar">
+  <button id="play" class="primary">▶ Play</button>
+  <button id="restart" title="Back to the start (R)">⟲ Start</button>
+  <button id="prev" title="Previous slide (←)">◀ Slide</button>
+  <button id="next" title="Next slide (→)">Slide ▶</button>
+  <select id="jump" title="Jump to slide"></select>
+  <label>Speed <input id="speed" type="range" min="10" max="220" step="2" value="70"> <span id="speedVal">70</span> px/s</label>
+  <label>Size <button id="smaller" title="Smaller (−)">A−</button><button id="bigger" title="Larger (+)">A+</button></label>
+  <label><input id="appx" type="checkbox"> Include appendix (slides 13–20)</label>
+  <label><input id="mirror" type="checkbox"> Mirror</label>
+  <span class="grow"></span>
+  <span id="status"></span>
+  <button id="helpBtn" title="Shortcuts (?)">?</button>
+  <button id="hideBar" title="Hide controls (H)">Hide</button>
+</div>
+
+<div id="guide"></div>
+
+<div id="scroller">
+  <div id="content">
+    <div class="spacer-top"></div>
+    <div id="slides"></div>
+    <div class="spacer-bottom"></div>
+  </div>
+</div>
+
+<div id="help" class="hidden">
+  <b>Shortcuts</b><br>
+  <kbd>Space</kbd> play / pause<br>
+  <kbd>↑</kbd> <kbd>↓</kbd> speed up / down<br>
+  <kbd>←</kbd> <kbd>→</kbd> previous / next slide<br>
+  <kbd>+</kbd> <kbd>−</kbd> text size<br>
+  <kbd>R</kbd> restart · <kbd>M</kbd> mirror · <kbd>H</kbd> hide controls · <kbd>F</kbd> fullscreen<br>
+  Scroll with the mouse or trackpad at any time to reposition.
+</div>
+
+<script>
+const SLIDES = [
+  { n: 1, title: "Title and Big Idea", p: [
+    "Welcome, and thank you for your time. This is the October review of Model 2, the comorbidity models, for the Population Health diabetes program.",
+    "Model 2 has not been built yet, and that is deliberate. Before we build anything, we need two clinical decisions. The first is which question Model 2 should answer. The second is which diagnosis codes define each of the four conditions.",
+    "The first real numbers show why these decisions matter. The code lists alone can change the answer a great deal. For hyperglycemia, a single code decides whether this is a thirty percent outcome or a two percent outcome."
+  ]},
+  { n: 2, title: "Model 1 flags who will be admitted; Model 2 would add why", p: [
+    "As a reminder, Model 1 answers one question. Which patients with type 2 diabetes will have an unplanned hospital admission in the next twelve months?",
+    "It covers just over three hundred thousand patients, and about seven in every hundred of them are admitted. When care teams focus on the top five percent of Model 1's list, forty-four in every hundred are admitted. That is almost six times better than choosing patients at random.",
+    "Model 2 would reuse the same patients and the same inputs, and add four condition-specific outcomes: heart failure, sepsis, hyperglycemia, and hypoglycemia.",
+    "So this review asks for two decisions. First, the question Model 2 should answer. Second, the code lists. The November 2025 lists are due for re-verification, and three findings show that the lists change the outcome more than any modeling choice."
+  ]},
+  { n: 3, title: "Model 2 can answer three questions, each with a different list", p: [
+    "There are three ways to frame Model 2, and each one gives a care team a different list.",
+    "Option A asks: who will be admitted for heart failure, or for sepsis, hyperglycemia, or hypoglycemia? Every patient is scored, and the care team sees a separate list for each condition.",
+    "Option B asks: if this patient is admitted, how likely is it to be for heart failure? Only the patients Model 1 flags are scored, and the care team sees Model 1's list with the likely reason for admission added.",
+    "Option C asks: among patients who already have heart failure, who will be admitted for any reason? Only patients with a prior hospital diagnosis of the condition are scored, and the list is a condition-specific panel.",
+    "The key difference is this. Options A and B predict the condition-specific admission. Option C predicts any admission within a group defined by a past condition, so it cannot say why the patient will be admitted.",
+    "If outreach differs by condition, for example a heart failure nurse versus a diabetes educator, option A or B fits. If teams already manage condition panels and only need to know who to prioritize, option C fits."
+  ]},
+  { n: 4, title: "Admissions for each condition are rare: 6 to 22 per 1,000", p: [
+    "Here is how common these events are, using the current code lists.",
+    "Under option A, admissions for each condition are rare. Per one thousand patients with type 2 diabetes, about twenty-two are admitted for hyperglycemia, thirteen for sepsis, seven for heart failure, and six for hypoglycemia. For comparison, about seventy-five per thousand have any unplanned admission, which is Model 1's outcome.",
+    "Under option B, the same conditions look much more common. Per one hundred admitted patients, about thirty are admitted with hyperglycemia, seventeen for sepsis, nine for heart failure, and nine with hypoglycemia. About half of admitted patients have none of the four conditions, and fourteen percent have two or more.",
+    "These numbers match the 2025 estimates closely, so the earlier work holds up.",
+    "One caution. Option B's higher rates are measured only on patients who were actually admitted. The next three slides show what each option looks like in practice."
+  ]},
+  { n: 5, title: "Option (b) would never see half or more of all admissions", p: [
+    "In practice, option B would only score the patients Model 1 flags. That has two consequences, and the numbers come from Model 1's September benchmark.",
+    "First, many admissions never reach Model 2. If every patient Model 1 predicts as positive is passed on, about forty-eight in every hundred admitted patients are never scored. If only the top five percent is passed on, about seventy in every hundred are never scored. A heart failure or sepsis admission in a patient Model 1 did not flag can never be picked up by Model 2.",
+    "Second, the higher event rate largely disappears. Most patients on Model 1's list are not admitted. So among the patients Model 2 would actually score, heart failure admissions drop from about nine per hundred to about four. Sepsis drops to about seven, hyperglycemia to about twelve or thirteen, and hypoglycemia to about three or four.",
+    "These per-condition values are estimates. They assume Model 1 catches condition admissions at its overall rate, and we can measure the real numbers from Model 1's test results before a decision is final."
+  ]},
+  { n: 6, title: "Option (a): low precision, but a real, concentrated signal", p: [
+    "Option A scores every patient, so it misses no one. But because these events are rare, precision will be low in absolute terms. Most patients flagged for a condition will not be admitted for it. Option B is no better on this point.",
+    "Rare, however, does not mean unpredictable. A single piece of history already concentrates the risk. Patients with a prior admission with heart failure are only four percent of the cohort, yet they account for forty-seven percent of next year's heart failure admissions. For hyperglycemia the figure is twenty-six percent, for sepsis eighteen percent, and for hypoglycemia twelve percent.",
+    "Among patients flagged by this simple rule, about eight in every hundred are admitted for heart failure, ten for sepsis, seventeen for hyperglycemia, and eight for hypoglycemia. That is roughly seven to twelve times the base rate.",
+    "The data volume is workable but thin, roughly six hundred to two thousand patients with each outcome in a test set.",
+    "So each condition model would need to clearly beat this simple history rule to be worth building."
+  ]},
+  { n: 7, title: "Option (c) looks high risk but covers only 29% of admissions", p: [
+    "Option C focuses on patients who already have one of the conditions. These groups are admitted for any reason at about thirty-one to thirty-five per hundred, which is four to five times the overall rate of seven per hundred.",
+    "Much of that higher rate comes from having had a recent hospital stay at all, rather than from the specific condition. And Model 1 already recognizes most of these patients. Ninety-one percent of patients with prior heart failure are already flagged by Model 1's heart failure input.",
+    "The bigger issue is coverage. Together, the four groups are about seven percent of the cohort, and they contain only twenty-nine percent of all admitted patients. About seven in ten admitted patients fall outside every group. For comparison, a Model 1 list of the same size would capture about thirty-seven percent of admitted patients.",
+    "So the higher rate reflects who is selected, not a better model. The fair test, before building anything, is to score Model 1 on these same patients."
+  ]},
+  { n: 8, title: "Hyperglycemia is a 30% or a 2% outcome, depending on one code", p: [
+    "Now to the code lists, starting with hyperglycemia.",
+    "Hyperglycemia is almost entirely one code. E eleven point six five, type 2 diabetes with hyperglycemia, accounts for ninety-four percent of hyperglycemia patients. The other codes, such as E ten point six five, the hyperosmolar codes, and R seventy-three point nine, contribute only a few percent each.",
+    "E eleven point six five is widely used as a secondary code to document poorly controlled diabetes, not necessarily an acute hyperglycemic event. With E eleven point six five and R seventy-three point nine included, about thirty per hundred admitted patients count as hyperglycemia. Without them, the figure is about two per hundred.",
+    "As a side note, Doctor Hebert may also wish to consider whether related hyperglycemic crisis codes, such as diabetic ketoacidosis, belong in this definition.",
+    "The takeaway is that the definition decides what this model predicts: an acute hyperglycemic event, or poorly controlled diabetes."
+  ]},
+  { n: 9, title: "Like E11.65, any-line CHF mostly records an existing condition", p: [
+    "Heart failure shows the same pattern from the other direction. Hyperglycemia is already counted on any line, which is how E eleven point six five takes over. Heart failure is counted only as the principal diagnosis, and this slide shows what would happen if that changed.",
+    "Counting any diagnosis line instead of the principal diagnosis would raise heart failure from about nine to about forty-two per hundred admitted patients. On any line, heart failure mostly records a condition the patient already has, rather than the reason for this admission. The current principal diagnosis rule for heart failure avoids this.",
+    "When heart failure is the principal diagnosis, it is mostly recorded with combination codes: I thirteen point zero, I eleven point zero, and I thirteen point two. The I fifty heart failure codes are rarely listed first, which is in line with coding conventions for hypertensive heart disease.",
+    "There is also a small cleanup. Three codes on the list describe hypertensive heart disease without heart failure. They are I eleven point nine, I thirteen point one zero, and I thirteen point one one. As the principal diagnosis they match fewer than five patients, so removing them changes almost nothing under the current rule. They would only matter if heart failure were counted on any line.",
+    "So slides eight and nine share one theme. Secondary diagnoses mostly record conditions patients already have, so the line rule decides what each outcome means."
+  ]},
+  { n: 10, title: "Excluding hospital-onset cases matters mainly for hypoglycemia", p: [
+    "Two smaller findings.",
+    "First, the present on admission flag. Diagnoses coded as not present on admission developed during the hospital stay, and outpatient data cannot be expected to predict them. For heart failure and sepsis as the principal diagnosis, excluding these makes almost no difference. For hypoglycemia, about one in ten cases developed during the stay. Excluding them lowers hypoglycemia from about nine to about eight per hundred admitted patients. These cases are likely related to in-hospital insulin dosing.",
+    "Second, a separate cleanup: obstetric and newborn codes. The sepsis list includes twelve obstetric and newborn codes, and the hypoglycemia list includes P seventy point four, neonatal hypoglycemia. Fewer than five patients matched any of them. They are not relevant to an adult type 2 diabetes cohort, and removing them simplifies the lists without any effect."
+  ]},
+  { n: 11, title: "Six decisions for Dr. Hebert; the first two shape everything else", p: [
+    "This brings us to six decisions for Doctor Hebert. The first two shape everything else.",
+    "One. Which question should Model 2 answer: option A, B, or C?",
+    "Two. For hyperglycemia, should E eleven point six five and R seventy-three point nine stay on the list, be removed, or count only as the principal diagnosis?",
+    "Three. For heart failure, should the three codes that mean without heart failure be removed?",
+    "Four. For each condition, should we count the principal diagnosis only, or any diagnosis line? Any line tends to capture conditions patients already have. Principal only captures the reason for admission, but makes the events rarer, especially for hyperglycemia and hypoglycemia.",
+    "Five. Should diagnoses that developed during the hospital stay be excluded?",
+    "Six. Should the obstetric and newborn codes be removed?",
+    "And one optional item, purely for Doctor Hebert's consideration: whether related hyperglycemic crisis codes, such as diabetic ketoacidosis, belong in the hyperglycemia definition.",
+    "Decisions one and two set what Model 2 predicts. Decisions three through six are code list cleanups."
+  ]},
+  { n: 12, title: "Once the decisions are made, real event rates follow the same day", p: [
+    "Here is what comes next.",
+    "The clinical decisions are the step for this review. After that, Doctor Hebert re-verifies all four code lists. Once the lists are approved, we rerun the two exploratory notebooks, and the final event rates are available the same day.",
+    "If option C is still under consideration, a quick test scores the current Model 1 on the prior heart failure group, to see whether a separate model would add anything. Then the Model 2 build begins, reusing Model 1's inputs and its fixed patient split. And if option B is chosen, we will also need to decide which Model 1 patients are passed on.",
+    "All numbers in this review use the same cohort, outcome window, and admission rules as Model 1, and they are aggregate counts only.",
+    "Decisions today let us replace every estimate with final numbers and start the Model 2 build. Thank you. The appendix slides that follow show how the numbers were calculated, and then list the four code lists for reference."
+  ]},
+  { n: 13, appendix: true, title: "Option (b) looks 13× higher only because of its denominator", p: [
+    "Appendix A shows how the option A and option B rates were calculated.",
+    "We start with Model 1's cohort of three hundred thousand two hundred ninety patients. Twenty-two thousand four hundred thirty-three of them, about seven and a half percent, have an unplanned admission in the twelve-month window. Admissions follow Model 1's exact rules. Diagnoses are matched against the November 2025 lists, with heart failure and sepsis counted as the principal diagnosis, and hyperglycemia and hypoglycemia counted on any line. Each patient counts once per condition.",
+    "The same patient counts are then divided two ways. For heart failure, two thousand one hundred eight patients is about seven per thousand of all patients, but about nine per hundred of admitted patients.",
+    "So option B is about thirteen times higher than option A only because it divides by admitted patients instead of all patients."
+  ]},
+  { n: 14, appendix: true, title: "Option (b) loses half or more of admissions, and its rate drops", p: [
+    "Appendix B shows option B in practice. Model 2 would only see the patients Model 1 flags.",
+    "If every predicted positive is passed on, forty-eight in every hundred admitted patients are never seen. If only the top five percent is passed on, seventy in every hundred are never seen.",
+    "And most flagged patients are never admitted. Multiplying each option B rate by the share of flagged patients who are admitted gives the rate among the patients Model 2 would score. For heart failure, that is about four per hundred. For sepsis, about seven. For hyperglycemia, about twelve to thirteen. For hypoglycemia, about three to four.",
+    "These values assume Model 1 flags condition admissions at its overall rate. The real values can be measured from Model 1's test results."
+  ]},
+  { n: 15, appendix: true, title: "Patients with a prior admission have 7.5 to 12 times the risk", p: [
+    "Appendix C shows the simple history rule behind slide six: flag patients who had a prior hospital admission with the same condition.",
+    "For heart failure, those patients are admitted for heart failure at about eight per hundred, compared with zero point seven per hundred across all patients with type 2 diabetes. That is about twelve times the risk. The lift is about eight times for sepsis, seven and a half times for hyperglycemia, and twelve times for hypoglycemia.",
+    "The comparison uses the option A rate, because the rule scores every patient. Even so, most flagged patients, eighty-three to ninety-two in every hundred, are not admitted for the condition.",
+    "The signal is real, and each condition model must clearly beat this one-line rule to be worth building."
+  ]},
+  { n: 16, appendix: true, title: "E11.65 alone decides whether hyperglycemia is 30 or 2 per 100", p: [
+    "Appendix D explains why one code moves hyperglycemia from thirty to two per hundred admitted patients.",
+    "E eleven point six five is on the hyperglycemia list and counts on any diagnosis line. Under coding rules, diabetes documented as uncontrolled or poorly controlled is coded as diabetes with hyperglycemia, so this code appears on many admissions. It accounts for ninety-four percent of hyperglycemia patients.",
+    "There are three options for Doctor Hebert. Keep it, and about six thousand seven hundred patients count, mostly reflecting poorly controlled diabetes. Remove it, together with R seventy-three point nine, and about four hundred fifty patients remain, reflecting an acute hyperglycemic event. Or keep it only as the principal diagnosis, a version we have not yet reported.",
+    "One housekeeping note: the list also contains E eleven point zero, a category header rather than a billable code, so it matches nothing."
+  ]},
+  { n: 17, appendix: true, title: "Excluding hospital-onset cases matters mainly for hypoglycemia", p: [
+    "Appendix E covers hospital-onset diagnoses and the obstetric and newborn codes.",
+    "Each hospital diagnosis carries a present on admission flag. Diagnoses that developed during the stay were not the reason for admission. Heart failure and sepsis are counted as the principal diagnosis, so these cases rarely count, and excluding them changes almost nothing. Hypoglycemia is counted on any line. About one in ten cases developed during the stay, and excluding them lowers the rate from about nine to about eight per hundred admitted patients.",
+    "Separately, the obstetric and newborn codes matched fewer than five patients, and removing them changes no numbers.",
+    "Both decisions are low stakes."
+  ]},
+  { n: 18, appendix: true, title: "Appendix F: CHF code list (28 codes)", p: [
+    "Appendix F lists the twenty-eight heart failure codes, as approved in November 2025. They are counted as the principal diagnosis. The three codes shown in blue describe hypertensive heart disease without heart failure, as discussed earlier."
+  ]},
+  { n: 19, appendix: true, title: "Appendix G: Sepsis code list (40 codes)", p: [
+    "Appendix G lists the forty sepsis codes, also counted as the principal diagnosis. The codes shown in blue are the obstetric and newborn codes, which matched fewer than five patients."
+  ]},
+  { n: 20, appendix: true, title: "Appendix H: Hyperglycemia (9) and hypoglycemia (15) code lists", p: [
+    "Appendix H lists the nine hyperglycemia codes and the fifteen hypoglycemia codes. Both are counted on any diagnosis line. The two codes in blue, E eleven point six five and R seventy-three point nine, are the codes that move hyperglycemia between thirty and two per hundred admitted patients."
+  ]}
+];
+
+(function () {
+  const $ = id => document.getElementById(id);
+  const scroller = $('scroller'), slidesEl = $('slides'), content = $('content');
+  const playBtn = $('play'), speed = $('speed'), speedVal = $('speedVal');
+  const appx = $('appx'), mirror = $('mirror'), jump = $('jump'), status = $('status');
+  const bar = $('bar'), help = $('help'), progress = $('progress');
+
+  let fontPx = 54, playing = false, pos = 0, last = 0, hideTimer = null;
+
+  // ---- Persisted settings (best effort) ----
+  function load() {
+    try { return JSON.parse(localStorage.getItem('tp-settings') || '{}'); } catch (e) { return {}; }
+  }
+  function save() {
+    try {
+      localStorage.setItem('tp-settings', JSON.stringify({
+        fontPx, speed: +speed.value, appx: appx.checked, mirror: mirror.checked
+      }));
+    } catch (e) {}
+  }
+
+  // ---- Build DOM ----
+  SLIDES.forEach(s => {
+    const sec = document.createElement('section');
+    sec.className = 'slide' + (s.appendix ? ' appendix' : '');
+    sec.id = 'slide-' + s.n;
+    const m = document.createElement('div');
+    m.className = 'marker';
+    m.innerHTML = '<span class="num">SLIDE ' + s.n + (s.appendix ? ' · APPENDIX' : '') +
+      '</span><span class="ttl"></span>';
+    m.querySelector('.ttl').textContent = s.title;
+    sec.appendChild(m);
+    s.p.forEach(t => {
+      const p = document.createElement('p');
+      p.className = 'para';
+      p.textContent = t;
+      sec.appendChild(p);
+    });
+    slidesEl.appendChild(sec);
+    const o = document.createElement('option');
+    o.value = s.n;
+    o.textContent = s.n + '. ' + s.title;
+    if (s.appendix) o.dataset.appendix = '1';
+    jump.appendChild(o);
+  });
+
+  const allSections = () => Array.from(slidesEl.querySelectorAll('section.slide'));
+  const visibleSections = () => allSections().filter(s => s.offsetParent !== null);
+  const allParas = () => Array.from(slidesEl.querySelectorAll('p.para'))
+    .filter(p => p.offsetParent !== null);
+
+  // ---- Settings application ----
+  function applyFont() {
+    content.style.fontSize = fontPx + 'px';
+  }
+  function applyAppendix() {
+    document.body.classList.toggle('no-appendix', !appx.checked);
+    Array.from(jump.options).forEach(o => {
+      if (o.dataset.appendix) o.hidden = !appx.checked;
+    });
+  }
+  function applyMirror() { scroller.classList.toggle('mirror', mirror.checked); }
+
+  const st = load();
+  if (st.fontPx) fontPx = st.fontPx;
+  if (st.speed) speed.value = st.speed;
+  appx.checked = !!st.appx;
+  mirror.checked = !!st.mirror;
+  speedVal.textContent = speed.value;
+  applyFont(); applyAppendix(); applyMirror();
+
+  // ---- Scrolling engine ----
+  function maxScroll() { return scroller.scrollHeight - scroller.clientHeight; }
+
+  function frame(ts) {
+    if (!playing) return;
+    if (!last) last = ts;
+    const dt = Math.min(0.1, (ts - last) / 1000);
+    last = ts;
+    // Respect manual scrolling
+    if (Math.abs(scroller.scrollTop - Math.round(pos)) > 2) pos = scroller.scrollTop;
+    pos += (+speed.value) * dt;
+    if (pos >= maxScroll()) {
+      pos = maxScroll();
+      scroller.scrollTop = pos;
+      setPlaying(false);
+    } else {
+      scroller.scrollTop = pos;
+    }
+    updateReading();
+    requestAnimationFrame(frame);
+  }
+
+  function setPlaying(v) {
+    playing = v;
+    playBtn.textContent = playing ? '❚❚ Pause' : '▶ Play';
+    if (playing) {
+      pos = scroller.scrollTop;
+      last = 0;
+      requestAnimationFrame(frame);
+    }
+  }
+
+  // ---- Reading position / highlight / progress ----
+  function updateReading() {
+    const guideY = window.innerHeight * 0.38;
+    const paras = allParas();
+    let curIdx = -1;
+    for (let i = 0; i < paras.length; i++) {
+      const r = paras[i].getBoundingClientRect();
+      if (r.top <= guideY + 4) curIdx = i; else break;
+    }
+    paras.forEach((p, i) => {
+      p.classList.toggle('current', i === curIdx);
+      p.classList.toggle('read', i < curIdx);
+    });
+    // current slide
+    let curSlide = null;
+    for (const s of visibleSections()) {
+      if (s.getBoundingClientRect().top <= guideY + 4) curSlide = s; else break;
+    }
+    if (curSlide) {
+      const n = curSlide.id.replace('slide-', '');
+      if (jump.value !== n) jump.value = n;
+    }
+    const ms = maxScroll();
+    progress.style.width = (ms > 0 ? (scroller.scrollTop / ms) * 100 : 0) + '%';
+    updateStatus(curSlide);
+  }
+
+  function totalWords() {
+    return allParas().reduce((a, p) => a + p.textContent.trim().split(/\s+/).length, 0);
+  }
+  function updateStatus(curSlide) {
+    const total = visibleSections().length;
+    const idx = curSlide ? visibleSections().indexOf(curSlide) + 1 : 0;
+    const ms = maxScroll();
+    const remainingPx = Math.max(0, ms - scroller.scrollTop);
+    const secs = remainingPx / (+speed.value || 1);
+    const mm = Math.floor(secs / 60), ss = Math.round(secs % 60);
+    status.textContent = 'Slide ' + (idx || '–') + ' of ' + total +
+      ' · ~' + mm + ':' + String(ss).padStart(2, '0') + ' left at this speed';
+  }
+
+  function goToSlide(n) {
+    const el = $('slide-' + n);
+    if (!el || el.offsetParent === null) return;
+    // Place the marker just at the guide line
+    const target = el.offsetTop - window.innerHeight * 0.38 + content.offsetTop + 8;
+    scroller.scrollTop = Math.max(0, target + parseFloat(getComputedStyle(content).paddingTop || 0));
+    pos = scroller.scrollTop;
+    updateReading();
+  }
+  function currentSlideIndex() {
+    const secs = visibleSections();
+    const guideY = window.innerHeight * 0.38;
+    let idx = 0;
+    secs.forEach((s, i) => { if (s.getBoundingClientRect().top <= guideY + 4) idx = i; });
+    return idx;
+  }
+  function stepSlide(d) {
+    const secs = visibleSections();
+    let i = currentSlideIndex();
+    // If we're well into the current slide and going back, jump to its start first
+    if (d < 0) {
+      const top = secs[i].getBoundingClientRect().top;
+      if (top < window.innerHeight * 0.38 - 120) { goToSlide(secs[i].id.replace('slide-', '')); return; }
+    }
+    i = Math.min(secs.length - 1, Math.max(0, i + d));
+    goToSlide(secs[i].id.replace('slide-', ''));
+  }
+
+  // ---- Wire up controls ----
+  playBtn.onclick = () => setPlaying(!playing);
+  $('restart').onclick = () => { setPlaying(false); scroller.scrollTop = 0; pos = 0; updateReading(); };
+  $('prev').onclick = () => stepSlide(-1);
+  $('next').onclick = () => stepSlide(1);
+  jump.onchange = () => goToSlide(jump.value);
+  speed.oninput = () => { speedVal.textContent = speed.value; save(); updateReading(); };
+  $('bigger').onclick = () => { fontPx = Math.min(140, fontPx + 4); applyFont(); save(); updateReading(); };
+  $('smaller').onclick = () => { fontPx = Math.max(24, fontPx - 4); applyFont(); save(); updateReading(); };
+  appx.onchange = () => { applyAppendix(); save(); updateReading(); };
+  mirror.onchange = () => { applyMirror(); save(); };
+  $('helpBtn').onclick = () => help.classList.toggle('hidden');
+  $('hideBar').onclick = () => bar.classList.add('hidden');
+  scroller.addEventListener('scroll', () => { if (!playing) { pos = scroller.scrollTop; } updateReading(); });
+  window.addEventListener('resize', updateReading);
+
+  function nudgeSpeed(d) {
+    speed.value = Math.min(+speed.max, Math.max(+speed.min, +speed.value + d));
+    speedVal.textContent = speed.value; save(); updateReading();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.target && (e.target.tagName === 'SELECT')) return;
+    switch (e.key) {
+      case ' ': e.preventDefault(); setPlaying(!playing); break;
+      case 'ArrowUp': e.preventDefault(); nudgeSpeed(6); break;
+      case 'ArrowDown': e.preventDefault(); nudgeSpeed(-6); break;
+      case 'ArrowRight': e.preventDefault(); stepSlide(1); break;
+      case 'ArrowLeft': e.preventDefault(); stepSlide(-1); break;
+      case '+': case '=': $('bigger').click(); break;
+      case '-': case '_': $('smaller').click(); break;
+      case 'r': case 'R': $('restart').click(); break;
+      case 'm': case 'M': mirror.checked = !mirror.checked; applyMirror(); save(); break;
+      case 'h': case 'H': bar.classList.toggle('hidden'); break;
+      case 'f': case 'F':
+        if (document.fullscreenElement) document.exitFullscreen();
+        else document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+        break;
+      case '?': help.classList.toggle('hidden'); break;
+    }
+  });
+
+  // Fix the bar overlap: first marker should not hide under the bar
+  scroller.scrollTop = 0;
+  updateReading();
+  void totalWords;
+})();
+</script>
+</body>
+</html>
